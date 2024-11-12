@@ -2,7 +2,7 @@
 #include "Buffer.h"
 
 int main() {
-    Buffer buffer(5, 20);
+    Buffer buffer(0, 0);
 
     // Imprime o conteúdo do buffer após a inicialização com '.'
     std::cout << "Buffer inicial:" << std::endl;

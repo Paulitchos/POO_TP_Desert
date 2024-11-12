@@ -1,7 +1,3 @@
-//
-// Created by paulo on 11/11/2024.
-//
-
 #include "Buffer.h"
 
 using namespace std;
