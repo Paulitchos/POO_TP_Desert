@@ -4,7 +4,7 @@
 #include <iostream>
 
 class Buffer {
-    char* data;
+    char** data;
     int rows, cols;
     int cursorRow, cursorCol;
 

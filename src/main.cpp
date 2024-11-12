@@ -1,21 +1,12 @@
 #include <iostream>
-#include "Buffer.h"
+#include "Mapa.h"
+
+using namespace std;
 
 int main() {
-    Buffer buffer(0, 0);
+    if(!iniciateMap())
+        return 0;
 
-    // Imprime o conteúdo do buffer após a inicialização com '.'
-    std::cout << "Buffer inicial:" << std::endl;
-    buffer.flush();  // Exibe o conteúdo e limpa o buffer
-
-    // Escreve alguns dados no buffer
-    buffer << "Texto no buffer";
-    buffer << 1234;
-    buffer << "Alo";
-
-    // Exibe o conteúdo do buffer com as modificações
-    std::cout << "\nBuffer apos escrita:" << std::endl;
-    buffer.flush();  // Exibe o conteúdo e limpa o buffer
 
     return 0;
 }

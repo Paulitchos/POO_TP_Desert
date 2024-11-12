@@ -4,16 +4,25 @@ using namespace std;
 
 Buffer::Buffer(int r, int c) : rows(r > 0 ? r : 1), cols(c > 0 ? c : 1)
 , cursorRow(0), cursorCol(0) {
-    data = new char[rows * cols];
-    clear();
+    data = new char*[rows];
+    for (int i = 0; i < rows; ++i) {
+        data[i] = new char[cols];
+        std::fill_n(data[i], cols, '.');
+    }
 }
 
 Buffer::~Buffer() {
+    for (int i = 0; i < rows; ++i) {
+        delete[] data[i];
+    }
     delete[] data;
 }
 
 void Buffer::clear() {
-    fill(data, data + (rows * cols), '.');
+    for (int i = 0; i < rows; ++i) {
+        std::fill_n(data[i], cols, ' ');
+    }
+    cursorRow = cursorCol = 0;
 }
 
 void Buffer::setCursor(int row, int col) {
@@ -25,10 +34,9 @@ void Buffer::setCursor(int row, int col) {
 
 // Write a character at the current cursor position
 void Buffer::writeChar(char c) {
-    if (cursorRow < rows && cursorCol < cols) {
-        data[cursorRow * cols + cursorCol] = c;
-        cursorCol++; // Move cursor to the next column
-        if (cursorCol >= cols) { // Wrap to the next line
+    if (cursorRow >= 0 && cursorRow < rows && cursorCol >= 0 && cursorCol < cols) {
+        data[cursorRow][cursorCol++] = c;
+        if (cursorCol >= cols) { // Move to the next line if column exceeds buffer width
             cursorCol = 0;
             cursorRow++;
         }
@@ -51,11 +59,10 @@ void Buffer::writeInt(int number) {
 void Buffer::flush() {
     for (int i = 0; i < rows; ++i) {
         for (int j = 0; j < cols; ++j) {
-            std::cout << data[i * cols + j];
+            std::cout << data[i][j];
         }
         std::cout << std::endl;
     }
-    std::cout << std::endl;
     clear(); // Clear buffer after printing
 }
 
