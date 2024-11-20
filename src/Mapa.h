@@ -1,5 +1,5 @@
-#ifndef INTERFACE_H
-#define INTERFACE_H
+#ifndef MAPA_H
+#define MAPA_H
 
 #include <iostream>
 #include <string>
@@ -9,16 +9,20 @@
 class Mapa {
     int rows, cols, coins,
     insNewItem, durItem, maxItem, pSellMerch, pBuyMerch, pCaravan, insNewBarb, durBarb;
-    Buffer buffer;
+    Buffer *buffer;
 public:
 
     Mapa();
+    ~Mapa();
 
     int getRows() const;
     void setRows(int rows);
 
     int getCols() const;
     void setCols(int cols);
+
+    void criaBuffer();
+    void imprimeMapa();
 };
 
-#endif //INTERFACE_H
+#endif //MAPA_H

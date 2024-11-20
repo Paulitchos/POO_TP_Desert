@@ -62,9 +62,9 @@ bool Interface::readFromFile(std::string fileName) {
         }
     }
 
+    mapa.criaBuffer();
+    mapa.imprimeMapa();
     file.close();
-    mapa.buffer = mapa.buffer(mapa.getRows(), mapa.getCols());
-    mapa;
 
     return true;
 }
