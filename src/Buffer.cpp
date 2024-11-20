@@ -63,7 +63,7 @@ void Buffer::flush() {
         }
         std::cout << std::endl;
     }
-    clear(); // Clear buffer after printing
+    clear();
 }
 
 ostream& operator<<(Buffer& buffer, char c) {

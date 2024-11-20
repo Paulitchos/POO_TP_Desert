@@ -7,4 +7,6 @@ add_executable(src main.cpp
         Buffer.cpp
         Buffer.h
         Mapa.cpp
-        Mapa.h)
+        Mapa.h
+        Interface.cpp
+        Interface.h)

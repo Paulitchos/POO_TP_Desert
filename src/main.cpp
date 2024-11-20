@@ -1,10 +1,11 @@
 #include <iostream>
-#include "Mapa.h"
+#include "Interface.h"
 
 using namespace std;
 
 int main() {
-    if(!iniciateMap())
+    Interface myInterface;
+    if(!myInterface.iniciateMap())
         return 0;
 
 

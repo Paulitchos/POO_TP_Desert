@@ -7,9 +7,9 @@
 #include "Buffer.h"
 
 class Mapa {
-    std::string **mapa;
-    int rows, cols, coins, insNewItem, durItem, maxItem, pSellMerch, pBuyMerch, pCaravan, insNewBarb, durBarb;
-
+    int rows, cols, coins,
+    insNewItem, durItem, maxItem, pSellMerch, pBuyMerch, pCaravan, insNewBarb, durBarb;
+    Buffer buffer;
 public:
 
     Mapa();
@@ -19,13 +19,6 @@ public:
 
     int getCols() const;
     void setCols(int cols);
-
-
 };
-
-bool iniciateMap();
-bool readFromFile(std::string filename);
-
-
 
 #endif //INTERFACE_H
