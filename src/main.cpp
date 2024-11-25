@@ -4,10 +4,8 @@
 using namespace std;
 
 int main() {
-    Interface myInterface;
-    if(!myInterface.iniciateMap())
-        return 0;
-
-
+    Simulador si;
+    Interface interface(si);
+    interface.iniciateSimulation();
     return 0;
 }

@@ -2,35 +2,39 @@
 
 using namespace std;
 
-bool Interface::iniciateMap() {
+Interface::Interface(Simulador &s) : sim(&s) {
+}
+
+
+bool Interface::iniciateSimulation() {
     string command1, command2;
     cout << "Para iniciar o mapa use o comando: config <nomeFicheiro>" << endl;
     cout << "Se quiser sair do programa, utilize comando: sair" << endl;
 
     while (true) {
-        std::cout << "> ";
-        std::cin >> command1;
+        cout << "> ";
+        cin >> command1;
 
         if (command1 == "sair") {
-            std::cout << "Fechar programa..." << std::endl;
+            cout << "Fechar programa..." << endl;
             return false;
         }
 
         if (cin.peek() != '\n') {
-            std::cin >> command2;
+            cin >> command2;
         } else {
             command2.clear();
         }
 
         if (command1 == "config" && !command2.empty()) {
             if (readFromFile(command2)) {
-                std::cout << "Mapa read from file" << std::endl;
+                cout << "Mapa lido do ficheiro" << endl;
                 return true;
             }
-            std::cout << "Ficheiro nao acessivel" << std::endl;
+            cout << "Ficheiro nao acessivel" << endl;
             return false;
         }
-        std::cout << "Comando invalido" << std::endl;
+        cout << "Comando invalido" << endl;
     }
 }
 
@@ -41,10 +45,11 @@ bool Interface::readFromFile(std::string fileName) {
         return false;
     }
 
+    sim->iniciateMap();
     string line;
 
     while (getline(file, line)) {
-        cout << line << std::endl;
+        cout << line << endl;
 
         istringstream iss(line);
         string key;
@@ -53,11 +58,16 @@ bool Interface::readFromFile(std::string fileName) {
         // Extract the key (e.g., "linhas" or "colunas") and the value
         if (iss >> key >> value) {
             if (key == "linhas") {
-                mapa.setRows(value);
+                if (value <= 0) {
+                    cout << "Linhas tem que ser maior que 0" << endl;
+                    return false;
+                }
             } else if (key == "colunas") {
-                mapa.setCols(value);
-            } else if (key == ".") {
-
+                if (value <= 0) {
+                    cout << "Colunas tem que ser maior que 0" << endl;
+                    return false;
+                }
+                
             }
         }
     }

@@ -3,8 +3,8 @@
 using namespace std;
 
 Buffer::Buffer(int r, int c) : rows(r > 0 ? r : 1), cols(c > 0 ? c : 1)
-, cursorRow(0), cursorCol(0) {
-    data = new char*[rows];
+                               , cursorRow(0), cursorCol(0) {
+    data = new char *[rows];
     for (int i = 0; i < rows; ++i) {
         data[i] = new char[cols];
         std::fill_n(data[i], cols, '.');
@@ -36,7 +36,8 @@ void Buffer::setCursor(int row, int col) {
 void Buffer::writeChar(char c) {
     if (cursorRow >= 0 && cursorRow < rows && cursorCol >= 0 && cursorCol < cols) {
         data[cursorRow][cursorCol++] = c;
-        if (cursorCol >= cols) { // Move to the next line if column exceeds buffer width
+        if (cursorCol >= cols) {
+            // Move to the next line if column exceeds buffer width
             cursorCol = 0;
             cursorRow++;
         }
@@ -44,7 +45,7 @@ void Buffer::writeChar(char c) {
 }
 
 // Write a string starting at the cursor position
-void Buffer::writeString(const char* str) {
+void Buffer::writeString(const char *str) {
     while (*str) {
         writeChar(*str++);
     }
@@ -66,19 +67,19 @@ void Buffer::flush() {
     clear();
 }
 
-ostream& operator<<(Buffer& buffer, char c) {
+ostream &operator<<(Buffer &buffer, char c) {
     buffer.writeChar(c); // Usa o métdo da classe Buffer para escrever um único caractere
     return cout; // Retorna o fluxo de saída
 }
 
 // Sobrecarga do operador << para escrever uma string no buffer
-ostream& operator<<(Buffer& buffer, const char* str) {
+ostream &operator<<(Buffer &buffer, const char *str) {
     buffer.writeString(str); // Usa o métdo da classe Buffer para escrever uma string
     return cout; // Retorna o fluxo de saída
 }
 
 // Sobrecarga do operador << para escrever um inteiro no buffer
-ostream& operator<<(Buffer& buffer, int number) {
+ostream &operator<<(Buffer &buffer, int number) {
     buffer.writeInt(number); // Usa o método da classe Buffer para escrever um inteiro
     return cout; // Retorna o fluxo de saída
 }

@@ -9,4 +9,6 @@ add_executable(src main.cpp
         Mapa.cpp
         Mapa.h
         Interface.cpp
-        Interface.h)
+        Interface.h
+        Simulador.cpp
+        Simulador.h)

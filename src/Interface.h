@@ -6,15 +6,18 @@
 #include <sstream>
 #include <fstream>
 
-#include "Mapa.h"
+#include "Simulador.h"
 
 class Interface {
-    Mapa mapa;
+    Simulador *sim;
+
 public:
-    bool iniciateMap();
+    Interface(Simulador &s);
+
+    bool iniciateSimulation();
+
     bool readFromFile(std::string filename);
 };
-
 
 
 #endif //INTERFACE_H

@@ -4,7 +4,7 @@
 #include <iostream>
 
 class Buffer {
-    char** data;
+    char **data;
     int rows, cols;
     int cursorRow, cursorCol;
 
@@ -23,21 +23,20 @@ public:
     void writeChar(char c);
 
     // Write a string starting at the cursor position
-    void writeString(const char* str);
+    void writeString(const char *str);
 
     // Write an integer at the cursor position
     void writeInt(int number);
 
     // Output buffer to the console
     void flush();
-
 };
 
-std::ostream& operator<<(Buffer& buffer, char c);
+std::ostream &operator<<(Buffer &buffer, char c);
 
-std::ostream& operator<<(Buffer& buffer, const char* str);
+std::ostream &operator<<(Buffer &buffer, const char *str);
 
-std::ostream& operator<<(Buffer& buffer, int number);
+std::ostream &operator<<(Buffer &buffer, int number);
 
 
 #endif //BUFFER_H
