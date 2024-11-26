@@ -10,7 +10,6 @@ Mapa::Mapa()
 }
 
 Mapa::~Mapa() {
-    delete buffer;
 }
 
 int Mapa::getRows() const {
@@ -29,20 +28,14 @@ void Mapa::setCols(int cols) {
     this->cols = cols;
 }
 
-void Mapa::criaBuffer() {
+void Mapa::startBuffer() {
     // If a buffer already exists, delete it
-    if (buffer != nullptr) {
-        delete buffer;
-        buffer = nullptr;
-    }
-
-    // Create a new buffer
-    buffer = new Buffer(rows, cols);
+    buffer = std::make_unique<Buffer>(rows, cols);
 
     //cout << "Buffer criado com sucesso: " << rows << "x" << cols << endl;
 }
 
-void Mapa::imprimeMapa() const {
+void Mapa::imprimeBuffer() const {
     if (buffer != nullptr) {
         buffer->flush();
     }

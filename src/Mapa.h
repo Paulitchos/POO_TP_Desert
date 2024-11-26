@@ -4,12 +4,13 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+#include <memory>
 #include "Buffer.h"
 
 class Mapa {
     int rows, cols, coins,
             insNewItem, durItem, maxItem, pSellMerch, pBuyMerch, pCaravan, insNewBarb, durBarb;
-    Buffer *buffer;
+    std::unique_ptr<Buffer> buffer;
 
 public:
     Mapa();
@@ -24,9 +25,9 @@ public:
 
     void setCols(int cols);
 
-    void criaBuffer();
+    void startBuffer();
 
-    void imprimeMapa() const;
+    void imprimeBuffer() const;
 };
 
 #endif //MAPA_H

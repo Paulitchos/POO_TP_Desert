@@ -1,17 +1,25 @@
 #ifndef SIMULADOR_H
 #define SIMULADOR_H
-#include "Mapa.h"
 
+#include "Mapa.h"
+#include <memory>
 
 class Simulador {
-    Mapa *mapa;
-
+    std::unique_ptr<Mapa> mapa;
 public:
     Simulador();
 
     ~Simulador();
 
     void iniciateMap();
+
+    void setMapRows(int row);
+
+    void setMapCols(int col);
+
+    void startBuffer();
+
+    void imprimeBuffer() const;
 };
 
 

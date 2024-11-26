@@ -62,18 +62,19 @@ bool Interface::readFromFile(std::string fileName) {
                     cout << "Linhas tem que ser maior que 0" << endl;
                     return false;
                 }
+                sim->setMapRows(value);
             } else if (key == "colunas") {
                 if (value <= 0) {
                     cout << "Colunas tem que ser maior que 0" << endl;
                     return false;
                 }
-                
+                sim->setMapCols(value);
             }
         }
     }
 
-    mapa.criaBuffer();
-    mapa.imprimeMapa();
+    sim->startBuffer();
+    sim->imprimeBuffer();
     file.close();
 
     return true;

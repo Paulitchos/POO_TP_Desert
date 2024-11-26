@@ -4,16 +4,26 @@ Simulador::Simulador() : mapa(nullptr) {
 }
 
 Simulador::~Simulador() {
-  delete mapa;
 }
 
 void Simulador::iniciateMap() {
-  if (mapa != nullptr) {
-    delete mapa;
-    mapa = nullptr;
-  }
+  mapa = std::make_unique<Mapa>();
+}
 
-  mapa = new Mapa();
+void Simulador::setMapRows(const int row) {
+  mapa->setRows(row);
+}
+
+void Simulador::setMapCols(const int col) {
+  mapa->setCols(col);
+}
+
+void Simulador::startBuffer() {
+  mapa->startBuffer();
+}
+
+void Simulador::imprimeBuffer() const {
+  mapa->imprimeBuffer();
 }
 
 
