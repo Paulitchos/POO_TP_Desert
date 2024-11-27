@@ -11,4 +11,8 @@ add_executable(src main.cpp
         Interface.cpp
         Interface.h
         Simulador.cpp
-        Simulador.h)
+        Simulador.h
+        Montanha.cpp
+        Montanha.h
+        Cidade.cpp
+        Cidade.h)

@@ -12,26 +12,16 @@ Mapa::Mapa()
 Mapa::~Mapa() {
 }
 
-int Mapa::getRows() const {
-    return rows;
-}
+int Mapa::getRows() const { return rows; }
 
-void Mapa::setRows(int rows) {
-    this->rows = rows;
-}
+void Mapa::setRows(int rows) { this->rows = rows; }
 
-int Mapa::getCols() const {
-    return cols;
-}
+int Mapa::getCols() const { return cols; }
 
-void Mapa::setCols(int cols) {
-    this->cols = cols;
-}
+void Mapa::setCols(int cols) { this->cols = cols; }
 
 void Mapa::startBuffer() {
-    // If a buffer already exists, delete it
     buffer = std::make_unique<Buffer>(rows, cols);
-
     //cout << "Buffer criado com sucesso: " << rows << "x" << cols << endl;
 }
 
@@ -39,4 +29,33 @@ void Mapa::imprimeBuffer() const {
     if (buffer != nullptr) {
         buffer->flush();
     }
+}
+
+void Mapa::addMontanha(int row, int col) {
+    montanhas.emplace_back(row, col);
+    std::cout << "Montanha adicionada em (" << row << ", " << col << ")" << std::endl;
+}
+
+void Mapa::addCidade(int row, int col, char name) {
+    cidades.emplace_back(row, col, name);
+    std::cout << "Cidade adicionada em (" << row << ", " << col << ")" << std::endl;
+}
+
+bool Mapa::isMontanha(int row, int col) const {
+    // Check if a mountain exists at the specified position
+    for (const Montanha& montanha : montanhas) {
+        if (montanha.getRow() == row && montanha.getCol() == col) {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool Mapa::cidadeNameAvailable(char name) const{
+    for (const Cidade& cidade : cidades) {
+        if (cidade.getName() == name) {
+            return false;
+        }
+    }
+    return true;
 }
