@@ -14,7 +14,7 @@ bool Interface::iniciateSimulation() {
     while (true) {
         cout << "> ";
         cin >> command1;
-
+        cout << endl;
         if (command1 == "sair") {
             cout << "Fechar programa..." << endl;
             return false;
@@ -28,7 +28,7 @@ bool Interface::iniciateSimulation() {
 
         if (command1 == "config" && !command2.empty()) {
             if (readFromFile(command2)) {
-                cout << "Mapa lido do ficheiro" << endl;
+                cout << "\nMapa lido com sucesso" << endl;
                 return true;
             }
             return false;
@@ -48,9 +48,11 @@ bool Interface::readFromFile(std::string fileName) {
     sim->iniciateMap();
     string line, previousLine;
     int currentRow = 0;
+    bool linhasSet = false;
+    bool colunasSet = false;
 
     while (getline(file, line)) {
-        cout << line << endl;
+        //cout << line << endl;
 
         istringstream iss(line);
         string key;
@@ -59,24 +61,41 @@ bool Interface::readFromFile(std::string fileName) {
         // Extract the key (e.g., "linhas" or "colunas") and the value
         if (iss >> key >> value) {
             if (key == "linhas") {
+                if (linhasSet) {
+                    // Detect duplicate key
+                    cout << "Erro: 'linhas' ja foi definido!" << endl;
+                    file.close();
+                    return false;
+                }
+
                 if (value <= 0) {
                     cout << "Linhas tem que ser maior que 0" << endl;
                     file.close();
                     return false;
                 }
+
                 sim->setMapRows(value);
+                linhasSet = true;
             } else if (key == "colunas") {
+                if (colunasSet) {
+                    // Detect duplicate key
+                    cout << "Erro: 'colunas' ja foi definido!" << endl;
+                    file.close();
+                    return false;
+                }
                 if (value <= 0) {
                     cout << "Colunas tem que ser maior que 0" << endl;
                     file.close();
                     return false;
                 }
                 sim->setMapCols(value);
+                colunasSet = true;
+                sim->startBuffer();
             }
         } else if (!line.empty() && currentRow < sim->getMapRows()) {
-
             if (line.size() != sim->getMapCols()) {
-                cout << "Erro: Linha " << currentRow + 1 << " nao tem o numero correto de colunas (" << sim->getMapCols() << ")" << endl;
+                cout << "Erro: Linha " << currentRow + 1 << " nao tem o numero correto de colunas (" << sim->
+                        getMapCols() << ")" << endl;
                 file.close();
                 return false;
             }
@@ -84,11 +103,14 @@ bool Interface::readFromFile(std::string fileName) {
             if (currentRow > 0) {
                 for (int col = 0; col < previousLine.size() && col < sim->getMapCols(); ++col) {
                     char cell = previousLine[col];
-                    if (islower(cell)) { // It's a city
+                    if (islower(cell)) {
+                        // It's a city
                         if (line[col] != '+') {
                             break;
-                        } else if (sim->isMontanha(currentRow - 1, col - 1) && sim->isMontanha(currentRow - 1, col + 1) && sim->isMontanha(currentRow - 2, col) && line[col] == '+') {
-                            cout << "Cidade na posicao " << currentRow - 1 << " " << col << " esta rodeada por montanhas" << endl;
+                        } else if (sim->isMontanha(currentRow - 1, col - 1) && sim->isMontanha(currentRow - 1, col + 1)
+                                   && sim->isMontanha(currentRow - 2, col) && line[col] == '+') {
+                            cout << "Cidade na posicao " << currentRow - 1 << " " << col <<
+                                    " esta rodeada por montanhas" << endl;
                             return false;
                         }
                     }
@@ -103,7 +125,7 @@ bool Interface::readFromFile(std::string fileName) {
                 } else if (islower(cell)) {
                     //cout << "Cidade encontrada em (" << currentRow << ", " << col << ")" << endl;
 
-                    if(sim->cidadeNameAvailable(cell)) {
+                    if (sim->cidadeNameAvailable(cell)) {
                         sim->addCidade(currentRow, col, cell);
                     } else {
                         cout << "Nome de cidade ja esta a ser utilizado!" << endl;
@@ -112,6 +134,7 @@ bool Interface::readFromFile(std::string fileName) {
                     }
                 }
             }
+
             previousLine = line;
             ++currentRow;
         }
@@ -123,7 +146,6 @@ bool Interface::readFromFile(std::string fileName) {
         return false;
     }
 
-    sim->startBuffer();
     sim->imprimeBuffer();
     file.close();
 

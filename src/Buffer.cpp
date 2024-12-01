@@ -20,7 +20,7 @@ Buffer::~Buffer() {
 
 void Buffer::clear() {
     for (int i = 0; i < rows; ++i) {
-        std::fill_n(data[i], cols, ' ');
+        std::fill_n(data[i], cols, '.');
     }
     cursorRow = cursorCol = 0;
 }

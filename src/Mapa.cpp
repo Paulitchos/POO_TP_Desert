@@ -23,6 +23,7 @@ void Mapa::setCols(int cols) { this->cols = cols; }
 void Mapa::startBuffer() {
     buffer = std::make_unique<Buffer>(rows, cols);
     //cout << "Buffer criado com sucesso: " << rows << "x" << cols << endl;
+
 }
 
 void Mapa::imprimeBuffer() const {
@@ -33,12 +34,18 @@ void Mapa::imprimeBuffer() const {
 
 void Mapa::addMontanha(int row, int col) {
     montanhas.emplace_back(row, col);
-    std::cout << "Montanha adicionada em (" << row << ", " << col << ")" << std::endl;
+    //cout << "Montanha adicionada em (" << row << ", " << col << ")" << endl;
+    buffer->setCursor(row, col);
+    buffer->writeChar('+');
+    buffer->setCursor(0, 0);
 }
 
 void Mapa::addCidade(int row, int col, char name) {
     cidades.emplace_back(row, col, name);
-    std::cout << "Cidade adicionada em (" << row << ", " << col << ")" << std::endl;
+    //cout << "Cidade adicionada em (" << row << ", " << col << ")" << endl;
+    buffer->setCursor(row, col);
+    buffer->writeChar(name);
+    buffer->setCursor(0, 0);
 }
 
 bool Mapa::isMontanha(int row, int col) const {
