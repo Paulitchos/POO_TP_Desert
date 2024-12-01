@@ -25,3 +25,5 @@ void Simulador::addMontanha(int row, int col) { mapa->addMontanha(row, col); }
 void Simulador::addCidade(int row, int col, char name) { mapa->addCidade(row, col, name); }
 
 bool Simulador::cidadeNameAvailable(char name) const { return mapa->cidadeNameAvailable(name); }
+
+bool Simulador::isMontanha(int row, int col) const { return mapa->isMontanha(row, col); }

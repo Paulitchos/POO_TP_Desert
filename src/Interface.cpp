@@ -46,7 +46,7 @@ bool Interface::readFromFile(std::string fileName) {
     }
 
     sim->iniciateMap();
-    string line;
+    string line, previousLine;
     int currentRow = 0;
 
     while (getline(file, line)) {
@@ -74,6 +74,27 @@ bool Interface::readFromFile(std::string fileName) {
                 sim->setMapCols(value);
             }
         } else if (!line.empty() && currentRow < sim->getMapRows()) {
+
+            if (line.size() != sim->getMapCols()) {
+                cout << "Erro: Linha " << currentRow + 1 << " nao tem o numero correto de colunas (" << sim->getMapCols() << ")" << endl;
+                file.close();
+                return false;
+            }
+
+            if (currentRow > 0) {
+                for (int col = 0; col < previousLine.size() && col < sim->getMapCols(); ++col) {
+                    char cell = previousLine[col];
+                    if (islower(cell)) { // It's a city
+                        if (line[col] != '+') {
+                            break;
+                        } else if (sim->isMontanha(currentRow - 1, col - 1) && sim->isMontanha(currentRow - 1, col + 1) && sim->isMontanha(currentRow - 2, col) && line[col] == '+') {
+                            cout << "Cidade na posicao " << currentRow - 1 << " " << col << " esta rodeada por montanhas" << endl;
+                            return false;
+                        }
+                    }
+                }
+            }
+
             for (int col = 0; col < line.size() && col < sim->getMapCols(); ++col) {
                 char cell = line[col];
                 if (cell == '+') {
@@ -91,8 +112,15 @@ bool Interface::readFromFile(std::string fileName) {
                     }
                 }
             }
+            previousLine = line;
             ++currentRow;
         }
+    }
+
+    if (currentRow != sim->getMapRows()) {
+        std::cout << "Erro: O numero de linhas no mapa nao corresponde a 'linhas'" << std::endl;
+        file.close();
+        return false;
     }
 
     sim->startBuffer();

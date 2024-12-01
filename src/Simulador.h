@@ -32,6 +32,8 @@ public:
     void addCidade(int row, int col, char name);
 
     bool cidadeNameAvailable(char name) const;
+
+    bool isMontanha(int row, int col) const;
 };
 
 
