@@ -17,11 +17,29 @@ public:
 
     int getMapRows() const;
 
-    int getMapCols() const;
-
     void setMapRows(int row);
 
+    int getMapCols() const;
+
     void setMapCols(int col);
+
+    void setMapCoins(int coins);
+
+    void setMapInsNewItem(int insNewItem);
+
+    void setMapDurItem(int durItem);
+
+    void setMapMaxItem(int maxItem);
+
+    void setMapSellMerch(int pSellMerch);
+
+    void setMapBuyMerch(int pBuyMerch);
+
+    void setMapPCaravan(int pCaravan);
+
+    void setMapInsNewBarb(int insNewBarb);
+
+    void setMapDurBarb(int durBarb);
 
     void startBuffer();
 

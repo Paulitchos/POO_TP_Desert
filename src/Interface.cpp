@@ -48,8 +48,7 @@ bool Interface::readFromFile(std::string fileName) {
     sim->iniciateMap();
     string line, previousLine;
     int currentRow = 0;
-    bool linhasSet = false;
-    bool colunasSet = false;
+    bool rowsSet, colsSet, coinsSet, insNewItemSet, durItemSet, maxItemSet, pSellMerchSet, pBuyMerchSet, pCaravanSet, insNewBarbSet, durBarbSet = false;
 
     while (getline(file, line)) {
         //cout << line << endl;
@@ -58,39 +57,149 @@ bool Interface::readFromFile(std::string fileName) {
         string key;
         int value;
 
-        // Extract the key (e.g., "linhas" or "colunas") and the value
         if (iss >> key >> value) {
             if (key == "linhas") {
-                if (linhasSet) {
-                    // Detect duplicate key
+                if (rowsSet) {
                     cout << "Erro: 'linhas' ja foi definido!" << endl;
                     file.close();
                     return false;
                 }
-
                 if (value <= 0) {
-                    cout << "Linhas tem que ser maior que 0" << endl;
+                    cout << "Linhas tem que ser maior que zero" << endl;
                     file.close();
                     return false;
                 }
-
                 sim->setMapRows(value);
-                linhasSet = true;
+                rowsSet = true;
             } else if (key == "colunas") {
-                if (colunasSet) {
-                    // Detect duplicate key
+                if (colsSet) {
                     cout << "Erro: 'colunas' ja foi definido!" << endl;
                     file.close();
                     return false;
                 }
                 if (value <= 0) {
-                    cout << "Colunas tem que ser maior que 0" << endl;
+                    cout << "Colunas tem que ser maior que zero" << endl;
                     file.close();
                     return false;
                 }
                 sim->setMapCols(value);
-                colunasSet = true;
+                colsSet = true;
                 sim->startBuffer();
+            } else if (key == "moedas") {
+                if (coinsSet) {
+                    cout << "Erro: 'moedas' ja foi definido!" << endl;
+                    file.close();
+                    return false;
+                }
+                if (value < 0) {
+                    cout << "Moedas tem que ser positivo ou zero" << endl;
+                    file.close();
+                    return false;
+                }
+                sim->setMapCoins(value);
+                coinsSet = true;
+            } else if (key == "instantes_entre_novos_itens") {
+                if (insNewItemSet) {
+                    cout << "Erro: 'instantes_entre_novos_itens' ja foi definido!" << endl;
+                    file.close();
+                    return false;
+                }
+                if (value <= 0) {
+                    cout << "Instantes entre novos itens tem que ser maior que zero" << endl;
+                    file.close();
+                    return false;
+                }
+                sim->setMapInsNewItem(value);
+                insNewItemSet = true;
+            } else if (key == "duração_item") {
+                if (durItemSet) {
+                    cout << "Erro: 'duração_item' ja foi definido!" << endl;
+                    file.close();
+                    return false;
+                }
+                if (value <= 0) {
+                    cout << "Duracao de items tem que ser maior que zero" << endl;
+                    file.close();
+                    return false;
+                }
+                sim->setMapDurItem(value);
+                durItemSet = true;
+            } else if (key == "max_itens") {
+                if (maxItemSet) {
+                    cout << "Erro: 'max_itens' ja foi definido!" << endl;
+                    file.close();
+                    return false;
+                }
+                if (value <= 0) {
+                    cout << "Quantidade maxima de items tem que ser maior que zero" << endl;
+                    file.close();
+                    return false;
+                }
+                sim->setMapMaxItem(value);
+                maxItemSet = true;
+            } else if (key == "preço_venda_mercadoria") {
+                if (pSellMerchSet) {
+                    cout << "Erro: 'preço_venda_mercadoria' ja foi definido!" << endl;
+                    file.close();
+                    return false;
+                }
+                if (value <= 0) {
+                    cout << "Preco de venda de mercadoria ficou no valor de omissao de 2" << endl;
+                    sim->setMapSellMerch(2);
+                }else
+                    sim->setMapSellMerch(value);
+                pSellMerchSet = true;
+            } else if (key == "preço_compra_mercadoria") {
+                if (pBuyMerchSet) {
+                    cout << "Erro: 'preço_compra_mercadoria' ja foi definido!" << endl;
+                    file.close();
+                    return false;
+                }
+                if (value <= 0) {
+                    cout << "Preco de compra de mercadoria ficou no valor de omissao de 1" << endl;
+                    sim->setMapBuyMerch(1);
+                } else
+                    sim->setMapBuyMerch(value);
+                pBuyMerchSet = true;
+            } else if (key == "preço_caravana") {
+                if(pCaravanSet) {
+                    cout << "Erro: 'preço_caravana' ja foi definido!" << endl;
+                    file.close();
+                    return false;
+                }
+                if (value <= 0) {
+                    cout << "Preco da caravana tem que ser maior que zero" << endl;
+                    file.close();
+                    return false;
+                }
+                sim->setMapPCaravan(value);
+                pCaravanSet = true;
+            } else if (key == "instantes_entre_novos_barbaros") {
+                if(insNewBarbSet) {
+                    cout << "Erro: 'instantes_entre_novos_barbaros' ja foi definido!" << endl;
+                    file.close();
+                    return false;
+                }
+                if (value <= 0) {
+                    cout << "Instantes entre barbaros tem que ser maior que zero" << endl;
+                    file.close();
+                    return false;
+                }
+                sim->setMapInsNewBarb(value);
+                insNewBarbSet = true;
+            } else if (key == "duração_barbaros") {
+                if(durBarbSet) {
+                    cout << "Erro: 'duração_barbaros' ja foi definido!" << endl;
+                    file.close();
+                    return false;
+                }
+                if (value <= 0) {
+                    cout << "Duracao dos barbaros tem que ser maior que zero" << endl;
+                    file.close();
+                    return false;
+                }
+                sim->setMapDurItem(value);
+                durBarbSet = true;
             }
         } else if (!line.empty() && currentRow < sim->getMapRows()) {
             if (line.size() != sim->getMapCols()) {

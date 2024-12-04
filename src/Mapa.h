@@ -30,6 +30,42 @@ public:
 
     void setCols(int cols);
 
+    int getCoins() const;
+
+    void setCoins(int coins);
+
+    int getInsNewItem() const;
+
+    void setInsNewItem(int insNewItem);
+
+    int getDurItem() const;
+
+    void setDurItem(int durItem);
+
+    int getMaxItem() const;
+
+    void setMaxItem(int maxItem);
+
+    int getSellMerch() const;
+
+    void setSellMerch(int sellMerch);
+
+    int getBuyMerch() const;
+
+    void setBuyMerch(int buyMerch);
+
+    int getPCaravan() const;
+
+    void setPCaravan(int pcaravan);
+
+    int getInsNewBarb() const;
+
+    void setInsNewBarb(int insNewBarb);
+
+    int getDurBarb() const;
+
+    void setDurBarb(int durBarb);
+
     void startBuffer();
 
     void imprimeBuffer() const;

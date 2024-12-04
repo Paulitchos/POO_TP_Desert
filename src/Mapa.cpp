@@ -20,6 +20,42 @@ int Mapa::getCols() const { return cols; }
 
 void Mapa::setCols(int cols) { this->cols = cols; }
 
+int Mapa::getCoins() const { return coins; }
+
+void Mapa::setCoins(int coins) { this->coins = coins; }
+
+int Mapa::getInsNewItem() const { return insNewItem; }
+
+void Mapa::setInsNewItem(int insNewItem) { this->insNewItem = insNewItem; }
+
+int Mapa::getDurItem() const { return durItem; }
+
+void Mapa::setDurItem(int durItem) { this->durItem = durItem; }
+
+int Mapa::getMaxItem() const { return maxItem; }
+
+void Mapa::setMaxItem(int maxItem) { this->maxItem = maxItem; }
+
+int Mapa::getSellMerch() const { return pSellMerch; }
+
+void Mapa::setSellMerch(int pSellMerch) { this->pSellMerch = pSellMerch; }
+
+int Mapa::getBuyMerch() const { return pBuyMerch; }
+
+void Mapa::setBuyMerch(int buyMerch) { this->pBuyMerch = buyMerch; }
+
+int Mapa::getPCaravan() const { return pCaravan; }
+
+void Mapa::setPCaravan(int pcaravan) { this->pCaravan = pcaravan; }
+
+int Mapa::getInsNewBarb() const { return insNewBarb; }
+
+void Mapa::setInsNewBarb(int insNewBarb) { this->insNewBarb = insNewBarb; }
+
+int Mapa::getDurBarb() const { return durBarb; }
+
+void Mapa::setDurBarb(int durBarb) { this->durBarb = durBarb; }
+
 void Mapa::startBuffer() {
     buffer = std::make_unique<Buffer>(rows, cols);
     //cout << "Buffer criado com sucesso: " << rows << "x" << cols << endl;

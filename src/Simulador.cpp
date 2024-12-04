@@ -10,11 +10,29 @@ void Simulador::iniciateMap() { mapa = std::make_unique<Mapa>(); }
 
 int Simulador::getMapRows() const { return mapa->getRows(); }
 
-int Simulador::getMapCols() const { return mapa->getCols(); }
-
 void Simulador::setMapRows(const int row) { mapa->setRows(row); }
 
+int Simulador::getMapCols() const { return mapa->getCols(); }
+
 void Simulador::setMapCols(const int col) { mapa->setCols(col); }
+
+void Simulador::setMapCoins(const int coins) { mapa->setCoins(coins); }
+
+void Simulador::setMapInsNewItem(const int insNewItem) { mapa->setInsNewItem(insNewItem); }
+
+void Simulador::setMapDurItem(int durItem) { mapa->setDurItem(durItem); }
+
+void Simulador::setMapMaxItem(int maxItem) { mapa->setMaxItem(maxItem); }
+
+void Simulador::setMapSellMerch(int pSellMerch) { mapa->setSellMerch(pSellMerch); }
+
+void Simulador::setMapBuyMerch(int pBuyMerch) { mapa->setBuyMerch(pBuyMerch); }
+
+void Simulador::setMapPCaravan(int pCaravan) { mapa->setPCaravan(pCaravan); }
+
+void Simulador::setMapInsNewBarb(int insNewBarb) { mapa->setInsNewBarb(insNewBarb); }
+
+void Simulador::setMapDurBarb(int durBarb) { mapa->setDurBarb(durBarb); }
 
 void Simulador::startBuffer() { mapa->startBuffer(); }
 
