@@ -45,6 +45,8 @@ public:
 
     void setMapDurBarb(int durBarb);
 
+    void showMapDetails() const;
+
     void startBuffer();
 
     void imprimeBuffer() const;

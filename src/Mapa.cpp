@@ -6,7 +6,7 @@ Mapa::Mapa()
     : rows(0), cols(0), coins(0),
       insNewItem(0), durItem(0), maxItem(0),
       pSellMerch(0), pBuyMerch(0), pCaravan(0),
-      insNewBarb(0), durBarb(0), buffer(nullptr) {
+      insNewBarb(0), durBarb(0), turn(0), buffer(nullptr) {
 }
 
 Mapa::~Mapa() {
@@ -55,6 +55,16 @@ void Mapa::setInsNewBarb(int insNewBarb) { this->insNewBarb = insNewBarb; }
 int Mapa::getDurBarb() const { return durBarb; }
 
 void Mapa::setDurBarb(int durBarb) { this->durBarb = durBarb; }
+
+int Mapa::getTurn() const { return turn; }
+
+void Mapa::setTurn(int turn) { this->turn = turn; }
+
+void Mapa::showDetails() const {
+    cout << endl << endl << "*** MAPA ***" << endl << endl;
+    cout << "Linhas: " << rows << " Colunas: " << cols
+    << "\nTurno: " << turn << " Cidades: " << cidades.size() << endl;
+}
 
 void Mapa::startBuffer() {
     buffer = std::make_unique<Buffer>(rows, cols);

@@ -41,7 +41,8 @@ bool Interface::iniciateSimulation() {
     }
 
     loadCommands();
-    helpCommands();
+    //helpCommands();
+    sim->showMapDetails();
 
     while (true) {
         cout << "> ";
@@ -322,3 +323,5 @@ vector<string> Interface::split(const string &s, char c) {
 
     return result;
 }
+
+void Interface::showMapDetails() { sim->showMapDetails(); }

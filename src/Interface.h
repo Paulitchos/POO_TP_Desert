@@ -28,6 +28,8 @@ public:
     void helpCommands() const;
 
     std::vector<std::string> split(const std::string &s, char c);
+
+    void showMapDetails();
 };
 
 

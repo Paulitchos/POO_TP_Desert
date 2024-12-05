@@ -38,6 +38,8 @@ void Simulador::setMapInsNewBarb(int insNewBarb) { mapa->setInsNewBarb(insNewBar
 
 void Simulador::setMapDurBarb(int durBarb) { mapa->setDurBarb(durBarb); }
 
+void Simulador::showMapDetails() const { mapa->showDetails(); }
+
 void Simulador::startBuffer() { mapa->startBuffer(); }
 
 void Simulador::imprimeBuffer() const { mapa->imprimeBuffer(); }

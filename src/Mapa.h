@@ -12,7 +12,8 @@
 
 class Mapa {
     int rows, cols, coins,
-            insNewItem, durItem, maxItem, pSellMerch, pBuyMerch, pCaravan, insNewBarb, durBarb;
+            insNewItem, durItem, maxItem, pSellMerch, pBuyMerch,
+            pCaravan, insNewBarb, durBarb, turn;
     std::unique_ptr<Buffer> buffer;
     std::vector<Montanha> montanhas;
     std::vector<Cidade> cidades;
@@ -65,6 +66,12 @@ public:
     int getDurBarb() const;
 
     void setDurBarb(int durBarb);
+
+    int getTurn() const;
+
+    void setTurn(int turn);
+
+    void showDetails() const;
 
     void startBuffer();
 
