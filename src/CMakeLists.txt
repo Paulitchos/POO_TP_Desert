@@ -15,4 +15,6 @@ add_executable(src main.cpp
         Montanha.cpp
         Montanha.h
         Cidade.cpp
-        Cidade.h)
+        Cidade.h
+        Comando.cpp
+        Comando.h)
