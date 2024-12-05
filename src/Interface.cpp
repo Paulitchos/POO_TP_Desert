@@ -7,34 +7,63 @@ Interface::Interface(Simulador &s) : sim(&s) {
 
 
 bool Interface::iniciateSimulation() {
-    string command1, command2;
+    string input;
+    vector<string> inputs;
     cout << "Para iniciar o mapa use o comando: config <nomeFicheiro>" << endl;
     cout << "Se quiser sair do programa, utilize comando: sair" << endl;
 
     while (true) {
         cout << "> ";
-        cin >> command1;
+        getline(cin, input);
         cout << endl;
-        if (command1 == "sair") {
+
+        if (input.size() < 1) {
+            cout << "Comando invalido!" << endl << endl;
+            continue;
+        }
+
+        inputs = split(input, ' ');
+
+        if (inputs[0] == "sair") {
             cout << "Fechar programa..." << endl;
             return false;
         }
 
-        if (cin.peek() != '\n') {
-            cin >> command2;
-        } else {
-            command2.clear();
-        }
-
-        if (command1 == "config" && !command2.empty()) {
-            if (readFromFile(command2)) {
-                cout << "\nMapa lido com sucesso" << endl;
-                return true;
+        if (inputs[0] == "config" && inputs.size() > 1) {
+            if (readFromFile(inputs[1])) {
+                cout << "\nMapa lido com sucesso" << endl << endl;
+                break;
             }
             return false;
         }
+
         cout << "Comando invalido" << endl;
     }
+
+    loadCommands();
+    helpCommands();
+
+    while (true) {
+        cout << "> ";
+
+        getline(cin, input);
+
+        if (input.size() < 1) {
+            cout << "Comando invalido!" << endl << endl;
+            continue;
+        }
+
+        inputs = split(input, ' ');
+
+        auto it = commands.find(inputs[0]);
+        if (it != commands.end()) {// Read the rest of the line as arguments
+            it->second->execute(input);
+        } else {
+            std::cout << "Comando inválido: " << input << std::endl;
+        }
+    }
+
+    return true;
 }
 
 bool Interface::readFromFile(std::string fileName) {
@@ -48,7 +77,9 @@ bool Interface::readFromFile(std::string fileName) {
     sim->iniciateMap();
     string line, previousLine;
     int currentRow = 0;
-    bool rowsSet, colsSet, coinsSet, insNewItemSet, durItemSet, maxItemSet, pSellMerchSet, pBuyMerchSet, pCaravanSet, insNewBarbSet, durBarbSet = false;
+    bool rowsSet = false, colsSet = false, coinsSet = false, insNewItemSet = false, durItemSet = false,
+     maxItemSet = false, pSellMerchSet = false, pBuyMerchSet = false, pCaravanSet = false,
+     insNewBarbSet = false, durBarbSet = false;
 
     while (getline(file, line)) {
         //cout << line << endl;
@@ -259,4 +290,35 @@ bool Interface::readFromFile(std::string fileName) {
     file.close();
 
     return true;
+}
+
+void Interface::loadCommands() {
+    commands["prox"] = std::make_unique<ComandoProx>();
+    commands["precos"] = std::make_unique<ComandoPrecos>(sim->getMapSellMerch(), sim->getMapBuyMerch());
+}
+
+void Interface::helpCommands() const {
+    cout << "Lista de comandos disponiveis:\n";
+    for (const auto& commandPair : commands) {
+        std::cout << commandPair.second->getAsString() << "\n\n";  // Call getAsString on each command
+    }
+}
+
+vector<string> Interface::split(const string &s, char c) {
+    vector<string> result;
+    stringstream ss(s);
+    string item;
+
+    bool flag;
+    while (getline(ss, item, c)) {
+        flag = false;
+        for (char temp : item)
+            if (temp != ' ')
+                flag = true;
+
+        if (flag)
+            result.push_back(item);
+    }
+
+    return result;
 }

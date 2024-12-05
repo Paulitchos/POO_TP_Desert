@@ -24,7 +24,11 @@ void Simulador::setMapDurItem(int durItem) { mapa->setDurItem(durItem); }
 
 void Simulador::setMapMaxItem(int maxItem) { mapa->setMaxItem(maxItem); }
 
+int Simulador::getMapSellMerch() const { return mapa->getSellMerch(); }
+
 void Simulador::setMapSellMerch(int pSellMerch) { mapa->setSellMerch(pSellMerch); }
+
+int Simulador::getMapBuyMerch() const { return mapa->getBuyMerch(); }
 
 void Simulador::setMapBuyMerch(int pBuyMerch) { mapa->setBuyMerch(pBuyMerch); }
 

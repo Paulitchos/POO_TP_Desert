@@ -3,21 +3,27 @@
 
 #include <string>
 #include <sstream>
+#include <vector>
 
 class Comando {
     std::string nome, descr, args;
 
 public:
-    Comando(std::string n, std::string d, std::string a);
+    Comando(std::string n, std::string d, std::string args = "");
+
+    virtual ~Comando() = default;
 
     std::string getNome() const;
 
     std::string getDescr() const;
 
-    std::string getArgs() const;
+    virtual std::string getAsString() const;
 
-    std::string Comando::getAsString() const;
+    virtual void execute(const std::string& args = "") const = 0;
 
+    std::vector<std::string> split(const std::string &s, char c) const;
+
+    bool isNumeric(const std::string& str) const;
 };
 
 

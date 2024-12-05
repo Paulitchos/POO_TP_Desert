@@ -17,4 +17,8 @@ add_executable(src main.cpp
         Cidade.cpp
         Cidade.h
         Comando.cpp
-        Comando.h)
+        Comando.h
+        ComandoProx.cpp
+        ComandoProx.h
+        ComandoPrecos.cpp
+        ComandoPrecos.h)

@@ -31,7 +31,11 @@ public:
 
     void setMapMaxItem(int maxItem);
 
+    int getMapSellMerch() const;
+
     void setMapSellMerch(int pSellMerch);
+
+    int getMapBuyMerch() const;
 
     void setMapBuyMerch(int pBuyMerch);
 
