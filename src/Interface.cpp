@@ -58,7 +58,7 @@ bool Interface::iniciateSimulation() {
 
         auto it = commands.find(inputs[0]);
         if (it != commands.end()) {// Read the rest of the line as arguments
-            it->second->execute(input);
+            it->second->execute(input,*sim);
         } else {
             std::cout << "Comando inválido: " << input << std::endl;
         }

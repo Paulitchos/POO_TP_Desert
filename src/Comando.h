@@ -5,6 +5,8 @@
 #include <sstream>
 #include <vector>
 
+#include "Simulador.h"
+
 class Comando {
     std::string nome, descr, args;
 
@@ -19,7 +21,7 @@ public:
 
     virtual std::string getAsString() const;
 
-    virtual void execute(const std::string& args = "") const = 0;
+    virtual void execute(const std::string& args = "", Simulador &sim) const = 0;
 
     std::vector<std::string> split(const std::string &s, char c) const;
 
