@@ -63,7 +63,7 @@ void Mapa::setTurn(int turn) { this->turn = turn; }
 void Mapa::showDetails() const {
     cout << endl << endl << "*** MAPA ***" << endl << endl;
     cout << "Linhas: " << rows << " Colunas: " << cols
-    << "\nTurno: " << turn << " Cidades: " << cidades.size() << endl;
+    << "\nTurno: " << turn << " Cidades: " << cidades.size() << endl << endl;
 }
 
 void Mapa::startBuffer() {

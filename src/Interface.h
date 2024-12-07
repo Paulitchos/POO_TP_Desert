@@ -15,13 +15,18 @@
 class Interface {
     Simulador *sim;
     std::map<std::string, std::unique_ptr<Comando>> commands;
+    int proxFase;
 
 public:
     Interface(Simulador &s);
 
+    void startSimulation();
+
     bool iniciateSimulation();
 
-    bool readFromFile(std::string filename);
+    bool readMapFromFile(std::string filename);
+
+    int askCommands();
 
     void loadCommands();
 

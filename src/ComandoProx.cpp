@@ -14,7 +14,7 @@ bool ComandoProx::setInstantes(int n) {
     return true;
 }
 
-void ComandoProx::execute(const string& args) const {
+void ComandoProx::execute(const string& args, Simulador &sim) const {
     vector<string> inputs;
 
     inputs = split(args, ' ');
