@@ -7,12 +7,9 @@
 #include "Comando.h"
 
 class ComandoProx : public Comando {
-    int instants;
 
 public:
     ComandoProx();
-
-    bool setInstantes(int n);
 
     void execute(const std::string& args = "", Simulador &sim) const override;
 };
