@@ -14,7 +14,7 @@ bool ComandoProx::setInstantes(int n) {
     return true;
 }
 
-void ComandoProx::execute(const string& args, Simulador &sim) const {
+void ComandoProx::execute(const string& args, Simulador &sim) {
     vector<string> inputs;
 
     inputs = split(args, ' ');
@@ -28,6 +28,5 @@ void ComandoProx::execute(const string& args, Simulador &sim) const {
         cout << "argumento <n> precisa de ser um numero inteiro!!" << endl;
         return;
     }
-
 }
 

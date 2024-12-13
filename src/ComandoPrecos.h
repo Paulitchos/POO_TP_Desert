@@ -13,7 +13,7 @@ class ComandoPrecos : public Comando {
     public:
         ComandoPrecos(int pSellMerch, int pBuyMerch);
 
-        void execute(const std::string& args, Simulador &sim) const override;
+        void execute(const std::string& args , Simulador &sim) override;
 };
 
 

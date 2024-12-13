@@ -66,11 +66,7 @@ void Mapa::showDetails() const {
     << "\nTurno: " << turn << " Cidades: " << cidades.size() << endl << endl;
 }
 
-void Mapa::startBuffer() {
-    buffer = std::make_unique<Buffer>(rows, cols);
-    //cout << "Buffer criado com sucesso: " << rows << "x" << cols << endl;
-
-}
+void Mapa::startBuffer() { buffer = std::make_unique<Buffer>(rows, cols); }
 
 void Mapa::imprimeBuffer() const {
     if (buffer != nullptr) {

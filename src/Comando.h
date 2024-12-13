@@ -21,7 +21,7 @@ public:
 
     virtual std::string getAsString() const;
 
-    virtual void execute(const std::string& args, Simulador& sim) const = 0;
+    virtual void execute(const std::string& args, Simulador& sim) = 0;
 
     std::vector<std::string> split(const std::string &s, char c) const;
 

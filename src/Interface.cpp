@@ -14,6 +14,9 @@ void Interface::startSimulation() {
             case 0:
                 this->proxFase = askCommands();
                 break;
+            case 1:
+                cout << "faz algo diferente";
+                break;
             default:
                 cout << "Algo de inesperado aconteceu!" << endl;
         }
