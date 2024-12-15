@@ -61,9 +61,9 @@ int Mapa::getTurn() const { return turn; }
 void Mapa::setTurn(int turn) { this->turn = turn; }
 
 void Mapa::showDetails() const {
-    cout << endl << endl << "*** MAPA ***" << endl << endl;
+    cout << "*** Detalhes ***" << endl << endl;
     cout << "Linhas: " << rows << " Colunas: " << cols
-            << "\nTurno: " << turn << " Cidades: " << cidades.size() << endl << endl;
+            << "\nTurno: " << turn << " || Cidades: " << cidades.size() << " || Caravanas: " << caravanas.size() << endl << endl;
 }
 
 void Mapa::startBuffer() { buffer = std::make_unique<Buffer>(rows, cols); }
@@ -101,8 +101,29 @@ bool Mapa::isMontanha(int row, int col) const {
 }
 
 bool Mapa::cidadeNameAvailable(char name) const {
-    for (const Cidade &cidade: cidades) {
+    for (const auto &cidade: cidades) {
         if (cidade.getName() == name) {
+            return false;
+        }
+    }
+    return true;
+}
+
+void Mapa::addCaravanaInicial(int row, int col, char id) {
+    if(id == '!')
+        caravanas.emplace_back(std::make_shared<Barbaros>(row, col, id, getDurBarb()));
+    else {
+        caravanas.emplace_back(std::make_shared<Comercio>(row, col, id));
+    }
+    //cout << "Caravana adicionada em (" << row << ", " << col << ")" << endl;
+    buffer->setCursor(row, col);
+    buffer->writeChar(id);
+    buffer->setCursor(0, 0);
+}
+
+bool Mapa::caravaNameAvailable(int caravanaID) const {
+    for (const auto &caravana: caravanas) {
+        if (caravana->getID() == caravanaID) {
             return false;
         }
     }

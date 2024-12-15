@@ -5,10 +5,10 @@ using namespace std;
 int Comercio::turnos = 5;
 
 void Comercio::perdeAgua() {
-    if (getnPessoas() == 0)
+    if (getNPessoas() == 0)
         return;
 
-    if (getnPessoas() < getmaxPessoas() / 2)
+    if (getNPessoas() < getmaxPessoas() / 2)
         removerAgua(1);
 
     removerAgua(2);
@@ -66,11 +66,11 @@ void Comercio::semTripulantes() {
 bool Comercio::verificaContinuidade() {
     if (!getAutoPilot()) {
         if (!getRandomMode()) {
-            if (getnPessoas() == 0) {
+            if (getNPessoas() == 0) {
                 semTripulantes();
                 setRandomMode();
             } else {
-                removerAgua(getnPessoas() * 0.25);
+                removerAgua(getNPessoas() * 0.25);
                 if (getnivelAgua() == 0)
                     removePessoas(1);
             }
@@ -83,7 +83,7 @@ bool Comercio::verificaContinuidade() {
             }
         }
     } else {
-        removerAgua(getnPessoas() * 0.25);
+        removerAgua(getNPessoas() * 0.25);
         if (getnivelAgua() == 0)
             removePessoas(1);
     }

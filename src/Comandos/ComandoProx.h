@@ -1,9 +1,6 @@
 #ifndef COMANDOPROX_H
 #define COMANDOPROX_H
 
-#include <iostream>
-#include <cctype>
-
 #include "Comando.h"
 
 class ComandoProx : public Comando {

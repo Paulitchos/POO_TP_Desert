@@ -5,7 +5,7 @@
 
 class Comercio : public Caravana {
 public:
-    Comercio() : Caravana(20, 30, 200, 2, 40, true) {}
+    Comercio(int row, int col, int id) : Caravana(row, col, id, 20, 30, 200, 2, 40, true) {}
 
     void perdeAgua();
     std::string showInfo() const override;

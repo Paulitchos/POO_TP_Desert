@@ -5,7 +5,7 @@ using namespace std;
 int Militar::turnos = 7;
 
 void Militar::perdeAgua() {
-    if (getnPessoas() < getmaxPessoas() / 2)
+    if (getNPessoas() < getmaxPessoas() / 2)
         removerAgua(1);
 
     removerAgua(3);
@@ -22,7 +22,7 @@ bool Militar::tempestade() {
     srand(time(0));
     int randomDead;
 
-    setPessoas(getnPessoas() - getnPessoas()*0.1);
+    setNPessoas(getNPessoas() - getNPessoas()*0.1);
 
     if (getMercadoria() > getMaxMercadoria()/2) {
         randomDead = rand() % 3 + 1;
@@ -53,11 +53,11 @@ void Militar::semTripulantes() {
 bool Militar::verificaContinuidade() {
     if (!getAutoPilot()) {
         if (!getRandomMode()) {
-            if (getnPessoas() == 0) {
+            if (getNPessoas() == 0) {
                 semTripulantes();
                 //mesma direção
             } else {
-                removerAgua(getnPessoas() * 0.5);
+                removerAgua(getNPessoas() * 0.5);
                 if (getnivelAgua() == 0)
                     removePessoas(1);
             }
@@ -70,7 +70,7 @@ bool Militar::verificaContinuidade() {
             }
         }
     } else {
-        removerAgua(getnPessoas() * 0.5);
+        removerAgua(getNPessoas() * 0.5);
         if (getnivelAgua() == 0)
             removePessoas(1);
     }

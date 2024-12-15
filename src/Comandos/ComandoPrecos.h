@@ -1,11 +1,7 @@
-//
-// Created by Paulitchos on 05-12-24.
-//
-
 #ifndef COMANDOPRECOS_H
 #define COMANDOPRECOS_H
-#include "Comando.h"
 
+#include "Comando.h"
 
 class ComandoPrecos : public Comando {
     int pSellMerch, pBuyMerch;

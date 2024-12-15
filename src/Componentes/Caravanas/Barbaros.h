@@ -5,13 +5,19 @@
 
 class Barbaros : public Caravana {
 public:
-    Barbaros() : Caravana(40, 80, -1, -1, -1, false), lifeTime (60) {}
+    Barbaros(int row, int col, char id, int lifeTime) : Caravana(row, col, id, 40, 80, -1, -1, -1, false), lifeTime (lifeTime) {}
 
-    std::string showInfo() const override;
-    bool tempestade() override;
     //reduzir o tempo de vida a cada turno
 
     int getLifetime() const;
+
+    std::string showInfo() const override;
+    bool tempestade() override;
+
+    //verificar
+    void move() override;
+    void semTripulantes() override;
+    bool verificaContinuidade() override;
 private:
     bool vidaInfinita = false;
     int lifeTime;

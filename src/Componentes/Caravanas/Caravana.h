@@ -8,14 +8,14 @@
 
 class Caravana {
 public:
-    Caravana(int nPessoas, int maxPessoas, int maxAgua,
+    Caravana(int row, int col, char id, int nPessoas, int maxPessoas, int maxAgua,
              int maxJogadasPTurno,
              double maxMercadoria, bool controlavel);
 
     ~Caravana();
 
     //PESSOAS
-    int getnPessoas() const;
+    int getNPessoas() const;
 
     int getmaxPessoas() const;
 
@@ -23,7 +23,7 @@ public:
 
     void removePessoas(int pessoasARemover);
 
-    void setPessoas(int numeroPessoas);
+    void setNPessoas(int numeroPessoas);
 
     //AGUA
     int getnivelAgua() const;
@@ -38,9 +38,9 @@ public:
     void abastecerAgua();
 
     //ID
-    int getID() const;
+    char getID() const;
 
-    void setID(int newID);
+    void setID(char newID);
 
     //MERCADORIA
     int getMercadoria() const;
@@ -95,9 +95,10 @@ public:
     virtual std::string showInfo() const;
 
 private:
-    int caravanaID;
+    char caravanaID;
     static int preco;
 
+    int row, col;
     int nPessoas, maxPessoas;
     int nivelAgua, maxAgua;
     double nMercadoria, maxMercadoria;

@@ -51,3 +51,7 @@ void Simulador::addCidade(int row, int col, char name) { mapa->addCidade(row, co
 bool Simulador::cidadeNameAvailable(char name) const { return mapa->cidadeNameAvailable(name); }
 
 bool Simulador::isMontanha(int row, int col) const { return mapa->isMontanha(row, col); }
+
+void Simulador::addCaravanaInicial(int row, int col, char id) { mapa->addCaravanaInicial(row, col, id); }
+
+bool Simulador::caravaNameAvailable(int caravanaID) const { return mapa->caravaNameAvailable(caravanaID); }

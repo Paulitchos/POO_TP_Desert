@@ -6,9 +6,9 @@ using namespace std;
 
 int Caravana::preco = 100;
 
-Caravana::Caravana(int nPessoas, int maxPessoas, int maxAgua,
+Caravana::Caravana(int row, int col, char id, int nPessoas, int maxPessoas, int maxAgua,
                    int maxJogadasPTurno, double maxMercadoria, bool controlavel)
-        : nPessoas(nPessoas), maxPessoas(maxPessoas), maxAgua(maxAgua),
+        : row(row), col(col), caravanaID(id) , nPessoas(nPessoas), maxPessoas(maxPessoas), maxAgua(maxAgua),
           maxJogadasPTurno(maxJogadasPTurno), maxMercadoria(maxMercadoria), controlavel(controlavel) {}
 
 Caravana::~Caravana() {
@@ -16,7 +16,7 @@ Caravana::~Caravana() {
 }
 
 // ------- PESSOAS
-int Caravana::getnPessoas() const {
+int Caravana::getNPessoas() const {
     return nPessoas;
 }
 
@@ -25,26 +25,26 @@ int Caravana::getmaxPessoas() const {
 }
 
 void Caravana::adicionaPessoas(int pessoasAAdicionar) {
-    if (getnPessoas() + pessoasAAdicionar > getmaxPessoas()) {
+    if (getNPessoas() + pessoasAAdicionar > getmaxPessoas()) {
         cout << "Caravana cheia de pessoas!" << endl;
         return;
     }
 
-    setPessoas(getnPessoas() + pessoasAAdicionar);
+    setNPessoas(getNPessoas() + pessoasAAdicionar);
 }
 
 void Caravana::removePessoas(int pessoasARemover) {
-    if (getnPessoas() - pessoasARemover < 0) {
-        setPessoas(0);
+    if (getNPessoas() - pessoasARemover < 0) {
+        setNPessoas(0);
 
         cout << "Caravana sem pessoas!" << endl;
         return;
     }
 
-    setPessoas(getnPessoas() - pessoasARemover);
+    setNPessoas(getNPessoas() - pessoasARemover);
 }
 
-void Caravana::setPessoas(int numeroPessoas) {
+void Caravana::setNPessoas(int numeroPessoas) {
     nPessoas = numeroPessoas;
 }
 
@@ -79,11 +79,11 @@ void Caravana::abastecerAgua() {
 }
 
 //ID
-int Caravana::getID() const {
+char Caravana::getID() const {
     return caravanaID;
 }
 
-void Caravana::setID(int newID) {
+void Caravana::setID(char newID) {
     caravanaID = newID;
 }
 

@@ -261,11 +261,18 @@ bool Interface::readMapFromFile(std::string fileName) {
                     sim->addMontanha(currentRow, col);
                 } else if (islower(cell)) {
                     //cout << "Cidade encontrada em (" << currentRow << ", " << col << ")" << endl;
-
                     if (sim->cidadeNameAvailable(cell)) {
                         sim->addCidade(currentRow, col, cell);
                     } else {
                         cout << "Nome de cidade ja esta a ser utilizado!" << endl;
+                        file.close();
+                        return false;
+                    }
+                } else if (isdigit(cell) || cell == '!') {
+                    if (sim->caravaNameAvailable(cell)) {
+                        sim->addCaravanaInicial(currentRow, col, cell);
+                    } else {
+                        cout << "Id da caravana ja esta a ser utilizado!" << endl;
                         file.close();
                         return false;
                     }

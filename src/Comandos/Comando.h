@@ -4,6 +4,8 @@
 #include <string>
 #include <sstream>
 #include <vector>
+#include <iostream>
+#include <cctype>
 
 #include "../Componentes/Simulador.h"
 

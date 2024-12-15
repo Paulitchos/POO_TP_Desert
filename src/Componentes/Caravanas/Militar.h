@@ -4,7 +4,7 @@
 #include "Caravana.h"
 class Militar : public Caravana {
 public:
-    Militar() : Caravana(20, 40, 400, 3, 5, true) {}
+    Militar(int row, int col, char id) : Caravana(row, col, id, 20, 40, 400, 3, 5, true) {}
 
     void perdeAgua();
     std::string showInfo() const override;

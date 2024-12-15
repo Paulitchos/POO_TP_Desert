@@ -2,11 +2,17 @@
 #define MAPA_H
 
 #include <iostream>
+#include <memory>
 #include <string>
 #include <sstream>
 #include <memory>
 #include <vector>
 #include "../Interface/Buffer.h"
+
+#include "Caravanas/Caravana.h"
+#include "Caravanas/Comercio.h"
+#include "Caravanas/Barbaros.h"
+
 #include "Montanha/Montanha.h"
 #include "Cidade/Cidade.h"
 
@@ -17,6 +23,7 @@ class Mapa {
     std::unique_ptr<Buffer> buffer;
     std::vector<Montanha> montanhas;
     std::vector<Cidade> cidades;
+    std::vector<std::shared_ptr<Caravana>> caravanas;
 
 public:
     Mapa();
@@ -84,6 +91,10 @@ public:
     bool isMontanha(int row, int col) const;
 
     bool cidadeNameAvailable(char name) const;
+
+    void addCaravanaInicial(int row, int col, char id);
+
+    bool caravaNameAvailable(int caravanaID) const;
 };
 
 #endif //MAPA_H

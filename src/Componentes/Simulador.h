@@ -58,6 +58,10 @@ public:
     bool cidadeNameAvailable(char name) const;
 
     bool isMontanha(int row, int col) const;
+
+    void addCaravanaInicial(int row, int col, char id);
+
+    bool caravaNameAvailable(int caravanaID) const;
 };
 
 
