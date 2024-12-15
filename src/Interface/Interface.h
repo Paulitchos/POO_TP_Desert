@@ -8,13 +8,13 @@
 #include <map>
 #include <vector>
 
-#include "Simulador.h"
-#include "ComandoPrecos.h"
-#include "ComandoProx.h"
+#include "../Componentes/Simulador.h"
+#include "../Comandos/ComandoPrecos.h"
+#include "../Comandos/ComandoProx.h"
 
 class Interface {
     Simulador *sim;
-    std::map<std::string, std::unique_ptr<Comando>> commands;
+    std::map<std::string, std::unique_ptr<Comando> > commands;
     int proxFase;
 
 public:

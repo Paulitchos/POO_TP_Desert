@@ -63,7 +63,7 @@ void Mapa::setTurn(int turn) { this->turn = turn; }
 void Mapa::showDetails() const {
     cout << endl << endl << "*** MAPA ***" << endl << endl;
     cout << "Linhas: " << rows << " Colunas: " << cols
-    << "\nTurno: " << turn << " Cidades: " << cidades.size() << endl << endl;
+            << "\nTurno: " << turn << " Cidades: " << cidades.size() << endl << endl;
 }
 
 void Mapa::startBuffer() { buffer = std::make_unique<Buffer>(rows, cols); }
@@ -92,7 +92,7 @@ void Mapa::addCidade(int row, int col, char name) {
 
 bool Mapa::isMontanha(int row, int col) const {
     // Check if a mountain exists at the specified position
-    for (const Montanha& montanha : montanhas) {
+    for (const Montanha &montanha: montanhas) {
         if (montanha.getRow() == row && montanha.getCol() == col) {
             return true;
         }
@@ -100,8 +100,8 @@ bool Mapa::isMontanha(int row, int col) const {
     return false;
 }
 
-bool Mapa::cidadeNameAvailable(char name) const{
-    for (const Cidade& cidade : cidades) {
+bool Mapa::cidadeNameAvailable(char name) const {
+    for (const Cidade &cidade: cidades) {
         if (cidade.getName() == name) {
             return false;
         }

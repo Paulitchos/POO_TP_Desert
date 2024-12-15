@@ -3,7 +3,8 @@
 using namespace std;
 
 ComandoProx::ComandoProx()
-    : Comando("prox", "Avancar instantes", "<n"), instants(1) {}
+    : Comando("prox", "Avancar instantes", "<n"), instants(1) {
+}
 
 bool ComandoProx::setInstantes(int n) {
     if (n <= 0) {
@@ -14,7 +15,7 @@ bool ComandoProx::setInstantes(int n) {
     return true;
 }
 
-void ComandoProx::execute(const string& args, Simulador &sim) {
+void ComandoProx::execute(const string &args, Simulador &sim) {
     vector<string> inputs;
 
     inputs = split(args, ' ');
@@ -29,4 +30,3 @@ void ComandoProx::execute(const string& args, Simulador &sim) {
         return;
     }
 }
-

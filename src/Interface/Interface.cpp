@@ -2,14 +2,14 @@
 
 using namespace std;
 
-Interface::Interface(Simulador &s) : sim(&s) {  }
+Interface::Interface(Simulador &s) : sim(&s) {
+}
 
 void Interface::startSimulation() {
     sim->showMapDetails();
     this->proxFase = 0;
 
     while (true) {
-
         switch (this->proxFase) {
             case 0:
                 this->proxFase = askCommands();
@@ -20,7 +20,6 @@ void Interface::startSimulation() {
             default:
                 cout << "Algo de inesperado aconteceu!" << endl;
         }
-
     }
 }
 
@@ -76,8 +75,8 @@ bool Interface::readMapFromFile(std::string fileName) {
     string line, previousLine;
     int currentRow = 0;
     bool rowsSet = false, colsSet = false, coinsSet = false, insNewItemSet = false, durItemSet = false,
-     maxItemSet = false, pSellMerchSet = false, pBuyMerchSet = false, pCaravanSet = false,
-     insNewBarbSet = false, durBarbSet = false;
+            maxItemSet = false, pSellMerchSet = false, pBuyMerchSet = false, pCaravanSet = false,
+            insNewBarbSet = false, durBarbSet = false;
 
     while (getline(file, line)) {
         //cout << line << endl;
@@ -175,7 +174,7 @@ bool Interface::readMapFromFile(std::string fileName) {
                 if (value <= 0) {
                     cout << "Preco de venda de mercadoria ficou no valor de omissao de 2" << endl;
                     sim->setMapSellMerch(2);
-                }else
+                } else
                     sim->setMapSellMerch(value);
                 pSellMerchSet = true;
             } else if (key == "preço_compra_mercadoria") {
@@ -191,7 +190,7 @@ bool Interface::readMapFromFile(std::string fileName) {
                     sim->setMapBuyMerch(value);
                 pBuyMerchSet = true;
             } else if (key == "preço_caravana") {
-                if(pCaravanSet) {
+                if (pCaravanSet) {
                     cout << "Erro: 'preço_caravana' ja foi definido!" << endl;
                     file.close();
                     return false;
@@ -204,7 +203,7 @@ bool Interface::readMapFromFile(std::string fileName) {
                 sim->setMapPCaravan(value);
                 pCaravanSet = true;
             } else if (key == "instantes_entre_novos_barbaros") {
-                if(insNewBarbSet) {
+                if (insNewBarbSet) {
                     cout << "Erro: 'instantes_entre_novos_barbaros' ja foi definido!" << endl;
                     file.close();
                     return false;
@@ -217,7 +216,7 @@ bool Interface::readMapFromFile(std::string fileName) {
                 sim->setMapInsNewBarb(value);
                 insNewBarbSet = true;
             } else if (key == "duração_barbaros") {
-                if(durBarbSet) {
+                if (durBarbSet) {
                     cout << "Erro: 'duração_barbaros' ja foi definido!" << endl;
                     file.close();
                     return false;
@@ -306,10 +305,11 @@ int Interface::askCommands() {
     inputs = split(input, ' ');
 
     auto it = commands.find(inputs[0]);
-    if (it != commands.end()) {// Read the rest of the line as arguments
-        it->second->execute(input,*sim);
+    if (it != commands.end()) {
+        // Read the rest of the line as arguments
+        it->second->execute(input, *sim);
     } else {
-        std::cout << "Comando inválido: " << input << std::endl;
+        std::cout << "Comando invalido: " << input << std::endl;
         return 0;
     }
 
@@ -326,8 +326,8 @@ void Interface::loadCommands() {
 
 void Interface::helpCommands() const {
     cout << "Lista de comandos disponiveis:\n";
-    for (const auto& commandPair : commands) {
-        std::cout << commandPair.second->getAsString() << "\n\n";  // Call getAsString on each command
+    for (const auto &commandPair: commands) {
+        std::cout << commandPair.second->getAsString() << "\n\n"; // Call getAsString on each command
     }
 }
 
@@ -339,7 +339,7 @@ vector<string> Interface::split(const string &s, char c) {
     bool flag;
     while (getline(ss, item, c)) {
         flag = false;
-        for (char temp : item)
+        for (char temp: item)
             if (temp != ' ')
                 flag = true;
 
@@ -351,7 +351,3 @@ vector<string> Interface::split(const string &s, char c) {
 }
 
 void Interface::showMapDetails() { sim->showMapDetails(); }
-
-
-
-

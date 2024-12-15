@@ -2,7 +2,8 @@
 
 using namespace std;
 
-Comando::Comando(string n, string d, string args) : nome(n), descr(d), args(args)  {}
+Comando::Comando(string n, string d, string args) : nome(n), descr(d), args(args) {
+}
 
 string Comando::getNome() const { return nome; }
 
@@ -23,7 +24,7 @@ vector<string> Comando::split(const string &s, char c) const {
     bool flag;
     while (getline(ss, item, c)) {
         flag = false;
-        for (char temp : item)
+        for (char temp: item)
             if (temp != ' ')
                 flag = true;
 
@@ -34,8 +35,8 @@ vector<string> Comando::split(const string &s, char c) const {
     return result;
 }
 
-bool Comando::isNumeric(const std::string& str) const {
-    for (char ch : str) {
+bool Comando::isNumeric(const std::string &str) const {
+    for (char ch: str) {
         if (!std::isdigit(ch)) {
             return false;
         }

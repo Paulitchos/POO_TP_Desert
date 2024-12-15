@@ -6,9 +6,9 @@
 #include <sstream>
 #include <memory>
 #include <vector>
-#include "Buffer.h"
-#include "Montanha.h"
-#include "Cidade.h"
+#include "../Interface/Buffer.h"
+#include "Montanha/Montanha.h"
+#include "Cidade/Cidade.h"
 
 class Mapa {
     int rows, cols, coins,
