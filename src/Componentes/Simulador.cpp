@@ -58,6 +58,8 @@ bool Simulador::isMontanha(int row, int col) const { return mapa->isMontanha(row
 
 void Simulador::addCaravanaInicial(int row, int col, char id) { mapa->addCaravanaInicial(row, col, id); }
 
-bool Simulador::caravaNameAvailable(char caravanaID) const { return mapa->caravanaNameAvailable(caravanaID); }
+int Simulador::caravaNameAvailable(char caravanaID) const { return mapa->getCaravanaIndex(caravanaID); }
 
 std::shared_ptr<Caravana> Simulador::getLastCaravana() const { return mapa->getLastCaravana(); }
+
+std::shared_ptr<Caravana> Simulador::getMapCaravana(int index) const { return mapa->getCaravana(index); }

@@ -1,5 +1,7 @@
 #include "Interface.h"
 
+#include "../Comandos/ComandoCaravana.h"
+
 using namespace std;
 
 Interface::Interface(Simulador &s) : sim(&s) {
@@ -260,7 +262,7 @@ bool Interface::readMapFromFile(std::string fileName) {
                     sim->addMontanha(currentRow, col);
                 } else if (islower(cell)) {
                     //cout << "Cidade encontrada em (" << currentRow << ", " << col << ")" << endl;
-                    if (sim->cidadeNameAvailable(cell)) {
+                    if (sim->cidadeNameAvailable(cell) == -1) {
                         sim->addCidade(currentRow, col, cell);
                     } else {
                         cout << "Nome de cidade ja esta a ser utilizado!" << endl;
@@ -268,7 +270,7 @@ bool Interface::readMapFromFile(std::string fileName) {
                         return false;
                     }
                 } else if (isdigit(cell)) {
-                    if (sim->caravaNameAvailable(cell)) {
+                    if (sim->caravaNameAvailable(cell) == -1) {
                         sim->addCaravanaInicial(currentRow, col, cell);
                     } else {
                         cout << "Id da caravana ja esta a ser utilizado!" << endl;
@@ -328,10 +330,11 @@ int Interface::askCommands() {
 }
 
 void Interface::loadCommands() {
-    commands["prox"] = std::make_unique<ComandoProx>();
-    commands["comprac"] = std::make_unique<ComandoCompraC>();
-    commands["precos"] = std::make_unique<ComandoPrecos>(sim->getMapSellMerch(), sim->getMapBuyMerch());
-    commands["cidade"] = std::make_unique<ComandoCidade>();
+    commands["prox"] = make_unique<ComandoProx>();
+    commands["comprac"] = make_unique<ComandoCompraC>();
+    commands["precos"] = make_unique<ComandoPrecos>(sim->getMapSellMerch(), sim->getMapBuyMerch());
+    commands["cidade"] = make_unique<ComandoCidade>();
+    commands["caravana"] =  make_unique<ComandoCaravana>();
 }
 
 void Interface::helpCommands() const {

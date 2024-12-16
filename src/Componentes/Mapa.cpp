@@ -104,7 +104,7 @@ bool Mapa::isMontanha(int row, int col) const {
 int Mapa::cidadeNameAvailable(char name) const {
     for (int i = 0; i < cidades.size(); ++i) {
         if (cidades[i].getName() == name) {
-            return i;  // Return the index of the city
+            return i;
         }
     }
     return -1;
@@ -112,7 +112,7 @@ int Mapa::cidadeNameAvailable(char name) const {
 
 Cidade *Mapa::getCidade(int index) {
     if (index >= 0 && index < cidades.size()) {
-        return &cidades[index];  // Return a copy of the city
+        return &cidades[index];
     }
     cout << "Cidade nao encontrada" << endl;
     return nullptr;
@@ -134,34 +134,34 @@ void Mapa::addCaravana(const std::shared_ptr<Caravana>& caravana) {
     caravanas.emplace_back(caravana);
 }
 
-bool Mapa::caravanaNameAvailable(char caravanaID) const {
+int Mapa::getCaravanaIndex(char caravanaID) const {
     if (caravanaID < '0' || caravanaID > '9') {
         std::cout << "ID da caravana deve ser entre '0' e '9'" << std::endl;
-        return false;
+        return -2;
     }
 
-    for (const auto& caravana : caravanas) {
-        if (caravana->getID() == caravanaID) {
-            return false;
+    for (int i = 0; i < caravanas.size(); ++i) {
+        if (caravanas[i]->getID() == caravanaID) {
+            return i;
         }
     }
 
-    return true;
+    return -1;
 }
 
 char Mapa::getAvailableCaravanaID() const {
-    for (char i = '0'; i <= '9'; ++i) {  // Iterate over char '0' to '9'
+    for (char i = '0'; i <= '9'; ++i) {
         bool isAvailable = true;
 
         for (const auto& caravana : caravanas) {
-            if (caravana && caravana->getID() == i) {  // Compare char ID directly
+            if (caravana && caravana->getID() == i) {
                 isAvailable = false;
                 break;
             }
         }
 
         if (isAvailable) {
-            return i;  // Convert char ID back to int before returning
+            return i;
         }
     }
 
@@ -170,7 +170,15 @@ char Mapa::getAvailableCaravanaID() const {
 
 shared_ptr<Caravana> Mapa::getLastCaravana() const {
     if (!caravanas.empty()) {
-        return caravanas.back();  // Return the last caravana if the vector is not empty
+        return caravanas.back();
     }
-    return nullptr;  // Return nullptr if the vector is empty
+    return nullptr;
+}
+
+std::shared_ptr<Caravana> Mapa::getCaravana(int index) const {
+    if (index >= 0 && index < caravanas.size()) {
+        return caravanas[index];
+    }
+    cout << "Cidade nao encontrada" << endl;
+    return nullptr;
 }

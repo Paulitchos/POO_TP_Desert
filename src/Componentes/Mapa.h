@@ -100,11 +100,13 @@ public:
 
     void addCaravana(const std::shared_ptr<Caravana>& caravana);
 
-    bool caravanaNameAvailable(char caravanaID) const;
+    int getCaravanaIndex(char caravanaID) const;
 
     char getAvailableCaravanaID() const;
 
     std::shared_ptr<Caravana> getLastCaravana() const;
+
+    std::shared_ptr<Caravana> getCaravana(int index) const;
 };
 
 #endif //MAPA_H

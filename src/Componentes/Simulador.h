@@ -65,9 +65,11 @@ public:
 
     void addCaravanaInicial(int row, int col, char id);
 
-    bool caravaNameAvailable(char caravanaID) const;
+    int caravaNameAvailable(char caravanaID) const;
 
     std::shared_ptr<Caravana> getLastCaravana() const;
+
+    std::shared_ptr<Caravana> getMapCaravana(int index) const;
 };
 
 
