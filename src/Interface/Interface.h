@@ -9,8 +9,11 @@
 #include <vector>
 
 #include "../Componentes/Simulador.h"
+
 #include "../Comandos/ComandoPrecos.h"
 #include "../Comandos/ComandoProx.h"
+#include "../Comandos/ComandoCidade.h"
+#include "../Comandos/ComandoCompraC.h"
 
 class Interface {
     Simulador *sim;

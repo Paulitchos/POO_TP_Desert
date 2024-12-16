@@ -8,7 +8,7 @@ int Caravana::preco = 100;
 
 Caravana::Caravana(int row, int col, char id, int nPessoas, int maxPessoas, int maxAgua,
                    int maxJogadasPTurno, double maxMercadoria, bool controlavel)
-        : row(row), col(col), caravanaID(id) , nPessoas(nPessoas), maxPessoas(maxPessoas), maxAgua(maxAgua),
+        : row(row), col(col), caravanaID(id) , nPessoas(nPessoas), nMercadoria(0), maxPessoas(maxPessoas), maxAgua(maxAgua),
           maxJogadasPTurno(maxJogadasPTurno), maxMercadoria(maxMercadoria), controlavel(controlavel) {}
 
 Caravana::~Caravana() {

@@ -29,6 +29,7 @@ bool Cidade::buyCaravana(char tipoCar) {
 
     if (tipoCar == 'C') {
         auto newCaravana = std::make_shared<Comercio>(getRow(), getCol(), newID);
+        newCaravana->setNivelAgua(newCaravana->getMaxAgua());
         parked.emplace_back(newCaravana);
         onde->addCaravana(newCaravana);
         onde->setCoins(onde->getCoins() - onde->getPCaravan());
@@ -37,6 +38,7 @@ bool Cidade::buyCaravana(char tipoCar) {
 
     if (tipoCar == 'M') {
         auto newCaravana = std::make_shared<Militar>(getRow(), getCol(), newID);
+        newCaravana->setNivelAgua(newCaravana->getMaxAgua());
         parked.emplace_back(newCaravana);
         onde->addCaravana(newCaravana);
         onde->setCoins(onde->getCoins() - onde->getPCaravan());
@@ -46,4 +48,21 @@ bool Cidade::buyCaravana(char tipoCar) {
 
 
     return true;
+}
+
+void Cidade::showCaravanas() const {
+    if (parked.empty()) {
+        cout << "Nenhuma caravana estacionada nesta cidade." << endl;
+        return;
+    }
+
+    cout << endl << "Caravanas estacionadas na cidade " << getName() << ":" << endl;
+
+    for (const auto& caravana : parked) {
+        if (caravana) {
+            cout << caravana->showInfo() << endl << endl;
+        } else {
+            cout << "Caravana invalida encontrada!" << endl;
+        }
+    }
 }

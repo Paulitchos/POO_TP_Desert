@@ -1,7 +1,5 @@
 #include "Interface.h"
 
-#include "../Comandos/ComandoCompraC.h"
-
 using namespace std;
 
 Interface::Interface(Simulador &s) : sim(&s) {
@@ -333,6 +331,7 @@ void Interface::loadCommands() {
     commands["prox"] = std::make_unique<ComandoProx>();
     commands["comprac"] = std::make_unique<ComandoCompraC>();
     commands["precos"] = std::make_unique<ComandoPrecos>(sim->getMapSellMerch(), sim->getMapBuyMerch());
+    commands["cidade"] = std::make_unique<ComandoCidade>();
 }
 
 void Interface::helpCommands() const {

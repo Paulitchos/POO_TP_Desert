@@ -21,11 +21,13 @@ public:
 
     char getName() const;
 
-    bool buyCaravana(char tipoCar);
-
     int getRow() const;
 
     int getCol() const;
+
+    bool buyCaravana(char tipoCar);
+
+    void showCaravanas() const;
 };
 
 
