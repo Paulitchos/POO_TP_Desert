@@ -42,4 +42,6 @@ add_executable(src main.cpp
         Comandos/ComandoCidade.h
         Comandos/ComandoCaravana.cpp
         Comandos/ComandoCaravana.h
+        Comandos/ComandoCompra.cpp
+        Comandos/ComandoCompra.h
 )

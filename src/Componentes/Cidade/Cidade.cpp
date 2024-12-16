@@ -30,6 +30,7 @@ bool Cidade::buyCaravana(char tipoCar) {
     if (tipoCar == 'C') {
         auto newCaravana = std::make_shared<Comercio>(getRow(), getCol(), newID);
         newCaravana->setNivelAgua(newCaravana->getMaxAgua());
+        newCaravana->setInCity(true);
         parked.emplace_back(newCaravana);
         onde->addCaravana(newCaravana);
         onde->setCoins(onde->getCoins() - onde->getPCaravan());
@@ -39,6 +40,7 @@ bool Cidade::buyCaravana(char tipoCar) {
     if (tipoCar == 'M') {
         auto newCaravana = std::make_shared<Militar>(getRow(), getCol(), newID);
         newCaravana->setNivelAgua(newCaravana->getMaxAgua());
+        newCaravana->setInCity(true);
         parked.emplace_back(newCaravana);
         onde->addCaravana(newCaravana);
         onde->setCoins(onde->getCoins() - onde->getPCaravan());

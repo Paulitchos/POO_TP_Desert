@@ -1,6 +1,7 @@
 #include "Interface.h"
 
 #include "../Comandos/ComandoCaravana.h"
+#include "../Comandos/ComandoCompra.h"
 
 using namespace std;
 
@@ -335,6 +336,7 @@ void Interface::loadCommands() {
     commands["precos"] = make_unique<ComandoPrecos>(sim->getMapSellMerch(), sim->getMapBuyMerch());
     commands["cidade"] = make_unique<ComandoCidade>();
     commands["caravana"] =  make_unique<ComandoCaravana>();
+    commands["compra"] = make_unique<ComandoCompra>();
 }
 
 void Interface::helpCommands() const {

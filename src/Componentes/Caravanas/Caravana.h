@@ -47,7 +47,7 @@ public:
 
     int getMaxMercadoria() const;
 
-    void adicionaMercadoria(int mercadoriaAAdicionar);
+    bool adicionaMercadoria(int mercadoriaAAdicionar);
 
     void removeMercadoria(int mercadoriaARemover);
 
@@ -81,7 +81,6 @@ public:
 
     bool getRandomMode();
 
-
     //DESTRUIR
     bool getEstado() const;
 
@@ -94,6 +93,10 @@ public:
 
     virtual std::string showInfo() const;
 
+    bool getInCity() const;
+
+    void setInCity(bool inCity);
+
 private:
     char caravanaID;
     static int preco;
@@ -104,6 +107,7 @@ private:
     double nMercadoria, maxMercadoria;
     bool controlavel, destruida = false, autoPilot = false, randomMode = false;
     bool vidaInfinita;
+    bool inCity;
 
     const int maxJogadasPTurno;
     int movimentos;

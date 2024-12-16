@@ -9,7 +9,7 @@ int Caravana::preco = 100;
 Caravana::Caravana(int row, int col, char id, int nPessoas, int maxPessoas, int maxAgua,
                    int maxJogadasPTurno, double maxMercadoria, bool controlavel)
         : row(row), col(col), caravanaID(id) , nPessoas(nPessoas), nMercadoria(0), maxPessoas(maxPessoas), maxAgua(maxAgua),
-          maxJogadasPTurno(maxJogadasPTurno), maxMercadoria(maxMercadoria), controlavel(controlavel) {}
+          maxJogadasPTurno(maxJogadasPTurno), maxMercadoria(maxMercadoria), controlavel(controlavel), inCity(false) {}
 
 Caravana::~Caravana() {
     cout << "Caravana destruida" << endl;
@@ -100,13 +100,14 @@ void Caravana::setMercadoria(int novaMercadoria) {
     nMercadoria = novaMercadoria;
 }
 
-void Caravana::adicionaMercadoria(int mercadoriaAAdicionar) {
+bool Caravana::adicionaMercadoria(int mercadoriaAAdicionar) {
     if (getMercadoria() + mercadoriaAAdicionar > getMaxMercadoria()) {
         cout << "Caravana cheia de mercadoria!" << endl;
-        return;
+        return false;
     }
 
     setMercadoria(getMercadoria() + mercadoriaAAdicionar);
+    return true;
 }
 
 void Caravana::removeMercadoria(int mercadoriaARemover) {
@@ -180,3 +181,8 @@ bool Caravana::getEstado() const {
 void Caravana::setDestruida() {
     destruida = true;
 }
+
+bool Caravana::getInCity() const { return inCity; }
+
+void Caravana::setInCity(bool inCity) { this->inCity = inCity; }
+
