@@ -30,10 +30,11 @@ void ComandoCompraC::execute(const std::string &args, Simulador &sim) {
     Cidade* aux = sim.getMapCidade(index);
 
     if (aux) {
-        aux->buyCaravana(inputs[2][0]);
-        auto lastCaravana = sim.getLastCaravana();
-        cout << "Comprou uma caravana na cidade " << aux->getName() << " que ficou com ID: " << lastCaravana->getID() << endl;
-        cout << "O utiliziador ficou com " << sim.getMapCoins() << " moedas restantes" << endl;
+        if(aux->buyCaravana(inputs[2][0])) {
+            auto lastCaravana = sim.getLastCaravana();
+            cout << "Comprou uma caravana na cidade " << aux->getName() << " que ficou com ID: " << lastCaravana->getID() << endl;
+            cout << "O utiliziador ficou com " << sim.getMapCoins() << " moedas restantes" << endl << endl;
+        }
     } else {
         cout << "Erro: Cidade nao encontrada!" << endl;
     }
