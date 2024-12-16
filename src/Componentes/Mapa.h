@@ -90,11 +90,15 @@ public:
 
     bool isMontanha(int row, int col) const;
 
-    bool cidadeNameAvailable(char name) const;
+    int cidadeNameAvailable(char name) const;
+
+    Cidade getCidade(int index) const;
 
     void addCaravanaInicial(int row, int col, char id);
 
     bool caravaNameAvailable(int caravanaID) const;
+
+    bool buyCaravana(int row, int col, char tipoCar);
 };
 
 #endif //MAPA_H

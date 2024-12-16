@@ -55,13 +55,17 @@ public:
 
     void addCidade(int row, int col, char name);
 
-    bool cidadeNameAvailable(char name) const;
+    int cidadeNameAvailable(char name) const;
+
+    Cidade Simulador::getMapCidade(char name) const;
 
     bool isMontanha(int row, int col) const;
 
     void addCaravanaInicial(int row, int col, char id);
 
     bool caravaNameAvailable(int caravanaID) const;
+
+    bool Simulador::buyMapCaravana(int row, int col, char tipoCar);
 };
 
 

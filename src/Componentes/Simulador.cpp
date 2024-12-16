@@ -48,10 +48,14 @@ void Simulador::addMontanha(int row, int col) { mapa->addMontanha(row, col); }
 
 void Simulador::addCidade(int row, int col, char name) { mapa->addCidade(row, col, name); }
 
-bool Simulador::cidadeNameAvailable(char name) const { return mapa->cidadeNameAvailable(name); }
+int Simulador::cidadeNameAvailable(char name) const { return mapa->cidadeNameAvailable(name); }
+
+Cidade Simulador::getMapCidade(char name) const { return mapa->getCidade(name); }
 
 bool Simulador::isMontanha(int row, int col) const { return mapa->isMontanha(row, col); }
 
 void Simulador::addCaravanaInicial(int row, int col, char id) { mapa->addCaravanaInicial(row, col, id); }
 
 bool Simulador::caravaNameAvailable(int caravanaID) const { return mapa->caravaNameAvailable(caravanaID); }
+
+bool Simulador::buyMapCaravana(int row, int col, char tipoCar) { return mapa->buyCaravana(row, col, tipoCar); }

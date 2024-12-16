@@ -4,14 +4,15 @@
 #include <memory>
 
 #include "../Caravanas/Caravana.h"
+#include "../Item/Item.h"
 
-class Pandora {
+class Pandora : public Item {
 public:
     Pandora();
 
     ~Pandora();
 
-    void execute(std::shared_ptr<Caravana> car);
+    void execute(std::shared_ptr<Caravana> car) override;
 };
 
 

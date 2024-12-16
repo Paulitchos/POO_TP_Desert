@@ -63,7 +63,7 @@ void Mapa::setTurn(int turn) { this->turn = turn; }
 void Mapa::showDetails() const {
     cout << "*** Detalhes ***" << endl << endl;
     cout << "Linhas: " << rows << " Colunas: " << cols
-            << "\nTurno: " << turn << " || Cidades: " << cidades.size() << " || Caravanas: " << caravanas.size() << endl << endl;
+            << "\nTurno: " << getTurn() << " || Cidades: " << cidades.size() << " || Caravanas: " << caravanas.size() << " || Moedas: " << getCoins() << endl << endl;
 }
 
 void Mapa::startBuffer() { buffer = std::make_unique<Buffer>(rows, cols); }
@@ -100,13 +100,20 @@ bool Mapa::isMontanha(int row, int col) const {
     return false;
 }
 
-bool Mapa::cidadeNameAvailable(char name) const {
-    for (const auto &cidade: cidades) {
-        if (cidade.getName() == name) {
-            return false;
+int Mapa::cidadeNameAvailable(char name) const {
+    for (int i = 0; i < cidades.size(); ++i) {
+        if (cidades[i].getName() == name) {
+            return i;  // Return the index of the city
         }
     }
-    return true;
+    return -1;
+}
+
+Cidade Mapa::getCidade(int index) const {
+    if (index >= 0 && index < cidades.size()) {
+        return cidades[index];  // Return a copy of the city
+    }
+    cout << "Cidade nao encontrada" << endl;
 }
 
 void Mapa::addCaravanaInicial(int row, int col, char id) {
@@ -122,10 +129,51 @@ void Mapa::addCaravanaInicial(int row, int col, char id) {
 }
 
 bool Mapa::caravaNameAvailable(int caravanaID) const {
+    if(caravanaID > 9 || caravanaID < 0) {
+        cout << "Id da carava tem que ser entre 0 e 9" << endl;
+        return false;
+    }
+
     for (const auto &caravana: caravanas) {
         if (caravana->getID() == caravanaID) {
             return false;
         }
     }
+
+    return true;
+}
+
+bool Mapa::buyCaravana(int row, int col, char tipoCar) {
+    if(caravanas.size() == 9) {
+        cout << "Ja atingiu o maximo de caravanas possiveis no mapa!!" << endl;
+        return false;
+    }
+
+    if(getCoins() < getPCaravan()) {
+        cout << "Utilizador nao tem dinheiro para comprar a caravana" << endl;
+        return false;
+    }
+
+    int newID = -1;
+    for (int i = 0; i <= 9; ++i) {
+        if (caravaNameAvailable(i)) {
+            newID = i;
+            break;
+        }
+    }
+
+    if (tipoCar == 'C') {
+        caravanas.emplace_back(std::make_shared<Comercio>(row, col, newID));
+        setCoins(getCoins() - getPCaravan());
+        return true;
+    }
+
+    if (tipoCar == 'M') {
+        setCoins(getCoins() - getPCaravan());
+        return true;
+    }
+
+
+
     return true;
 }

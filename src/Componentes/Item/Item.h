@@ -8,15 +8,16 @@ private:
     std::string nome;
     int vidaUtil;
 public:
-  Item(std::string nome, int vidaUtil);
+    Item(std::string nome, int vidaUtil);
+    virtual void execute(std::shared_ptr<Caravana> car);
 
-  std::string getNome() const;
+    std::string getNome() const;
 
-  void setNome(std::string nome);
+    void setNome(std::string nome);
 
-  int getVidaUtil() const;
+    int getVidaUtil() const;
 
-  void setVidaUtil(int vidaUtil);
+    void setVidaUtil(int vidaUtil);
 };
 
 
