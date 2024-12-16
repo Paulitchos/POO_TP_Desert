@@ -2,6 +2,9 @@
 #define SUPPORT_TP_ITEM_H
 
 #include <iostream>
+#include <memory>
+#include "../Caravanas/Caravana.h"
+
 
 class Item {
 private:
@@ -9,7 +12,8 @@ private:
     int vidaUtil;
 public:
     Item(std::string nome, int vidaUtil);
-    virtual void execute(std::shared_ptr<Caravana> car);
+
+    virtual void execute(std::shared_ptr<Caravana> car) = 0;
 
     std::string getNome() const;
 

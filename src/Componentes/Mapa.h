@@ -7,11 +7,13 @@
 #include <sstream>
 #include <memory>
 #include <vector>
+#include <algorithm>
 #include "../Interface/Buffer.h"
 
 #include "Caravanas/Caravana.h"
 #include "Caravanas/Comercio.h"
 #include "Caravanas/Barbaros.h"
+#include "Caravanas/Militar.h"
 
 #include "Montanha/Montanha.h"
 #include "Cidade/Cidade.h"
@@ -92,13 +94,17 @@ public:
 
     int cidadeNameAvailable(char name) const;
 
-    Cidade getCidade(int index) const;
+    Cidade *getCidade(int index);
 
     void addCaravanaInicial(int row, int col, char id);
 
-    bool caravaNameAvailable(int caravanaID) const;
+    void addCaravana(const std::shared_ptr<Caravana>& caravana);
 
-    bool buyCaravana(int row, int col, char tipoCar);
+    bool caravanaNameAvailable(char caravanaID) const;
+
+    char getAvailableCaravanaID() const;
+
+    std::shared_ptr<Caravana> getLastCaravana() const;
 };
 
 #endif //MAPA_H

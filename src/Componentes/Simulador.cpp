@@ -16,6 +16,8 @@ int Simulador::getMapCols() const { return mapa->getCols(); }
 
 void Simulador::setMapCols(const int col) { mapa->setCols(col); }
 
+int Simulador::getMapCoins() const { return mapa->getCoins(); }
+
 void Simulador::setMapCoins(const int coins) { mapa->setCoins(coins); }
 
 void Simulador::setMapInsNewItem(const int insNewItem) { mapa->setInsNewItem(insNewItem); }
@@ -50,12 +52,12 @@ void Simulador::addCidade(int row, int col, char name) { mapa->addCidade(row, co
 
 int Simulador::cidadeNameAvailable(char name) const { return mapa->cidadeNameAvailable(name); }
 
-Cidade Simulador::getMapCidade(char name) const { return mapa->getCidade(name); }
+Cidade* Simulador::getMapCidade(int index) const { return mapa->getCidade(index); }
 
 bool Simulador::isMontanha(int row, int col) const { return mapa->isMontanha(row, col); }
 
 void Simulador::addCaravanaInicial(int row, int col, char id) { mapa->addCaravanaInicial(row, col, id); }
 
-bool Simulador::caravaNameAvailable(int caravanaID) const { return mapa->caravaNameAvailable(caravanaID); }
+bool Simulador::caravaNameAvailable(char caravanaID) const { return mapa->caravanaNameAvailable(caravanaID); }
 
-bool Simulador::buyMapCaravana(int row, int col, char tipoCar) { return mapa->buyCaravana(row, col, tipoCar); }
+std::shared_ptr<Caravana> Simulador::getLastCaravana() const { return mapa->getLastCaravana(); }

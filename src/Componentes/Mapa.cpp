@@ -6,7 +6,7 @@ Mapa::Mapa()
     : rows(0), cols(0), coins(0),
       insNewItem(0), durItem(0), maxItem(0),
       pSellMerch(0), pBuyMerch(0), pCaravan(0),
-      insNewBarb(0), durBarb(0), turn(0), buffer(nullptr) {
+      insNewBarb(0), durBarb(0), turn(1), buffer(nullptr) {
 }
 
 Mapa::~Mapa() {
@@ -62,8 +62,9 @@ void Mapa::setTurn(int turn) { this->turn = turn; }
 
 void Mapa::showDetails() const {
     cout << "*** Detalhes ***" << endl << endl;
-    cout << "Linhas: " << rows << " Colunas: " << cols
-            << "\nTurno: " << getTurn() << " || Cidades: " << cidades.size() << " || Caravanas: " << caravanas.size() << " || Moedas: " << getCoins() << endl << endl;
+    cout << "Linhas: " << rows << " Colunas: " << cols << endl
+            << "Turno: " << getTurn() << " || Cidades: " << cidades.size() << " || Caravanas: " << caravanas.size() << " || Moedas: " << getCoins() << endl
+            << "Preco da caravana: " << getPCaravan() << endl << endl;
 }
 
 void Mapa::startBuffer() { buffer = std::make_unique<Buffer>(rows, cols); }
@@ -83,7 +84,7 @@ void Mapa::addMontanha(int row, int col) {
 }
 
 void Mapa::addCidade(int row, int col, char name) {
-    cidades.emplace_back(row, col, name);
+    cidades.emplace_back(row, col, name, this);
     //cout << "Cidade adicionada em (" << row << ", " << col << ")" << endl;
     buffer->setCursor(row, col);
     buffer->writeChar(name);
@@ -109,11 +110,12 @@ int Mapa::cidadeNameAvailable(char name) const {
     return -1;
 }
 
-Cidade Mapa::getCidade(int index) const {
+Cidade *Mapa::getCidade(int index) {
     if (index >= 0 && index < cidades.size()) {
-        return cidades[index];  // Return a copy of the city
+        return &cidades[index];  // Return a copy of the city
     }
     cout << "Cidade nao encontrada" << endl;
+    return nullptr;
 }
 
 void Mapa::addCaravanaInicial(int row, int col, char id) {
@@ -128,13 +130,17 @@ void Mapa::addCaravanaInicial(int row, int col, char id) {
     buffer->setCursor(0, 0);
 }
 
-bool Mapa::caravaNameAvailable(int caravanaID) const {
-    if(caravanaID > 9 || caravanaID < 0) {
-        cout << "Id da carava tem que ser entre 0 e 9" << endl;
+void Mapa::addCaravana(const std::shared_ptr<Caravana>& caravana) {
+    caravanas.emplace_back(caravana);
+}
+
+bool Mapa::caravanaNameAvailable(char caravanaID) const {
+    if (caravanaID < '0' || caravanaID > '9') {
+        std::cout << "ID da caravana deve ser entre '0' e '9'" << std::endl;
         return false;
     }
 
-    for (const auto &caravana: caravanas) {
+    for (const auto& caravana : caravanas) {
         if (caravana->getID() == caravanaID) {
             return false;
         }
@@ -143,37 +149,28 @@ bool Mapa::caravaNameAvailable(int caravanaID) const {
     return true;
 }
 
-bool Mapa::buyCaravana(int row, int col, char tipoCar) {
-    if(caravanas.size() == 9) {
-        cout << "Ja atingiu o maximo de caravanas possiveis no mapa!!" << endl;
-        return false;
-    }
+char Mapa::getAvailableCaravanaID() const {
+    for (char i = '0'; i <= '9'; ++i) {  // Iterate over char '0' to '9'
+        bool isAvailable = true;
 
-    if(getCoins() < getPCaravan()) {
-        cout << "Utilizador nao tem dinheiro para comprar a caravana" << endl;
-        return false;
-    }
+        for (const auto& caravana : caravanas) {
+            if (caravana && caravana->getID() == i) {  // Compare char ID directly
+                isAvailable = false;
+                break;
+            }
+        }
 
-    int newID = -1;
-    for (int i = 0; i <= 9; ++i) {
-        if (caravaNameAvailable(i)) {
-            newID = i;
-            break;
+        if (isAvailable) {
+            return i;  // Convert char ID back to int before returning
         }
     }
 
-    if (tipoCar == 'C') {
-        caravanas.emplace_back(std::make_shared<Comercio>(row, col, newID));
-        setCoins(getCoins() - getPCaravan());
-        return true;
+    return ' ';
+}
+
+shared_ptr<Caravana> Mapa::getLastCaravana() const {
+    if (!caravanas.empty()) {
+        return caravanas.back();  // Return the last caravana if the vector is not empty
     }
-
-    if (tipoCar == 'M') {
-        setCoins(getCoins() - getPCaravan());
-        return true;
-    }
-
-
-
-    return true;
+    return nullptr;  // Return nullptr if the vector is empty
 }

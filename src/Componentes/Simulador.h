@@ -23,6 +23,8 @@ public:
 
     void setMapCols(int col);
 
+    int getMapCoins() const;
+
     void setMapCoins(int coins);
 
     void setMapInsNewItem(int insNewItem);
@@ -57,15 +59,15 @@ public:
 
     int cidadeNameAvailable(char name) const;
 
-    Cidade Simulador::getMapCidade(char name) const;
+    Cidade *getMapCidade(int index) const;
 
     bool isMontanha(int row, int col) const;
 
     void addCaravanaInicial(int row, int col, char id);
 
-    bool caravaNameAvailable(int caravanaID) const;
+    bool caravaNameAvailable(char caravanaID) const;
 
-    bool Simulador::buyMapCaravana(int row, int col, char tipoCar);
+    std::shared_ptr<Caravana> getLastCaravana() const;
 };
 
 

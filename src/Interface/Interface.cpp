@@ -27,7 +27,6 @@ void Interface::startSimulation() {
 
 bool Interface::iniciateSimulation() {
     string input;
-    vector<string> inputs;
     cout << "Para iniciar o mapa use o comando: config <nomeFicheiro>" << endl;
     cout << "Se quiser sair do programa, utilize comando: sair" << endl;
 
@@ -41,7 +40,7 @@ bool Interface::iniciateSimulation() {
             continue;
         }
 
-        inputs = split(input, ' ');
+        vector<string> inputs = split(input, ' ');
 
         if (inputs[0] == "sair") {
             cout << "Fechar programa..." << endl;
@@ -270,7 +269,7 @@ bool Interface::readMapFromFile(std::string fileName) {
                         file.close();
                         return false;
                     }
-                } else if (isdigit(cell) || cell == '!') {
+                } else if (isdigit(cell)) {
                     if (sim->caravaNameAvailable(cell)) {
                         sim->addCaravanaInicial(currentRow, col, cell);
                     } else {
@@ -278,6 +277,8 @@ bool Interface::readMapFromFile(std::string fileName) {
                         file.close();
                         return false;
                     }
+                } else if (cell == '!') {
+                    sim->addCaravanaInicial(currentRow, col, cell);
                 }
             }
 
