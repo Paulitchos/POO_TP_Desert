@@ -14,6 +14,9 @@
 #include "../Comandos/ComandoProx.h"
 #include "../Comandos/ComandoCidade.h"
 #include "../Comandos/ComandoCompraC.h"
+#include "../Comandos/ComandoCaravana.h"
+#include "../Comandos/ComandoCompra.h"
+#include "../Comandos/ComandoVende.h"
 
 class Interface {
     Simulador *sim;

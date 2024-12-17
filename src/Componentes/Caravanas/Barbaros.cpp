@@ -1,5 +1,4 @@
 #include "Barbaros.h"
-#include "Barbaros.h"
 
 using namespace std;
 

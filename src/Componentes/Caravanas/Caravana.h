@@ -89,8 +89,6 @@ public:
     //EXTRA
     virtual bool tempestade() = 0;
 
-    int getPreco() const;
-
     virtual std::string showInfo() const;
 
     bool getInCity() const;
@@ -99,7 +97,6 @@ public:
 
 private:
     char caravanaID;
-    static int preco;
 
     int row, col;
     int nPessoas, maxPessoas;

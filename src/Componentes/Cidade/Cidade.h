@@ -12,6 +12,7 @@ class Mapa;
 class Cidade {
     int row, col;
     char name;
+    bool comprouC, comprouM;
 
     Mapa *onde;
 
@@ -24,6 +25,14 @@ public:
     int getRow() const;
 
     int getCol() const;
+
+    bool isComprouC() const;
+
+    bool isComprouM() const;
+
+    void setComprouC(bool comprou);
+
+    void setComprouM(bool comprou);
 
     bool buyCaravana(char tipoCar);
 

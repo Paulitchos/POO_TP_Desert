@@ -4,14 +4,21 @@
 
 using namespace std;
 
-Cidade::Cidade(int row, int col, char name, Mapa *onde) : row(row), col(col), name(name), onde(onde) {
-}
+Cidade::Cidade(int row, int col, char name, Mapa *onde) : row(row), col(col), name(name), onde(onde), comprouC(false), comprouM(false) { }
 
 char Cidade::getName() const { return name; }
 
 int Cidade::getRow() const { return row; }
 
 int Cidade::getCol() const { return col; }
+
+bool Cidade::isComprouC() const { return comprouC; }
+
+bool Cidade::isComprouM() const { return comprouM; }
+
+void Cidade::setComprouC(bool comprou) { this->comprouC = comprou; }
+
+void Cidade::setComprouM(bool comprou) { this->comprouM = comprou; }
 
 bool Cidade::buyCaravana(char tipoCar) {
 
@@ -27,7 +34,7 @@ bool Cidade::buyCaravana(char tipoCar) {
         return false;
     }
 
-    if (tipoCar == 'C') {
+    if (tipoCar == 'C' && !isComprouC()) {
         auto newCaravana = std::make_shared<Comercio>(getRow(), getCol(), newID);
         newCaravana->setNivelAgua(newCaravana->getMaxAgua());
         newCaravana->setInCity(true);
@@ -37,7 +44,7 @@ bool Cidade::buyCaravana(char tipoCar) {
         return true;
     }
 
-    if (tipoCar == 'M') {
+    if (tipoCar == 'M' && !isComprouM()) {
         auto newCaravana = std::make_shared<Militar>(getRow(), getCol(), newID);
         newCaravana->setNivelAgua(newCaravana->getMaxAgua());
         newCaravana->setInCity(true);
@@ -46,8 +53,6 @@ bool Cidade::buyCaravana(char tipoCar) {
         onde->setCoins(onde->getCoins() - onde->getPCaravan());
         return true;
     }
-
-
 
     return true;
 }

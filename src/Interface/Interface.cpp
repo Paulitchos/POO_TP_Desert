@@ -1,8 +1,5 @@
 #include "Interface.h"
 
-#include "../Comandos/ComandoCaravana.h"
-#include "../Comandos/ComandoCompra.h"
-
 using namespace std;
 
 Interface::Interface(Simulador &s) : sim(&s) {
@@ -18,8 +15,9 @@ void Interface::startSimulation() {
                 this->proxFase = askCommands();
                 break;
             case 1:
-                cout << "faz algo diferente";
+                cout << "Comportamentos auto - verifica continuidade";
                 break;
+
             default:
                 cout << "Algo de inesperado aconteceu!" << endl;
         }
@@ -337,6 +335,7 @@ void Interface::loadCommands() {
     commands["cidade"] = make_unique<ComandoCidade>();
     commands["caravana"] =  make_unique<ComandoCaravana>();
     commands["compra"] = make_unique<ComandoCompra>();
+    commands["vende"] = make_unique<ComandoVende>();
 }
 
 void Interface::helpCommands() const {

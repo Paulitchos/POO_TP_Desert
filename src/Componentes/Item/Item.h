@@ -8,6 +8,7 @@
 
 class Item {
 private:
+    int row, col;
     std::string nome;
     int vidaUtil;
 public:

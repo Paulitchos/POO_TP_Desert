@@ -4,12 +4,10 @@ using namespace std;
 
 #include <sstream>
 
-int Caravana::preco = 100;
-
 Caravana::Caravana(int row, int col, char id, int nPessoas, int maxPessoas, int maxAgua,
                    int maxJogadasPTurno, double maxMercadoria, bool controlavel)
         : row(row), col(col), caravanaID(id) , nPessoas(nPessoas), nMercadoria(0), maxPessoas(maxPessoas), maxAgua(maxAgua),
-          maxJogadasPTurno(maxJogadasPTurno), maxMercadoria(maxMercadoria), controlavel(controlavel), inCity(false) {}
+          maxJogadasPTurno(maxJogadasPTurno), maxMercadoria(maxMercadoria), controlavel(controlavel), inCity(false),  {}
 
 Caravana::~Caravana() {
     cout << "Caravana destruida" << endl;
