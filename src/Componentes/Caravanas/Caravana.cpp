@@ -1,13 +1,14 @@
 #include "Caravana.h"
+#include "../Mapa.h"
 
 using namespace std;
 
 #include <sstream>
 
 Caravana::Caravana(int row, int col, char id, int nPessoas, int maxPessoas, int maxAgua,
-                   int maxJogadasPTurno, double maxMercadoria, bool controlavel)
+                   int maxJogadasPTurno, double maxMercadoria, bool controlavel, Mapa *onde)
         : row(row), col(col), caravanaID(id) , nPessoas(nPessoas), nMercadoria(0), maxPessoas(maxPessoas), maxAgua(maxAgua),
-          maxJogadasPTurno(maxJogadasPTurno), maxMercadoria(maxMercadoria), controlavel(controlavel), inCity(false),  {}
+          maxJogadasPTurno(maxJogadasPTurno), maxMercadoria(maxMercadoria), controlavel(controlavel), inCity(false), onde(onde) {}
 
 Caravana::~Caravana() {
     cout << "Caravana destruida" << endl;
@@ -118,6 +119,100 @@ void Caravana::removeMercadoria(int mercadoriaARemover) {
 }
 
 //MOVIMENTOS
+void Caravana::move(const string& direction) {
+    if(autoPilot) {
+        cout << "Caravana esta a andar de forma autonoma" << endl;
+        return;
+    }
+
+    if(randomMode) {
+        cout << "Caravana esta a andar de forma aleatoria devido a nao ter tripulantes" << endl;
+        return;
+    }
+
+    if(movimentos == maxJogadasPTurno) {
+        cout << "Caravana ja excedeu o seus movimentos este turno!!" << endl;
+    }
+
+    int auxRow = getRow();
+    int auxCol = getCol();
+
+    if (direction == "D") {
+        setCol(col + 1);
+    } else if (direction == "E") {
+        setCol(col - 1);
+    } else if (direction == "C") {
+        setRow(row - 1);
+    } else if (direction == "B") {
+        setRow(row + 1);
+    } else if (direction == "CE") {
+        setRow(row - 1);
+        setCol(col - 1);
+    } else if (direction == "CD") {
+        setRow(row - 1);
+        setCol(col + 1);
+    } else if (direction == "BE") {
+        setRow(row + 1);
+        setCol(col - 1);
+    } else if (direction == "BD") {
+        setRow(row + 1);
+        setCol(col + 1);
+    } else {
+        cout << "Movimento invalido!" << endl;
+        return;
+    }
+
+    if(onde->isMontanha(getRow(), getCol())) {
+        cout << "Movimento invalido devido a tentar conduzir contra uma montanha!!" << endl;
+        setRow(auxRow);
+        setCol(auxCol);
+    } else if (onde->isCaravana(getRow(), getCol(), this)) {
+        cout << "Movimento invalido devido a tentar conduzir contra outra caravana!!" << endl;
+        setRow(auxRow);
+        setCol(auxCol);
+    } else if (onde->isCidade(getRow(), getCol())) {
+        char cidadeNome = onde->getNomeCidade(getRow(), getCol());
+        onde->parkCaravana(getID(), cidadeNome);
+        cout << "A caravana " << getID() << " entrou na cidade " << cidadeNome << endl;
+        movimentos++;
+    } else if (onde->isItem(getRow(), getCol())) {
+        cout << "Movimento invalido devido a tentar conduzir contra um item!!" << endl;
+        setRow(auxRow);
+        setCol(auxCol);
+    } else {
+        cout << "Caravana " << getID() << " moveu-se para a linha " << getRow() << " e coluna " << getCol() << endl;
+        if(inCity)
+            onde->writeCharToBuffer(getRow(), getCol(), getID());
+        else {
+            onde->writeCharToBuffer(auxRow, auxCol, '.');
+            onde->writeCharToBuffer(getRow(), getCol(), getID());
+        }
+        movimentos++;
+    }
+}
+
+int Caravana::getRow() const { return row; }
+
+void Caravana::setRow(int newRow) {
+    if (row < 0)
+        row = onde->getRows() - 1;
+    else if (row > onde->getRows())
+        row = 0;
+    else
+        row = newRow;
+}
+
+int Caravana::getCol() const { return col; }
+
+void Caravana::setCol(int newCol) {
+    if (col < 0)
+        col = onde->getCols() - 1;
+    else if (col >= onde->getCols())
+        col = 0;
+    else
+        col = newCol;
+}
+
 int Caravana::getMovimentos() const {
     return movimentos;
 }
@@ -166,10 +261,6 @@ string Caravana::showInfo() const {
     os << "ID: " << caravanaID << " Pessoas: " << nPessoas << "/" << maxPessoas
        << " Agua: " << nivelAgua << "/" << maxAgua << " Mercadoria: " << nMercadoria << "/" << maxMercadoria;
     return os.str();
-}
-
-int Caravana::getPreco() const {
-    return preco;
 }
 
 bool Caravana::getEstado() const {

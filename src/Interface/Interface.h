@@ -17,6 +17,7 @@
 #include "../Comandos/ComandoCaravana.h"
 #include "../Comandos/ComandoCompra.h"
 #include "../Comandos/ComandoVende.h"
+#include "../Comandos/ComandoMove.h"
 
 class Interface {
     Simulador *sim;

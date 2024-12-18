@@ -37,6 +37,8 @@ public:
     bool buyCaravana(char tipoCar);
 
     void showCaravanas() const;
+
+    void parkCaravana(const std::shared_ptr<Caravana>& caravana);
 };
 
 

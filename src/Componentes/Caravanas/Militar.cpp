@@ -36,16 +36,6 @@ bool Militar::tempestade() {
     return false;
 }
 
-void Militar::move() {
-    if (getAutoPilot()) {
-        //Em movimento autónomo fica parada.
-        // Mas, se aparecer alguma caravana bárbara a 6 posições de diferença (linha e coluna), persegue-a.
-
-    } else {
-        //move normal
-    }
-}
-
 void Militar::semTripulantes() {
     setTurnosParaDesaparecer(turnos);
 }

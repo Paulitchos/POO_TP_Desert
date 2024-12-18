@@ -96,6 +96,10 @@ public:
 
     Cidade *getCidade(int index);
 
+    char getNomeCidade(int row, int col) const;
+
+    bool isCidade(int row, int col) const;
+
     void addCaravanaInicial(int row, int col, char id);
 
     void addCaravana(const std::shared_ptr<Caravana>& caravana);
@@ -107,6 +111,14 @@ public:
     std::shared_ptr<Caravana> getLastCaravana() const;
 
     std::shared_ptr<Caravana> getCaravana(int index) const;
+
+    bool isCaravana(int row, int col, const Caravana* self) const;
+
+    void parkCaravana(char caravanaID, char cidadeName);
+
+    bool isItem(int row, int col) const;
+
+    void writeCharToBuffer(int row, int col, char c) const;
 };
 
 #endif //MAPA_H

@@ -48,17 +48,6 @@ bool Comercio::tempestade() {
     return false;
 }
 
-void Comercio::move() {
-    if (getAutoPilot()) {
-        //vai buscar info dos items proximos
-        //tenta manter-se ao lado de uma outra caravana do utilizador para ter proteção.
-        // Se existir algum item a uma distância de 2 linhas e/ou colunas,
-        // desloca-se para a apanhar o item.
-    } else {
-        //move
-    }
-}
-
 void Comercio::semTripulantes() {
     setTurnosParaDesaparecer(turnos);
 }

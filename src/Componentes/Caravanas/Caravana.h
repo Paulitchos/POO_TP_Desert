@@ -6,11 +6,13 @@
 #include <sstream>
 #include <iostream>
 
+class Mapa;
+
 class Caravana {
 public:
     Caravana(int row, int col, char id, int nPessoas, int maxPessoas, int maxAgua,
              int maxJogadasPTurno,
-             double maxMercadoria, bool controlavel);
+             double maxMercadoria, bool controlavel, Mapa *onde);
 
     ~Caravana();
 
@@ -54,6 +56,16 @@ public:
     void setMercadoria(int novaMercadoria);
 
     //MOVIMENTOS
+    void move(const std::string& direction);
+
+    int getRow() const;
+
+    void setRow(int newRow);
+
+    int getCol() const;
+
+    void setCol(int newCol);
+
     int getMovimentos() const;
 
     void setMovimentos(int movimentosADefinir);
@@ -66,8 +78,6 @@ public:
     void setTurnosParaDesaparecer(int turnos);
 
     int getTurnosParaDesaparecer();
-
-    virtual void move() = 0;
 
     virtual void semTripulantes() = 0;
 
@@ -96,6 +106,7 @@ public:
     void setInCity(bool inCity);
 
 private:
+    Mapa *onde;
     char caravanaID;
 
     int row, col;

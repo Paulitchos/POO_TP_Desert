@@ -35,8 +35,9 @@ bool Cidade::buyCaravana(char tipoCar) {
     }
 
     if (tipoCar == 'C' && !isComprouC()) {
-        auto newCaravana = std::make_shared<Comercio>(getRow(), getCol(), newID);
+        auto newCaravana = std::make_shared<Comercio>(getRow(), getCol(), newID, onde);
         newCaravana->setNivelAgua(newCaravana->getMaxAgua());
+        newCaravana->setNPessoas(newCaravana->getmaxPessoas());
         newCaravana->setInCity(true);
         parked.emplace_back(newCaravana);
         onde->addCaravana(newCaravana);
@@ -45,8 +46,9 @@ bool Cidade::buyCaravana(char tipoCar) {
     }
 
     if (tipoCar == 'M' && !isComprouM()) {
-        auto newCaravana = std::make_shared<Militar>(getRow(), getCol(), newID);
+        auto newCaravana = std::make_shared<Militar>(getRow(), getCol(), newID, onde);
         newCaravana->setNivelAgua(newCaravana->getMaxAgua());
+        newCaravana->setNPessoas(newCaravana->getmaxPessoas());
         newCaravana->setInCity(true);
         parked.emplace_back(newCaravana);
         onde->addCaravana(newCaravana);
@@ -72,4 +74,10 @@ void Cidade::showCaravanas() const {
             cout << "Caravana invalida encontrada!" << endl;
         }
     }
+}
+
+void Cidade::parkCaravana(const std::shared_ptr<Caravana>& caravana) {
+    //caravana->setNivelAgua(caravana->getMaxAgua()); comportamento automatico
+    caravana->setInCity(true);
+    parked.emplace_back(caravana);
 }

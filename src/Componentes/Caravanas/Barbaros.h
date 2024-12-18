@@ -5,7 +5,7 @@
 
 class Barbaros : public Caravana {
 public:
-    Barbaros(int row, int col, char id, int lifeTime) : Caravana(row, col, id, 40, 80, -1, -1, -1, false), lifeTime (lifeTime) {}
+    Barbaros(int row, int col, char id, int lifeTime, Mapa *m) : Caravana(row, col, id, 40, 80, -1, -1, -1, false, m), lifeTime (lifeTime) {}
 
     //reduzir o tempo de vida a cada turno
 
@@ -15,7 +15,6 @@ public:
     bool tempestade() override;
 
     //verificar
-    void move() override;
     void semTripulantes() override;
     bool verificaContinuidade() override;
 private:

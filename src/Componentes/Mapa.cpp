@@ -92,7 +92,6 @@ void Mapa::addCidade(int row, int col, char name) {
 }
 
 bool Mapa::isMontanha(int row, int col) const {
-    // Check if a mountain exists at the specified position
     for (const Montanha &montanha: montanhas) {
         if (montanha.getRow() == row && montanha.getCol() == col) {
             return true;
@@ -118,11 +117,32 @@ Cidade *Mapa::getCidade(int index) {
     return nullptr;
 }
 
+char Mapa::getNomeCidade(int row, int col) const {
+    for (auto &cidade: cidades) {
+        if (cidade.getRow() == row && cidade.getCol() == col) {
+            return cidade.getName();
+        }
+    }
+
+    cout << "Cidade nao encontrada" << endl;
+    return ' ';
+}
+
+bool Mapa::isCidade(int row, int col) const {
+    for (auto &cidade: cidades) {
+        if (cidade.getRow() == row && cidade.getCol() == col) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 void Mapa::addCaravanaInicial(int row, int col, char id) {
     if(id == '!')
-        caravanas.emplace_back(std::make_shared<Barbaros>(row, col, id, getDurBarb()));
+        caravanas.emplace_back(std::make_shared<Barbaros>(row, col, id, getDurBarb(), this));
     else {
-        caravanas.emplace_back(std::make_shared<Comercio>(row, col, id));
+        caravanas.emplace_back(std::make_shared<Comercio>(row, col, id, this));
     }
     //cout << "Caravana adicionada em (" << row << ", " << col << ")" << endl;
     buffer->setCursor(row, col);
@@ -182,3 +202,31 @@ std::shared_ptr<Caravana> Mapa::getCaravana(int index) const {
     cout << "Cidade nao encontrada" << endl;
     return nullptr;
 }
+
+bool Mapa::isCaravana(int row, int col, const Caravana* self) const {
+    for (auto &caravana: caravanas) {
+        if (caravana->getRow() == row && caravana->getCol() == col && caravana && caravana.get() != self) {
+            return true;
+        }
+    }
+    return false;
+}
+
+void Mapa::parkCaravana(char caravanaID, char cidadeName) {
+    int indexCidade = cidadeNameAvailable(cidadeName);
+    int indexCaravana = getCaravanaIndex(caravanaID);
+
+    cidades[indexCidade].parkCaravana(caravanas[indexCaravana]);
+}
+
+bool Mapa::isItem(int row, int col) const {
+    return false;
+}
+
+void Mapa::writeCharToBuffer(int row, int col, char c) const{
+    buffer->setCursor(row,col);
+    buffer->writeChar(c);
+    buffer->setCursor(0, 0);
+    buffer->flush();
+}
+
