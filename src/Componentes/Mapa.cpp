@@ -227,6 +227,6 @@ void Mapa::writeCharToBuffer(int row, int col, char c) const{
     buffer->setCursor(row,col);
     buffer->writeChar(c);
     buffer->setCursor(0, 0);
-    buffer->flush();
+    //buffer->flush();
 }
 

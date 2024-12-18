@@ -132,6 +132,7 @@ void Caravana::move(const string& direction) {
 
     if(movimentos == maxJogadasPTurno) {
         cout << "Caravana ja excedeu o seus movimentos este turno!!" << endl;
+        return;
     }
 
     int auxRow = getRow();
