@@ -1,7 +1,6 @@
 #ifndef INTERFACE_H
 #define INTERFACE_H
 
-#include <iostream>
 #include <string>
 #include <sstream>
 #include <fstream>
@@ -34,6 +33,8 @@ public:
     void startSimulation();
 
     bool iniciateSimulation();
+
+    bool fileCommandSet(std::map<std::string, int> & map, const std::string &key, const int &valor);
 
     bool readMapFromFile(std::string filename);
 
