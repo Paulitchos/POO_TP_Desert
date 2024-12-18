@@ -65,6 +65,8 @@ public:
 
     void addCaravanaInicial(int row, int col, char id);
 
+    void addCaravanaBarbaro(int row, int col);
+
     int caravaNameAvailable(char caravanaID) const;
 
     std::shared_ptr<Caravana> getLastCaravana() const;

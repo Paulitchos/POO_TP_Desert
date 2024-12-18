@@ -20,7 +20,7 @@ void ComandoProx::execute(const string &args, Simulador &sim) {
     inputs = split(args, ' ');
 
     if (inputs.size() != 2) {
-        cout << "O comando " << getNome() << "apenas aceita um argumento <n> que e um numero inteiro!!" << endl;
+        cout << "O comando " << getNome() << " apenas aceita um argumento <n> que e um numero inteiro!!" << endl;
         return;
     }
 

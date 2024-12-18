@@ -2,8 +2,7 @@
 
 using namespace std;
 
-Interface::Interface(Simulador &s) : sim(&s) {
-}
+Interface::Interface(Simulador &s) : sim(&s) { }
 
 void Interface::startSimulation() {
     sim->showMapDetails();
@@ -339,6 +338,7 @@ void Interface::loadCommands() {
     commands["move"] = make_unique<ComandoMove>();
     commands["auto"] = make_unique<ComandoAuto>();
     commands["stop"] = make_unique<ComandoStop>();
+    commands["barbaro"] = make_unique<ComandoBarbaro>();
 }
 
 void Interface::helpCommands() const {

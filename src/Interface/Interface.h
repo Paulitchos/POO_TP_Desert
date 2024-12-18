@@ -20,6 +20,7 @@
 #include "../Comandos/ComandoMove.h"
 #include "../Comandos/ComandoAuto.h"
 #include "../Comandos/ComandoStop.h"
+#include "../Comandos/ComandoBarbaro.h"
 
 class Interface {
     Simulador *sim;

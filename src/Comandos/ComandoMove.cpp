@@ -11,7 +11,7 @@ void ComandoMove::execute(const std::string &args, Simulador &sim) {
     vector<string> inputs = split(args, ' ');
 
     if (inputs.size() != 3) {
-        cout << "O comando " << getNome() << "apenas aceita dois argumentos <N> que e um numero e corresponde "
+        cout << "O comando " << getNome() << " apenas aceita dois argumentos <N> que e um numero e corresponde "
                                              "a uma caravana <X> corresponde a direcao do movimento!!" << endl;
         return;
     }

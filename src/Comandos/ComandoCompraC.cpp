@@ -9,7 +9,7 @@ void ComandoCompraC::execute(const std::string &args, Simulador &sim) {
     vector<string> inputs = split(args, ' ');
 
     if (inputs.size() != 3) {
-        cout << "O comando " << getNome() << "apenas aceita dois argumentos <C> que e uma letra minuscula e corresponde a uma cidade <T> corresponde ao tipo da caravana!!" << endl;
+        cout << "O comando " << getNome() << " apenas aceita dois argumentos <C> que e uma letra minuscula e corresponde a uma cidade <T> corresponde ao tipo da caravana!!" << endl;
         return;
     }
 

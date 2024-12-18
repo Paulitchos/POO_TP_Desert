@@ -8,7 +8,7 @@ void ComandoCaravana::execute(const std::string &args, Simulador &sim) {
     vector<string> inputs = split(args, ' ');
 
     if (inputs.size() != 2) {
-        cout << "O comando " << getNome() << "apenas aceita um argumento <C> que e um numero e corresponde a uma caravana!!" << endl;
+        cout << "O comando " << getNome() << " apenas aceita um argumento <C> que e um numero e corresponde a uma caravana!!" << endl;
         return;
     }
 

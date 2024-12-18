@@ -167,19 +167,28 @@ void Caravana::move(const string& direction) {
         cout << "Movimento invalido devido a tentar conduzir contra uma montanha!!" << endl;
         setRow(auxRow);
         setCol(auxCol);
-    } else if (onde->isCaravana(getRow(), getCol(), this)) {
+        return;
+    }
+
+    if (onde->isCaravana(getRow(), getCol(), this)) {
         cout << "Movimento invalido devido a tentar conduzir contra outra caravana!!" << endl;
         setRow(auxRow);
         setCol(auxCol);
-    } else if (onde->isCidade(getRow(), getCol())) {
+        return;
+    }
+
+    if (onde->isItem(getRow(), getCol())) {
+        cout << "Movimento invalido devido a tentar conduzir contra um item!!" << endl;
+        setRow(auxRow);
+        setCol(auxCol);
+        return;
+    }
+
+    if (onde->isCidade(getRow(), getCol())) {
         char cidadeNome = onde->getNomeCidade(getRow(), getCol());
         onde->parkCaravana(getID(), cidadeNome);
         cout << "A caravana " << getID() << " entrou na cidade " << cidadeNome << endl;
         movimentos++;
-    } else if (onde->isItem(getRow(), getCol())) {
-        cout << "Movimento invalido devido a tentar conduzir contra um item!!" << endl;
-        setRow(auxRow);
-        setCol(auxCol);
     } else {
         cout << "Caravana " << getID() << " moveu-se para a linha " << getRow() << " e coluna " << getCol() << endl;
         if(getCidadeName() != ' ') {

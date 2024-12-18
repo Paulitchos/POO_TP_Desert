@@ -8,7 +8,7 @@ void ComandoCompra::execute(const std::string &args, Simulador &sim) {
     vector<string> inputs = split(args, ' ');
 
     if (inputs.size() != 3) {
-        cout << "O comando " << getNome() << "apenas aceita dois argumentos <N> que e um numero e corresponde a uma caravana <M> corresponde as toneladas de mercadorias!!" << endl;
+        cout << "O comando " << getNome() << " apenas aceita dois argumentos <N> que e um numero e corresponde a uma caravana <M> corresponde as toneladas de mercadorias!!" << endl;
         return;
     }
 

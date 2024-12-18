@@ -102,6 +102,8 @@ public:
 
     void addCaravanaInicial(int row, int col, char id);
 
+    void addCaravanaBarbaro(int row, int col);
+
     void addCaravana(const std::shared_ptr<Caravana>& caravana);
 
     int getCaravanaIndex(char caravanaID) const;

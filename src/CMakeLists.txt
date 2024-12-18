@@ -52,4 +52,6 @@ add_executable(src main.cpp
         Comandos/ComandoAuto.h
         Comandos/ComandoStop.cpp
         Comandos/ComandoStop.h
+        Comandos/ComandoBarbaro.cpp
+        Comandos/ComandoBarbaro.h
 )

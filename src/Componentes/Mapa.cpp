@@ -145,10 +145,30 @@ void Mapa::addCaravanaInicial(int row, int col, char id) {
         caravanas.emplace_back(std::make_shared<Comercio>(row, col, id, this));
     }
     //cout << "Caravana adicionada em (" << row << ", " << col << ")" << endl;
-    buffer->setCursor(row, col);
-    buffer->writeChar(id);
-    buffer->setCursor(0, 0);
+    writeCharToBuffer(row,col, id);
 }
+
+void Mapa::addCaravanaBarbaro(int row, int col) {
+    if(isMontanha(row, col)) {
+        cout << "Nao pode criar uma caravana barbara em cima de uma montanha!!" << endl;
+        return;
+    }
+
+    if (isCaravana(row, col, nullptr)) {
+        cout << "Nao pode criar uma caravana barbara em cima de outra caravana!!" << endl;
+        return;
+    }
+
+    if (isCidade(row, col)) {
+        cout << "Nao pode criar uma caravana barbara em cima de uma cidade!!" << endl;
+        return;
+    }
+
+    caravanas.emplace_back(std::make_shared<Barbaros>(row, col, '!', getDurBarb(), this));
+    writeCharToBuffer(row,col, '!');
+    cout << "Criada uma caravana barbaro na linha " << row << " e coluna " << col << endl;
+}
+
 
 void Mapa::addCaravana(const std::shared_ptr<Caravana>& caravana) {
     caravanas.emplace_back(caravana);
