@@ -36,8 +36,20 @@ vector<string> Comando::split(const string &s, char c) const {
 }
 
 bool Comando::isNumeric(const std::string &str) const {
-    for (char ch: str) {
-        if (!std::isdigit(ch)) {
+    if (str.empty()) {
+        return false;
+    }
+
+    size_t start = 0;
+    if (str[0] == '-') {
+        if (str.length() == 1) {
+            return false;
+        }
+        start = 1;
+    }
+
+    for (size_t i = start; i < str.size(); ++i) {
+        if (!std::isdigit(str[i])) {
             return false;
         }
     }

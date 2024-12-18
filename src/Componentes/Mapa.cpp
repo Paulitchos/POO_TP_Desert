@@ -24,6 +24,20 @@ int Mapa::getCoins() const { return coins; }
 
 void Mapa::setCoins(int coins) { this->coins = coins; }
 
+void Mapa::addCoins(int coins) {
+    if(coins > 0) {
+        setCoins(coins + getCoins());
+        cout << "Adicionou " << coins << " moedas ao utilizador, ficou com um total de " << getCoins() << " moedas" << endl;
+    } else {
+        if(coins + getCoins() < 0) {
+            setCoins(0);
+        } else {
+            setCoins(coins + getCoins());
+        }
+        cout << "Removeu " << coins << " moedas ao utilizador, ficando o utilizador com " << getCoins() << " moedas" << endl;
+    }
+}
+
 int Mapa::getInsNewItem() const { return insNewItem; }
 
 void Mapa::setInsNewItem(int insNewItem) { this->insNewItem = insNewItem; }

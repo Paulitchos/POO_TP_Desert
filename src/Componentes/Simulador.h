@@ -27,6 +27,8 @@ public:
 
     void setMapCoins(int coins);
 
+    void addMapCoins(int coins);
+
     void setMapInsNewItem(int insNewItem);
 
     void setMapDurItem(int durItem);

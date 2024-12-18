@@ -44,6 +44,8 @@ public:
 
     void setCoins(int coins);
 
+    void addCoins(int coins);
+
     int getInsNewItem() const;
 
     void setInsNewItem(int insNewItem);

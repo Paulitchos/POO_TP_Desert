@@ -20,6 +20,8 @@ int Simulador::getMapCoins() const { return mapa->getCoins(); }
 
 void Simulador::setMapCoins(const int coins) { mapa->setCoins(coins); }
 
+void Simulador::addMapCoins(int coins) { mapa->addCoins(coins); }
+
 void Simulador::setMapInsNewItem(const int insNewItem) { mapa->setInsNewItem(insNewItem); }
 
 void Simulador::setMapDurItem(int durItem) { mapa->setDurItem(durItem); }

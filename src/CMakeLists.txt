@@ -54,4 +54,6 @@ add_executable(src main.cpp
         Comandos/ComandoStop.h
         Comandos/ComandoBarbaro.cpp
         Comandos/ComandoBarbaro.h
+        Comandos/ComandoMoedas.cpp
+        Comandos/ComandoMoedas.h
 )
