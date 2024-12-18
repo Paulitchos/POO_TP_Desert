@@ -17,6 +17,11 @@ void Comercio::perdeAgua() {
 string Comercio::showInfo() const {
     ostringstream os;
     os << "Caravana Comercio " << endl;
+    if (getCidadeName() == ' ') {
+        os << "A caravana nao esta numa cidade." << std::endl;
+    } else {
+        os << "A caravana esta na cidade " << getCidadeName() << std::endl;
+    }
     os << Caravana::showInfo();
     return os.str();
 }

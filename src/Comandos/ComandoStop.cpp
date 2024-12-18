@@ -26,7 +26,7 @@ void ComandoStop::execute(const std::string &args, Simulador &sim) {
             cout << "Caravana nao se encontra em modo auto-gestao" << endl;
         } else {
             aux->setAutoPilot();
-            cout << "A caravana " << getNome() << " ficou sem o modo auto-gestao" << endl;
+            cout << "A caravana " << aux->getID() << " ficou sem o modo auto-gestao" << endl;
         }
 
     } else {

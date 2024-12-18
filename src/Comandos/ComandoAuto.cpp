@@ -26,7 +26,7 @@ void ComandoAuto::execute(const std::string &args, Simulador &sim) {
             cout << "Caravana ja se encontra em modo auto-gestao" << endl;
         } else {
             aux->setAutoPilot();
-            cout << "A caravana " << getNome() << " ficou em modo auto-gestao" << endl;
+            cout << "A caravana " << aux->getID() << " ficou em modo auto-gestao" << endl;
         }
 
     } else {

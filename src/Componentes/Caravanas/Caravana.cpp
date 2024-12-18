@@ -262,7 +262,8 @@ bool Caravana::getRandomMode() {
 string Caravana::showInfo() const {
     ostringstream os;
     os << "ID: " << caravanaID << " Pessoas: " << nPessoas << "/" << maxPessoas
-       << " Agua: " << nivelAgua << "/" << maxAgua << " Mercadoria: " << nMercadoria << "/" << maxMercadoria;
+        << " Agua: " << nivelAgua << "/" << maxAgua << " Mercadoria: " << nMercadoria << "/" << maxMercadoria << endl
+        << "Linha: " << getRow() << " Coluna: " << getCol() << endl;
     return os.str();
 }
 

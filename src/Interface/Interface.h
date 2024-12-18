@@ -19,6 +19,7 @@
 #include "../Comandos/ComandoVende.h"
 #include "../Comandos/ComandoMove.h"
 #include "../Comandos/ComandoAuto.h"
+#include "../Comandos/ComandoStop.h"
 
 class Interface {
     Simulador *sim;
