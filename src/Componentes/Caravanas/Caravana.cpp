@@ -201,14 +201,15 @@ void Caravana::move(const string& direction) {
         }
         movimentos++;
     }
+    onde->imprimeBuffer();
 }
 
 int Caravana::getRow() const { return row; }
 
 void Caravana::setRow(int newRow) {
-    if (row < 0)
+    if (row == 0)
         row = onde->getRows() - 1;
-    else if (row > onde->getRows())
+    else if (row == onde->getRows() - 1)
         row = 0;
     else
         row = newRow;
@@ -217,9 +218,9 @@ void Caravana::setRow(int newRow) {
 int Caravana::getCol() const { return col; }
 
 void Caravana::setCol(int newCol) {
-    if (col < 0)
+    if (col == 0)
         col = onde->getCols() - 1;
-    else if (col >= onde->getCols())
+    else if (col == onde->getCols() - 1)
         col = 0;
     else
         col = newCol;

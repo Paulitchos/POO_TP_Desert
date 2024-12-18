@@ -92,17 +92,13 @@ void Mapa::imprimeBuffer() const {
 void Mapa::addMontanha(int row, int col) {
     montanhas.emplace_back(row, col);
     //cout << "Montanha adicionada em (" << row << ", " << col << ")" << endl;
-    buffer->setCursor(row, col);
-    buffer->writeChar('+');
-    buffer->setCursor(0, 0);
+    writeCharToBuffer(row, col, '+');
 }
 
 void Mapa::addCidade(int row, int col, char name) {
     cidades.emplace_back(row, col, name, this);
     //cout << "Cidade adicionada em (" << row << ", " << col << ")" << endl;
-    buffer->setCursor(row, col);
-    buffer->writeChar(name);
-    buffer->setCursor(0, 0);
+    writeCharToBuffer(row, col, name);
 }
 
 bool Mapa::isMontanha(int row, int col) const {
