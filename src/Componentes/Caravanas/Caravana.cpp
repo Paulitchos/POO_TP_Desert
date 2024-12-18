@@ -8,7 +8,7 @@ using namespace std;
 Caravana::Caravana(int row, int col, char id, int nPessoas, int maxPessoas, int maxAgua,
                    int maxJogadasPTurno, double maxMercadoria, bool controlavel, Mapa *onde)
         : row(row), col(col), caravanaID(id) , nPessoas(nPessoas), nMercadoria(0), maxPessoas(maxPessoas), maxAgua(maxAgua),
-          maxJogadasPTurno(maxJogadasPTurno), maxMercadoria(maxMercadoria), controlavel(controlavel), inCity(false), onde(onde) {}
+          movimentos(0), maxJogadasPTurno(maxJogadasPTurno), maxMercadoria(maxMercadoria), controlavel(controlavel), cidadeName(' '), onde(onde) {}
 
 Caravana::~Caravana() {
     cout << "Caravana destruida" << endl;
@@ -73,7 +73,7 @@ void Caravana::setNivelAgua(int nivelAgua) {
 }
 
 void Caravana::abastecerAgua() {
-    cout << "Agua abastecida" << endl;
+    cout << "Agua abastecida no poco da cidade" << endl;
     setNivelAgua(getMaxMercadoria());
 }
 
@@ -182,8 +182,10 @@ void Caravana::move(const string& direction) {
         setCol(auxCol);
     } else {
         cout << "Caravana " << getID() << " moveu-se para a linha " << getRow() << " e coluna " << getCol() << endl;
-        if(inCity)
+        if(getCidadeName() != ' ') {
+            onde->unparkCaravana(getID(), getCidadeName());
             onde->writeCharToBuffer(getRow(), getCol(), getID());
+        }
         else {
             onde->writeCharToBuffer(auxRow, auxCol, '.');
             onde->writeCharToBuffer(getRow(), getCol(), getID());
@@ -272,7 +274,7 @@ void Caravana::setDestruida() {
     destruida = true;
 }
 
-bool Caravana::getInCity() const { return inCity; }
+char Caravana::getCidadeName() const { return cidadeName;}
 
-void Caravana::setInCity(bool inCity) { this->inCity = inCity; }
+void Caravana::setCidadeName(char cidadeName) { this->cidadeName = cidadeName; }
 

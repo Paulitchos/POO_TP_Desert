@@ -22,7 +22,7 @@ void ComandoVende::execute(const std::string &args, Simulador &sim) {
     shared_ptr<Caravana> aux = sim.getMapCaravana(index);
 
     if (aux) {
-        if(!aux->getInCity()) {
+        if(aux->getCidadeName() == ' ') {
             cout << "Erro: Caravana nao esta numa cidade!" << endl;
         } else {
             if(aux->getMercadoria() != 0) {

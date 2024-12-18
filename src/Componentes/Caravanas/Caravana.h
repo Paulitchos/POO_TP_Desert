@@ -83,9 +83,9 @@ public:
 
     virtual bool verificaContinuidade() = 0;
 
-    void setAutoPilot();
-
     bool getAutoPilot();
+
+    void setAutoPilot();
 
     void setRandomMode();
 
@@ -101,13 +101,14 @@ public:
 
     virtual std::string showInfo() const;
 
-    bool getInCity() const;
+    char getCidadeName() const;
 
-    void setInCity(bool inCity);
+    void setCidadeName(char newCidadeName);
 
 private:
     Mapa *onde;
     char caravanaID;
+    char cidadeName;
 
     int row, col;
     int nPessoas, maxPessoas;
@@ -115,7 +116,6 @@ private:
     double nMercadoria, maxMercadoria;
     bool controlavel, destruida = false, autoPilot = false, randomMode = false;
     bool vidaInfinita;
-    bool inCity;
 
     const int maxJogadasPTurno;
     int movimentos;

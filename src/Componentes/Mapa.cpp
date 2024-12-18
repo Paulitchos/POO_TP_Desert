@@ -219,6 +219,14 @@ void Mapa::parkCaravana(char caravanaID, char cidadeName) {
     cidades[indexCidade].parkCaravana(caravanas[indexCaravana]);
 }
 
+void Mapa::unparkCaravana(char caravanaID, char cidadeName) {
+    int indexCaravana = getCaravanaIndex(caravanaID);
+    int indexCidade = cidadeNameAvailable(cidadeName);
+
+
+    cidades[indexCidade].unparkCaravana(caravanas[indexCaravana]);
+}
+
 bool Mapa::isItem(int row, int col) const {
     return false;
 }

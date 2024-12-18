@@ -38,7 +38,7 @@ bool Cidade::buyCaravana(char tipoCar) {
         auto newCaravana = std::make_shared<Comercio>(getRow(), getCol(), newID, onde);
         newCaravana->setNivelAgua(newCaravana->getMaxAgua());
         newCaravana->setNPessoas(newCaravana->getmaxPessoas());
-        newCaravana->setInCity(true);
+        newCaravana->setCidadeName(getName());
         parked.emplace_back(newCaravana);
         onde->addCaravana(newCaravana);
         onde->setCoins(onde->getCoins() - onde->getPCaravan());
@@ -49,7 +49,7 @@ bool Cidade::buyCaravana(char tipoCar) {
         auto newCaravana = std::make_shared<Militar>(getRow(), getCol(), newID, onde);
         newCaravana->setNivelAgua(newCaravana->getMaxAgua());
         newCaravana->setNPessoas(newCaravana->getmaxPessoas());
-        newCaravana->setInCity(true);
+        newCaravana->setCidadeName(getName());
         parked.emplace_back(newCaravana);
         onde->addCaravana(newCaravana);
         onde->setCoins(onde->getCoins() - onde->getPCaravan());
@@ -77,7 +77,18 @@ void Cidade::showCaravanas() const {
 }
 
 void Cidade::parkCaravana(const std::shared_ptr<Caravana>& caravana) {
-    //caravana->setNivelAgua(caravana->getMaxAgua()); comportamento automatico
-    caravana->setInCity(true);
+    caravana->setCidadeName(getName());
     parked.emplace_back(caravana);
+}
+
+void Cidade::unparkCaravana(const std::shared_ptr<Caravana>& caravana) {
+    caravana->setCidadeName(' ');
+    for (auto it = parked.begin(); it != parked.end(); ++it) {
+        if (*it == caravana) {
+            parked.erase(it);
+            break;
+        }
+    }
+
+    cout << "Caravana " << caravana->getID() << " saiu da cidade " << getName() << endl;
 }

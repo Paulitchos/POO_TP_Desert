@@ -48,4 +48,6 @@ add_executable(src main.cpp
         Comandos/ComandoVende.h
         Comandos/ComandoMove.cpp
         Comandos/ComandoMove.h
+        Comandos/ComandoAuto.cpp
+        Comandos/ComandoAuto.h
 )

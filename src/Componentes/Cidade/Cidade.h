@@ -39,6 +39,8 @@ public:
     void showCaravanas() const;
 
     void parkCaravana(const std::shared_ptr<Caravana>& caravana);
+
+    void unparkCaravana(const std::shared_ptr<Caravana>& caravana);
 };
 
 

@@ -29,7 +29,7 @@ void ComandoCompra::execute(const std::string &args, Simulador &sim) {
     int mercadoria = std::stoi(inputs[2]);
 
     if (aux) {
-        if(!aux->getInCity()) {
+        if(aux->getCidadeName() == ' ') {
             cout << "Erro: Caravana nao esta numa cidade!" << endl;
         } else {
             if(aux->adicionaMercadoria(aux->getMercadoria() + mercadoria) && sim.getMapBuyMerch() * mercadoria <= sim.getMapCoins()) {
