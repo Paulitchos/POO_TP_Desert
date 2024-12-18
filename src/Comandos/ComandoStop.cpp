@@ -1,10 +1,10 @@
-#include "ComandoAuto.h"
+#include "ComandoStop.h"
 
 using namespace std;
 
-ComandoAuto::ComandoAuto() : Comando("auto", "Coloca a caravana N em auto-gestão","<N>") { }
+ComandoStop::ComandoStop() : Comando("stop", " A caravana com o número N para o comportamento automático.", "<N>") { }
 
-void ComandoAuto::execute(const std::string &args, Simulador &sim) {
+void ComandoStop::execute(const std::string &args, Simulador &sim) {
     vector<string> inputs = split(args, ' ');
 
     if (inputs.size() != 2) {
@@ -22,11 +22,11 @@ void ComandoAuto::execute(const std::string &args, Simulador &sim) {
     shared_ptr<Caravana> aux = sim.getMapCaravana(index);
 
     if (aux) {
-        if(aux->getAutoPilot()) {
-            cout << "Caravana ja se encontra em modo auto-gestao" << endl;
+        if(!aux->getAutoPilot()) {
+            cout << "Caravana nao se encontra em modo auto-gestao" << endl;
         } else {
             aux->setAutoPilot();
-            cout << "A caravana " << getNome() << " ficou em modo auto-gestao" << endl;
+            cout << "A caravana " << getNome() << " ficou sem o modo auto-gestao" << endl;
         }
 
     } else {

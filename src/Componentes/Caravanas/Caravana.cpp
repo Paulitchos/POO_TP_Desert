@@ -243,7 +243,7 @@ int Caravana::getTurnosParaDesaparecer() {
 
 
 void Caravana::setAutoPilot() {
-    !autoPilot;
+    autoPilot = !autoPilot;
 }
 
 bool Caravana::getAutoPilot() {
@@ -251,7 +251,7 @@ bool Caravana::getAutoPilot() {
 }
 
 void Caravana::setRandomMode() {
-    !randomMode;
+    randomMode = !randomMode;
 }
 
 bool Caravana::getRandomMode() {

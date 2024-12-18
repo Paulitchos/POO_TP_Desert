@@ -50,4 +50,6 @@ add_executable(src main.cpp
         Comandos/ComandoMove.h
         Comandos/ComandoAuto.cpp
         Comandos/ComandoAuto.h
+        Comandos/ComandoStop.cpp
+        Comandos/ComandoStop.h
 )
