@@ -24,12 +24,20 @@ int Caravana::getmaxPessoas() const {
 }
 
 void Caravana::adicionaPessoas(int pessoasAAdicionar) {
+    if(onde->getCoins() - pessoasAAdicionar < 0) {
+        cout << "Nao tem dinheiro para comprar " << pessoasAAdicionar << " tripulantes" << endl;
+        return;
+    }
+
     if (getNPessoas() + pessoasAAdicionar > getmaxPessoas()) {
-        cout << "Caravana cheia de pessoas!" << endl;
+        cout << "A quantidade de compra de tripulantes excede o limite maximo de tripulantes" << endl;
         return;
     }
 
     setNPessoas(getNPessoas() + pessoasAAdicionar);
+    onde->setCoins(onde->getCoins() - pessoasAAdicionar);
+    cout << "Foram adicionados " << pessoasAAdicionar << " tripulantes a caravana " << getID() << endl;
+    cout << "Ficou com " << onde->getCoins() << " moedas restantes" << endl;
 }
 
 void Caravana::removePessoas(int pessoasARemover) {

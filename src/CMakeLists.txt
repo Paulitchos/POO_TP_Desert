@@ -56,4 +56,6 @@ add_executable(src main.cpp
         Comandos/ComandoBarbaro.h
         Comandos/ComandoMoedas.cpp
         Comandos/ComandoMoedas.h
+        Comandos/ComandoTripul.cpp
+        Comandos/ComandoTripul.h
 )

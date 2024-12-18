@@ -19,8 +19,8 @@ void ComandoCompra::execute(const std::string &args, Simulador &sim) {
         return;
     }
 
-    if (!isNumeric(inputs[2])) {
-        cout << "argumento <M> precisa de ser um numero inteiro!!" << endl;
+    if (!isNumeric(inputs[2]) || stoi(inputs[2]) < 0) {
+        cout << "argumento <M> precisa de ser um numero inteiro e positivo!!" << endl;
         return;
     }
 
