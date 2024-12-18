@@ -21,6 +21,7 @@
 #include "../Comandos/ComandoStop.h"
 #include "../Comandos/ComandoBarbaro.h"
 #include "../Comandos/ComandoMoedas.h"
+#include "../Comandos/ComandoTripul.h"
 
 class Interface {
     Simulador *sim;

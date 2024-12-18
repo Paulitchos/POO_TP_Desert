@@ -324,6 +324,7 @@ void Interface::loadCommands() {
     commands["stop"] = make_unique<ComandoStop>();
     commands["barbaro"] = make_unique<ComandoBarbaro>();
     commands["moedas"] = make_unique<ComandoMoedas>();
+    commands["tripul"] = make_unique<ComandoTripul>();
 }
 
 void Interface::helpCommands() const {
