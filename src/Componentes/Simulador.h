@@ -80,6 +80,10 @@ public:
     void saveBuffer(std::string ficheiro);
 
     void loadBuffer(std::string ficheiro);
+
+    void listMapSavedBuffers() const;
+
+    void deleteSavedBuffer(const std::string& nome);
 };
 
 

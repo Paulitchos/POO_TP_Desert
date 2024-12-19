@@ -331,3 +331,26 @@ void Mapa::loadBuffer(const string& ficheiro) {
         cout << line << endl;
     }
 }
+
+void Mapa::listSavedBuffers() const {
+    if (savedBuffers.empty()) {
+        cout << "Nenhum buffer salvo." << endl;
+        return;
+    }
+
+    cout << "Buffers salvos:" << endl;
+    for (const auto& [name, _] : savedBuffers) {
+        cout << "- " << name << endl;
+    }
+}
+
+void Mapa::deleteSavedBuffer(const std::string& nome) {
+    auto it = savedBuffers.find(nome);
+    if (it == savedBuffers.end()) {
+        cout << "Erro: Nenhum buffer salvo com o nome \"" << nome << "\" encontrado!" << endl;
+        return;
+    }
+
+    savedBuffers.erase(it);
+    cout << "Buffer \"" << nome << "\" apagado com sucesso." << endl;
+}

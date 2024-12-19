@@ -319,6 +319,8 @@ void Interface::loadCommands() {
     commands["areia"] = make_unique<ComandoAreia>();
     commands["save"] = make_unique<ComandoSave>();
     commands["loads"] = make_unique<ComandoLoad>();
+    commands["lists"] = make_unique<ComandoList>();
+    commands["dels"] = make_unique<ComandoDel>();
 }
 
 void Interface::helpCommands() const {

@@ -64,4 +64,8 @@ add_executable(src main.cpp
         Comandos/ComandoSave.h
         Comandos/ComandoLoad.cpp
         Comandos/ComandoLoad.h
+        Comandos/ComandoList.cpp
+        Comandos/ComandoList.h
+        Comandos/ComandoDel.cpp
+        Comandos/ComandoDel.h
 )

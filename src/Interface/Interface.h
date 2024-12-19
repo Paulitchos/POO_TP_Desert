@@ -25,6 +25,8 @@
 #include "../Comandos/ComandoAreia.h"
 #include "../Comandos/ComandoSave.h"
 #include "../Comandos/ComandoLoad.h"
+#include "../Comandos/ComandoList.h"
+#include "../Comandos/ComandoDel.h"
 
 class Interface {
     Simulador *sim;

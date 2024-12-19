@@ -135,6 +135,10 @@ public:
     void saveBuffer(const std::string& nome);
 
     void loadBuffer(const std::string& nome);
+
+    void listSavedBuffers() const;
+
+    void deleteSavedBuffer(const std::string& nome);
 };
 
 #endif //MAPA_H

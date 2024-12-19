@@ -73,3 +73,7 @@ void Simulador::startMapTempestade(int row, int col, int raio) { mapa->startTemp
 void Simulador::saveBuffer(std::string ficheiro) { mapa->saveBuffer(ficheiro); }
 
 void Simulador::loadBuffer(std::string ficheiro) { mapa->loadBuffer(ficheiro); }
+
+void Simulador::listMapSavedBuffers() const { mapa->listSavedBuffers(); }
+
+void Simulador::deleteSavedBuffer(const std::string& nome) { mapa->deleteSavedBuffer(nome); }
