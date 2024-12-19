@@ -6,10 +6,11 @@ Mapa::Mapa()
     : rows(0), cols(0), coins(0),
       insNewItem(0), durItem(0), maxItem(0),
       pSellMerch(0), pBuyMerch(0), pCaravan(0),
-      insNewBarb(0), durBarb(0), turn(1), buffer(nullptr) {
+      insNewBarb(0), durBarb(0), turn(1), nFightsWon(0), buffer(nullptr) {
 }
 
 Mapa::~Mapa() {
+    cout << "Mapa destruido e todos os recursos foram libertados." << endl;
 }
 
 int Mapa::getRows() const { return rows; }
@@ -74,7 +75,11 @@ void Mapa::setDurBarb(int durBarb) { this->durBarb = durBarb; }
 
 int Mapa::getTurn() const { return turn; }
 
-void Mapa::setTurn(int turn) { this->turn = turn; }
+void Mapa::setTurn() { turn = turn++; }
+
+int Mapa::getNFightsWon() const { return nFightsWon; }
+
+void Mapa::setNFightsWon() { nFightsWon = nFightsWon++; }
 
 void Mapa::showDetails() const {
     cout << "*** Detalhes ***" << endl << endl;

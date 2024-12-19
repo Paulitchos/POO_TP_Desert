@@ -68,4 +68,6 @@ add_executable(src main.cpp
         Comandos/ComandoList.h
         Comandos/ComandoDel.cpp
         Comandos/ComandoDel.h
+        Comandos/ComandoTermina.cpp
+        Comandos/ComandoTermina.h
 )

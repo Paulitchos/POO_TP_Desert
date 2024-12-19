@@ -13,7 +13,7 @@ Caravana::Caravana(int row, int col, char id, int nPessoas, int maxPessoas, int 
 }
 
 Caravana::~Caravana() {
-    cout << "Caravana destruida" << endl;
+    //cout << "Caravana destruida" << endl;
 }
 
 // ------- PESSOAS

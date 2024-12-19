@@ -84,6 +84,8 @@ public:
     void listMapSavedBuffers() const;
 
     void deleteSavedBuffer(const std::string& nome);
+
+    void terminaMapa();
 };
 
 

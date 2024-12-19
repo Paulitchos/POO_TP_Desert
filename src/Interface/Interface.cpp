@@ -10,8 +10,9 @@ Interface::Interface(Simulador &s) : sim(&s) {
 void Interface::startSimulation() {
     sim->showMapDetails();
     this->proxFase = 0;
+    bool running = true;
 
-    while (true) {
+    while (running) {
         switch (this->proxFase) {
             case 0:
                 this->proxFase = askCommands();
@@ -19,14 +20,16 @@ void Interface::startSimulation() {
             case 1:
                 cout << "Comportamentos auto - verifica continuidade";
                 break;
-
+            case 4:
+                running = false;
+                break;
             default:
                 cout << "Algo de inesperado aconteceu!" << endl;
         }
     }
 }
 
-bool Interface::iniciateSimulation() {
+void Interface::iniciateSimulation() {
     string input;
     cout << "Para iniciar o mapa use o comando: config <nomeFicheiro>" << endl;
     cout << "Se quiser sair do programa, utilize comando: sair" << endl;
@@ -45,7 +48,7 @@ bool Interface::iniciateSimulation() {
 
         if (inputs[0] == "sair") {
             cout << "Fechar programa..." << endl;
-            return false;
+            return;
         }
 
         if (inputs[0] == "config" && inputs.size() > 1) {
@@ -53,7 +56,7 @@ bool Interface::iniciateSimulation() {
                 cout << "\nMapa lido com sucesso" << endl << endl;
                 break;
             }
-            return false;
+            return;
         }
 
         cout << "Comando invalido" << endl;
@@ -62,7 +65,7 @@ bool Interface::iniciateSimulation() {
     loadCommands();
     //helpCommands();
     startSimulation();
-    return true;
+    iniciateSimulation();
 }
 
 bool Interface::fileCommandSet(std::map<string, int> &map, const string &key, const int &valor) {
@@ -299,6 +302,9 @@ int Interface::askCommands() {
     if (inputs[0] == "prox")
         return 1;
 
+    if(inputs[0] == "termina")
+        return 4;
+
     return 0;
 }
 
@@ -321,6 +327,7 @@ void Interface::loadCommands() {
     commands["loads"] = make_unique<ComandoLoad>();
     commands["lists"] = make_unique<ComandoList>();
     commands["dels"] = make_unique<ComandoDel>();
+    commands["termina"] = make_unique<ComandoTermina>();
 }
 
 void Interface::helpCommands() const {

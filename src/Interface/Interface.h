@@ -27,6 +27,7 @@
 #include "../Comandos/ComandoLoad.h"
 #include "../Comandos/ComandoList.h"
 #include "../Comandos/ComandoDel.h"
+#include "../Comandos/ComandoTermina.h"
 
 class Interface {
     Simulador *sim;
@@ -38,7 +39,7 @@ public:
 
     void startSimulation();
 
-    bool iniciateSimulation();
+    void iniciateSimulation();
 
     bool fileCommandSet(std::map<std::string, int> &map, const std::string &key, const int &valor);
 

@@ -1,12 +1,14 @@
 #include "Simulador.h"
 
+using namespace std;
+
 Simulador::Simulador() : mapa(nullptr) {
 }
 
 Simulador::~Simulador() {
 }
 
-void Simulador::iniciateMap() { mapa = std::make_unique<Mapa>(); }
+void Simulador::iniciateMap() { mapa = make_unique<Mapa>(); }
 
 int Simulador::getMapRows() const { return mapa->getRows(); }
 
@@ -64,16 +66,28 @@ void Simulador::addCaravanaBarbaro(int row, int col) { mapa->addCaravanaBarbaro(
 
 int Simulador::caravaNameAvailable(char caravanaID) const { return mapa->getCaravanaIndex(caravanaID); }
 
-std::shared_ptr<Caravana> Simulador::getLastCaravana() const { return mapa->getLastCaravana(); }
+shared_ptr<Caravana> Simulador::getLastCaravana() const { return mapa->getLastCaravana(); }
 
-std::shared_ptr<Caravana> Simulador::getMapCaravana(int index) const { return mapa->getCaravana(index); }
+shared_ptr<Caravana> Simulador::getMapCaravana(int index) const { return mapa->getCaravana(index); }
 
 void Simulador::startMapTempestade(int row, int col, int raio) { mapa->startTempestade(row, col, raio); }
 
-void Simulador::saveBuffer(std::string ficheiro) { mapa->saveBuffer(ficheiro); }
+void Simulador::saveBuffer(string ficheiro) { mapa->saveBuffer(ficheiro); }
 
-void Simulador::loadBuffer(std::string ficheiro) { mapa->loadBuffer(ficheiro); }
+void Simulador::loadBuffer(string ficheiro) { mapa->loadBuffer(ficheiro); }
 
 void Simulador::listMapSavedBuffers() const { mapa->listSavedBuffers(); }
 
-void Simulador::deleteSavedBuffer(const std::string& nome) { mapa->deleteSavedBuffer(nome); }
+void Simulador::deleteSavedBuffer(const string& nome) { mapa->deleteSavedBuffer(nome); }
+
+void Simulador::terminaMapa() {
+    if (mapa) {
+        cout << "Encerrando a simulacao e limpando os recursos do mapa..." << endl;
+        cout << "A simulacao decorreu durante " << mapa->getTurn() << " turnos" << endl <<
+        "O utilizador venceu " << mapa->getNFightsWon() << " combates e acabou com " << mapa->getCoins() << " moedas." << endl;
+        mapa.reset();
+    }
+
+    cout << "Simulacao encerrada com sucesso." << endl << endl;
+}
+

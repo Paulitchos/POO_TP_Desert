@@ -22,7 +22,7 @@
 class Mapa {
     int rows, cols, coins,
             insNewItem, durItem, maxItem, pSellMerch, pBuyMerch,
-            pCaravan, insNewBarb, durBarb, turn;
+            pCaravan, insNewBarb, durBarb, turn, nFightsWon;
     std::unique_ptr<Buffer> buffer;
     std::map<std::string, std::vector<std::string>> savedBuffers;
     std::vector<Montanha> montanhas;
@@ -82,7 +82,11 @@ public:
 
     int getTurn() const;
 
-    void setTurn(int turn);
+    void setTurn();
+
+    int getNFightsWon() const;
+
+    void setNFightsWon();
 
     void showDetails() const;
 
@@ -139,6 +143,8 @@ public:
     void listSavedBuffers() const;
 
     void deleteSavedBuffer(const std::string& nome);
+
+    void termina();
 };
 
 #endif //MAPA_H
