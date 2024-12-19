@@ -82,10 +82,12 @@ int Mapa::getNFightsWon() const { return nFightsWon; }
 void Mapa::setNFightsWon() { nFightsWon = nFightsWon++; }
 
 void Mapa::showDetails() const {
+    int nCaravansUtilizador = getNCaravanasUtilizador();
     cout << "*** Detalhes ***" << endl << endl;
     cout << "Linhas: " << rows << " Colunas: " << cols << endl
-            << "Turno: " << getTurn() << " || Cidades: " << cidades.size() << " || Caravanas: " << caravanas.size() <<
-            " || Moedas: " << getCoins() << endl
+            << "Turno: " << getTurn() << " || Cidades: " << cidades.size() << endl <<
+            "Caravanas do Utilizador: " << nCaravansUtilizador << " || Caravanas Barbaras: " << caravanas.size() - nCaravansUtilizador << endl <<
+            "Moedas: " << getCoins() << endl
             << "Preco da caravana: " << getPCaravan() << endl << endl;
 }
 
@@ -239,6 +241,17 @@ std::shared_ptr<Caravana> Mapa::getCaravana(int index) const {
     }
     cout << "Cidade nao encontrada" << endl;
     return nullptr;
+}
+
+int Mapa::getNCaravanasUtilizador() const {
+    int nCaravanas = 0;
+    for (auto &caravana: caravanas) {
+        if (caravana->getID() != '!') {
+            nCaravanas++;
+        }
+    }
+
+    return nCaravanas;
 }
 
 bool Mapa::isCaravana(int row, int col, const Caravana *self) const {

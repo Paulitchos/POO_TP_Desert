@@ -2,7 +2,7 @@
 
 using namespace std;
 
-Simulador::Simulador() : mapa(nullptr) {
+Simulador::Simulador() : turnAAvancar(1), mapa(nullptr) {
 }
 
 Simulador::~Simulador() {
@@ -43,6 +43,10 @@ void Simulador::setMapPCaravan(int pCaravan) { mapa->setPCaravan(pCaravan); }
 void Simulador::setMapInsNewBarb(int insNewBarb) { mapa->setInsNewBarb(insNewBarb); }
 
 void Simulador::setMapDurBarb(int durBarb) { mapa->setDurBarb(durBarb); }
+
+int Simulador::getTurnAAvancar() const { return turnAAvancar; }
+
+void Simulador::setTurnAAvancar(int turnAAvancar) { this->turnAAvancar = turnAAvancar; }
 
 void Simulador::showMapDetails() const { mapa->showDetails(); }
 

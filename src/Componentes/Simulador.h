@@ -7,7 +7,7 @@
 
 class Simulador {
     std::unique_ptr<Mapa> mapa;
-
+    int turnAAvancar;
 public:
     Simulador();
 
@@ -48,6 +48,10 @@ public:
     void setMapInsNewBarb(int insNewBarb);
 
     void setMapDurBarb(int durBarb);
+
+    int getTurnAAvancar() const;
+
+    void setTurnAAvancar(int turnAAvancar);
 
     void showMapDetails() const;
 

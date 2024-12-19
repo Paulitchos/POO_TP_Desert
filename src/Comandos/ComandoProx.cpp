@@ -20,13 +20,18 @@ void ComandoProx::execute(const string &args, Simulador &sim) {
 
     inputs = split(args, ' ');
 
-    if (inputs.size() != 2) {
-        cout << "O comando " << getNome() << " apenas aceita um argumento <n> que e um numero inteiro!!" << endl;
+    if (inputs.size() < 2) {
+        cout << "O comando " << getNome() << " apenas aceita um argumento opcional <n> que e um numero inteiro!!" << endl;
         return;
     }
 
     if (!isNumeric(inputs[1])) {
         cout << "argumento <n> precisa de ser um numero inteiro!!" << endl;
         return;
+    }
+
+    if(setInstantes(stoi(inputs[1]))) {
+        sim.setTurnAAvancar(instants);
+        cout << "Simulacao ira avancar " << instants << " turnos" << endl;
     }
 }

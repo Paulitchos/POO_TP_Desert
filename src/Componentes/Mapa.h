@@ -122,6 +122,8 @@ public:
 
     std::shared_ptr<Caravana> getCaravana(int index) const;
 
+    int getNCaravanasUtilizador() const;
+
     bool isCaravana(int row, int col, const Caravana *self) const;
 
     void parkCaravana(char caravanaID, char cidadeName);
