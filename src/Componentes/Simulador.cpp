@@ -69,3 +69,7 @@ std::shared_ptr<Caravana> Simulador::getLastCaravana() const { return mapa->getL
 std::shared_ptr<Caravana> Simulador::getMapCaravana(int index) const { return mapa->getCaravana(index); }
 
 void Simulador::startMapTempestade(int row, int col, int raio) { mapa->startTempestade(row, col, raio); }
+
+void Simulador::saveBuffer(std::string ficheiro) { mapa->saveBuffer(ficheiro); }
+
+void Simulador::loadBuffer(std::string ficheiro) { mapa->loadBuffer(ficheiro); }

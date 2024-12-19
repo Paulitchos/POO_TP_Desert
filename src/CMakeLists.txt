@@ -60,4 +60,8 @@ add_executable(src main.cpp
         Comandos/ComandoTripul.h
         Comandos/ComandoAreia.cpp
         Comandos/ComandoAreia.h
+        Comandos/ComandoSave.cpp
+        Comandos/ComandoSave.h
+        Comandos/ComandoLoad.cpp
+        Comandos/ComandoLoad.h
 )

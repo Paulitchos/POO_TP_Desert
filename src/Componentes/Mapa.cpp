@@ -288,3 +288,46 @@ void Mapa::startTempestade(int row, int col, int raio) {
 
     cout << "A tempestade de areia terminou" << endl;
 }
+
+vector<string> Mapa::captureBufferState() const {
+    std::vector<std::string> state;
+
+    if (!buffer) {
+        std::cout << "Erro: O buffer atual está vazio!" << std::endl;
+        return state;
+    }
+
+    for (int i = 0; i < getRows(); ++i) {
+        std::string line;
+        for (int j = 0; j < getCols(); ++j) {
+            line += buffer->getChar(i, j);
+        }
+        state.push_back(line);
+    }
+
+    return state;
+}
+
+
+void Mapa::saveBuffer(const string& nome) {
+    if (savedBuffers.find(nome) != savedBuffers.end()) {
+        cout << "Erro: Já existe um buffer salvo com o nome \"" << nome << "\"!" << endl;
+        return;
+    }
+
+    savedBuffers[nome] = captureBufferState();
+    cout << "Buffer salvo com sucesso como \"" << nome << "\"." << endl;
+}
+
+void Mapa::loadBuffer(const string& ficheiro) {
+    auto it = savedBuffers.find(ficheiro);
+    if (it == savedBuffers.end()) {
+        cout << "Erro: Nenhum buffer salvo com o nome \"" << ficheiro << "\"!" << endl;
+        return;
+    }
+
+    cout << "Estado do buffer \"" << ficheiro << "\":" << endl;
+    for (const auto& line : it->second) {
+        cout << line << endl;
+    }
+}

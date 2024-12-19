@@ -23,6 +23,8 @@
 #include "../Comandos/ComandoMoedas.h"
 #include "../Comandos/ComandoTripul.h"
 #include "../Comandos/ComandoAreia.h"
+#include "../Comandos/ComandoSave.h"
+#include "../Comandos/ComandoLoad.h"
 
 class Interface {
     Simulador *sim;

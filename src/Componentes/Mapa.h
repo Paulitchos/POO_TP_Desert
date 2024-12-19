@@ -8,6 +8,7 @@
 #include <memory>
 #include <vector>
 #include <algorithm>
+#include <map>
 #include "../Interface/Buffer.h"
 
 #include "Caravanas/Caravana.h"
@@ -23,6 +24,7 @@ class Mapa {
             insNewItem, durItem, maxItem, pSellMerch, pBuyMerch,
             pCaravan, insNewBarb, durBarb, turn;
     std::unique_ptr<Buffer> buffer;
+    std::map<std::string, std::vector<std::string>> savedBuffers;
     std::vector<Montanha> montanhas;
     std::vector<Cidade> cidades;
     std::vector<std::shared_ptr<Caravana> > caravanas;
@@ -127,6 +129,12 @@ public:
     void writeCharToBuffer(int row, int col, char c) const;
 
     void startTempestade(int row, int col, int raio);
+
+    std::vector<std::string> captureBufferState() const;
+
+    void saveBuffer(const std::string& nome);
+
+    void loadBuffer(const std::string& nome);
 };
 
 #endif //MAPA_H

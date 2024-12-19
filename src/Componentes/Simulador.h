@@ -76,6 +76,10 @@ public:
     std::shared_ptr<Caravana> getMapCaravana(int index) const;
 
     void startMapTempestade(int row, int col, int raio);
+
+    void saveBuffer(std::string ficheiro);
+
+    void loadBuffer(std::string ficheiro);
 };
 
 

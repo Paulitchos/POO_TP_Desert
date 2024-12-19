@@ -32,31 +32,26 @@ void Buffer::setCursor(int row, int col) {
     }
 }
 
-// Write a character at the current cursor position
 void Buffer::writeChar(char c) {
     if (cursorRow >= 0 && cursorRow < rows && cursorCol >= 0 && cursorCol < cols) {
         data[cursorRow][cursorCol++] = c;
         if (cursorCol >= cols) {
-            // Move to the next line if column exceeds buffer width
             cursorCol = 0;
             cursorRow++;
         }
     }
 }
 
-// Write a string starting at the cursor position
 void Buffer::writeString(const char *str) {
     while (*str) {
         writeChar(*str++);
     }
 }
 
-// Write an integer at the cursor position
 void Buffer::writeInt(int number) {
     writeString(to_string(number).c_str());
 }
 
-// Output buffer to the console
 void Buffer::flush() {
     for (int i = 0; i < rows; ++i) {
         for (int j = 0; j < cols; ++j) {
@@ -67,18 +62,23 @@ void Buffer::flush() {
 }
 
 ostream &operator<<(Buffer &buffer, char c) {
-    buffer.writeChar(c); // Usa o métdo da classe Buffer para escrever um único caractere
-    return cout; // Retorna o fluxo de saída
+    buffer.writeChar(c);
+    return cout;
 }
 
-// Sobrecarga do operador << para escrever uma string no buffer
 ostream &operator<<(Buffer &buffer, const char *str) {
-    buffer.writeString(str); // Usa o métdo da classe Buffer para escrever uma string
-    return cout; // Retorna o fluxo de saída
+    buffer.writeString(str);
+    return cout;
 }
 
-// Sobrecarga do operador << para escrever um inteiro no buffer
 ostream &operator<<(Buffer &buffer, int number) {
-    buffer.writeInt(number); // Usa o método da classe Buffer para escrever um inteiro
-    return cout; // Retorna o fluxo de saída
+    buffer.writeInt(number);
+    return cout;
+}
+
+char Buffer::getChar(int row, int col) const {
+    if (row >= 0 && row < rows && col >= 0 && col < cols) {
+        return data[row][col];
+    }
+    return '\0';
 }
