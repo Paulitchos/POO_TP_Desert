@@ -2,7 +2,6 @@
 #define SUPPORT_TP_CARAVANA_H
 
 #include <string>
-#include <ctime>
 #include <sstream>
 #include <iostream>
 

@@ -15,7 +15,6 @@ string Barbaros::showInfo() const {
 }
 
 void Barbaros::tempestade() {
-    srand(time(0));
     int randomDead;
 
     if (getMercadoria() > getMaxMercadoria() / 2) {

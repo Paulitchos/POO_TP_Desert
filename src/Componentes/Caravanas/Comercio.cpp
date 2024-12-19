@@ -27,7 +27,6 @@ string Comercio::showInfo() const {
 }
 
 void Comercio::tempestade() {
-    srand(time(0));
     int randomDead;
 
     if (getMercadoria() > getMaxMercadoria() / 2) {

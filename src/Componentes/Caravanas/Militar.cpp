@@ -24,7 +24,6 @@ string Militar::showInfo() const {
 }
 
 void Militar::tempestade() {
-    srand(time(0));
     int randomDead;
 
     setNPessoas(getNPessoas() - getNPessoas() * 0.1);

@@ -272,6 +272,7 @@ void Mapa::writeCharToBuffer(int row, int col, char c) const {
 }
 
 void Mapa::startTempestade(int row, int col, int raio) {
+    cout << "Comecou uma tempestade de areia na linha " << row << " e coluna " << col << " de raio " << raio << endl;
     for (int i = -raio; i <= raio; ++i) {
         for (int j = -raio; j <= raio; ++j) {
             int linhaAtual = (row + i + rows) % rows;
@@ -284,4 +285,6 @@ void Mapa::startTempestade(int row, int col, int raio) {
             }
         }
     }
+
+    cout << "A tempestade de areia terminou" << endl;
 }
