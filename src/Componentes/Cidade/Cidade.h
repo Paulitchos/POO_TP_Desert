@@ -16,7 +16,8 @@ class Cidade {
 
     Mapa *onde;
 
-    std::vector<std::shared_ptr<Caravana>> parked;
+    std::vector<std::shared_ptr<Caravana> > parked;
+
 public:
     Cidade(int row, int col, char name, Mapa *onde);
 
@@ -38,9 +39,9 @@ public:
 
     void showCaravanas() const;
 
-    void parkCaravana(const std::shared_ptr<Caravana>& caravana);
+    void parkCaravana(const std::shared_ptr<Caravana> &caravana);
 
-    void unparkCaravana(const std::shared_ptr<Caravana>& caravana);
+    void unparkCaravana(const std::shared_ptr<Caravana> &caravana);
 };
 
 

@@ -3,7 +3,8 @@
 using namespace std;
 
 ComandoProx::ComandoProx()
-    : Comando("prox", "Avancar instantes", "<n>"), instants(1) { }
+    : Comando("prox", "Avancar instantes", "<n>"), instants(1) {
+}
 
 bool ComandoProx::setInstantes(int n) {
     if (n <= 0) {

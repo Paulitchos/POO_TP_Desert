@@ -2,13 +2,15 @@
 
 using namespace std;
 
-ComandoCidade::ComandoCidade() : Comando("cidade","Lista conteudo da cidade C (caravanas existentes)","<C>"){ }
+ComandoCidade::ComandoCidade() : Comando("cidade", "Lista conteudo da cidade C (caravanas existentes)", "<C>") {
+}
 
 void ComandoCidade::execute(const std::string &args, Simulador &sim) {
     vector<string> inputs = split(args, ' ');
 
     if (inputs.size() != 2) {
-        cout << "O comando " << getNome() << " apenas aceita um argumento <C> que e uma letra minuscula e corresponde a uma cidade!!" << endl;
+        cout << "O comando " << getNome() <<
+                " apenas aceita um argumento <C> que e uma letra minuscula e corresponde a uma cidade!!" << endl;
         return;
     }
 
@@ -19,7 +21,7 @@ void ComandoCidade::execute(const std::string &args, Simulador &sim) {
         return;
     }
 
-    Cidade* aux = sim.getMapCidade(index);
+    Cidade *aux = sim.getMapCidade(index);
 
     if (aux) {
         aux->showCaravanas();

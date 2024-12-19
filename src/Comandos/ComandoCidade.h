@@ -4,12 +4,11 @@
 
 
 class ComandoCidade : public Comando {
-    public:
-        ComandoCidade();
+public:
+    ComandoCidade();
 
-        void execute(const std::string &args, Simulador &sim) override;
+    void execute(const std::string &args, Simulador &sim) override;
 };
-
 
 
 #endif //COMANDOCIDADE_H

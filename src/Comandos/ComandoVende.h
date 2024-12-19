@@ -5,13 +5,11 @@
 
 
 class ComandoVende : public Comando {
-    public:
-
+public:
     ComandoVende();
 
     void execute(const std::string &args, Simulador &sim) override;
 };
-
 
 
 #endif //COMANDOVENDE_H

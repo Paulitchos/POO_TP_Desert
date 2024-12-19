@@ -22,6 +22,7 @@
 #include "../Comandos/ComandoBarbaro.h"
 #include "../Comandos/ComandoMoedas.h"
 #include "../Comandos/ComandoTripul.h"
+#include "../Comandos/ComandoAreia.h"
 
 class Interface {
     Simulador *sim;
@@ -35,7 +36,7 @@ public:
 
     bool iniciateSimulation();
 
-    bool fileCommandSet(std::map<std::string, int> & map, const std::string &key, const int &valor);
+    bool fileCommandSet(std::map<std::string, int> &map, const std::string &key, const int &valor);
 
     bool readMapFromFile(std::string filename);
 

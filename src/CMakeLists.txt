@@ -58,4 +58,6 @@ add_executable(src main.cpp
         Comandos/ComandoMoedas.h
         Comandos/ComandoTripul.cpp
         Comandos/ComandoTripul.h
+        Comandos/ComandoAreia.cpp
+        Comandos/ComandoAreia.h
 )

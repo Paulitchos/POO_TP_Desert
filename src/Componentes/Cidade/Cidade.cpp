@@ -4,7 +4,9 @@
 
 using namespace std;
 
-Cidade::Cidade(int row, int col, char name, Mapa *onde) : row(row), col(col), name(name), onde(onde), comprouC(false), comprouM(false) { }
+Cidade::Cidade(int row, int col, char name, Mapa *onde) : row(row), col(col), name(name), onde(onde), comprouC(false),
+                                                          comprouM(false) {
+}
 
 char Cidade::getName() const { return name; }
 
@@ -21,8 +23,7 @@ void Cidade::setComprouC(bool comprou) { this->comprouC = comprou; }
 void Cidade::setComprouM(bool comprou) { this->comprouM = comprou; }
 
 bool Cidade::buyCaravana(char tipoCar) {
-
-    if(onde->getCoins() < onde->getPCaravan()) {
+    if (onde->getCoins() < onde->getPCaravan()) {
         cout << "Utilizador nao tem dinheiro para comprar a caravana" << endl;
         return false;
     }
@@ -67,7 +68,7 @@ void Cidade::showCaravanas() const {
 
     cout << endl << "Caravanas estacionadas na cidade " << getName() << ":" << endl;
 
-    for (const auto& caravana : parked) {
+    for (const auto &caravana: parked) {
         if (caravana) {
             cout << caravana->showInfo() << endl << endl;
         } else {
@@ -76,12 +77,12 @@ void Cidade::showCaravanas() const {
     }
 }
 
-void Cidade::parkCaravana(const std::shared_ptr<Caravana>& caravana) {
+void Cidade::parkCaravana(const std::shared_ptr<Caravana> &caravana) {
     caravana->setCidadeName(getName());
     parked.emplace_back(caravana);
 }
 
-void Cidade::unparkCaravana(const std::shared_ptr<Caravana>& caravana) {
+void Cidade::unparkCaravana(const std::shared_ptr<Caravana> &caravana) {
     caravana->setCidadeName(' ');
     for (auto it = parked.begin(); it != parked.end(); ++it) {
         if (*it == caravana) {

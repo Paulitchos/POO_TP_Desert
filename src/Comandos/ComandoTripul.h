@@ -11,5 +11,4 @@ public:
 };
 
 
-
 #endif //COMANDOTRIPUL_H

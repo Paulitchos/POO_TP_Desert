@@ -74,6 +74,8 @@ public:
     std::shared_ptr<Caravana> getLastCaravana() const;
 
     std::shared_ptr<Caravana> getMapCaravana(int index) const;
+
+    void startMapTempestade(int row, int col, int raio);
 };
 
 

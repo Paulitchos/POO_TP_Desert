@@ -54,7 +54,7 @@ void Simulador::addCidade(int row, int col, char name) { mapa->addCidade(row, co
 
 int Simulador::cidadeNameAvailable(char name) const { return mapa->cidadeNameAvailable(name); }
 
-Cidade* Simulador::getMapCidade(int index) const { return mapa->getCidade(index); }
+Cidade *Simulador::getMapCidade(int index) const { return mapa->getCidade(index); }
 
 bool Simulador::isMontanha(int row, int col) const { return mapa->isMontanha(row, col); }
 
@@ -67,3 +67,5 @@ int Simulador::caravaNameAvailable(char caravanaID) const { return mapa->getCara
 std::shared_ptr<Caravana> Simulador::getLastCaravana() const { return mapa->getLastCaravana(); }
 
 std::shared_ptr<Caravana> Simulador::getMapCaravana(int index) const { return mapa->getCaravana(index); }
+
+void Simulador::startMapTempestade(int row, int col, int raio) { mapa->startTempestade(row, col, raio); }

@@ -4,13 +4,11 @@
 #include "Comando.h"
 
 class ComandoAuto : public Comando {
-    public:
-
+public:
     ComandoAuto();
 
     void execute(const std::string &args, Simulador &sim) override;
 };
-
 
 
 #endif //COMANDOAUTO_H

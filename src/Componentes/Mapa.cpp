@@ -25,16 +25,18 @@ int Mapa::getCoins() const { return coins; }
 void Mapa::setCoins(int coins) { this->coins = coins; }
 
 void Mapa::addCoins(int coins) {
-    if(coins > 0) {
+    if (coins > 0) {
         setCoins(coins + getCoins());
-        cout << "Adicionou " << coins << " moedas ao utilizador, ficou com um total de " << getCoins() << " moedas" << endl;
+        cout << "Adicionou " << coins << " moedas ao utilizador, ficou com um total de " << getCoins() << " moedas" <<
+                endl;
     } else {
-        if(coins + getCoins() < 0) {
+        if (coins + getCoins() < 0) {
             setCoins(0);
         } else {
             setCoins(coins + getCoins());
         }
-        cout << "Removeu " << coins << " moedas ao utilizador, ficando o utilizador com " << getCoins() << " moedas" << endl;
+        cout << "Removeu " << coins << " moedas ao utilizador, ficando o utilizador com " << getCoins() << " moedas" <<
+                endl;
     }
 }
 
@@ -77,7 +79,8 @@ void Mapa::setTurn(int turn) { this->turn = turn; }
 void Mapa::showDetails() const {
     cout << "*** Detalhes ***" << endl << endl;
     cout << "Linhas: " << rows << " Colunas: " << cols << endl
-            << "Turno: " << getTurn() << " || Cidades: " << cidades.size() << " || Caravanas: " << caravanas.size() << " || Moedas: " << getCoins() << endl
+            << "Turno: " << getTurn() << " || Cidades: " << cidades.size() << " || Caravanas: " << caravanas.size() <<
+            " || Moedas: " << getCoins() << endl
             << "Preco da caravana: " << getPCaravan() << endl << endl;
 }
 
@@ -149,17 +152,17 @@ bool Mapa::isCidade(int row, int col) const {
 }
 
 void Mapa::addCaravanaInicial(int row, int col, char id) {
-    if(id == '!')
+    if (id == '!')
         caravanas.emplace_back(std::make_shared<Barbaros>(row, col, id, getDurBarb(), this));
     else {
         caravanas.emplace_back(std::make_shared<Comercio>(row, col, id, this));
     }
     //cout << "Caravana adicionada em (" << row << ", " << col << ")" << endl;
-    writeCharToBuffer(row,col, id);
+    writeCharToBuffer(row, col, id);
 }
 
 void Mapa::addCaravanaBarbaro(int row, int col) {
-    if(isMontanha(row, col)) {
+    if (isMontanha(row, col)) {
         cout << "Nao pode criar uma caravana barbara em cima de uma montanha!!" << endl;
         return;
     }
@@ -175,12 +178,12 @@ void Mapa::addCaravanaBarbaro(int row, int col) {
     }
 
     caravanas.emplace_back(std::make_shared<Barbaros>(row, col, '!', getDurBarb(), this));
-    writeCharToBuffer(row,col, '!');
+    writeCharToBuffer(row, col, '!');
     cout << "Criada uma caravana barbaro na linha " << row << " e coluna " << col << endl;
 }
 
 
-void Mapa::addCaravana(const std::shared_ptr<Caravana>& caravana) {
+void Mapa::addCaravana(const std::shared_ptr<Caravana> &caravana) {
     caravanas.emplace_back(caravana);
 }
 
@@ -203,7 +206,7 @@ char Mapa::getAvailableCaravanaID() const {
     for (char i = '0'; i <= '9'; ++i) {
         bool isAvailable = true;
 
-        for (const auto& caravana : caravanas) {
+        for (const auto &caravana: caravanas) {
             if (caravana && caravana->getID() == i) {
                 isAvailable = false;
                 break;
@@ -233,7 +236,7 @@ std::shared_ptr<Caravana> Mapa::getCaravana(int index) const {
     return nullptr;
 }
 
-bool Mapa::isCaravana(int row, int col, const Caravana* self) const {
+bool Mapa::isCaravana(int row, int col, const Caravana *self) const {
     for (auto &caravana: caravanas) {
         if (caravana->getRow() == row && caravana->getCol() == col && caravana && caravana.get() != self) {
             return true;
@@ -261,10 +264,24 @@ bool Mapa::isItem(int row, int col) const {
     return false;
 }
 
-void Mapa::writeCharToBuffer(int row, int col, char c) const{
-    buffer->setCursor(row,col);
+void Mapa::writeCharToBuffer(int row, int col, char c) const {
+    buffer->setCursor(row, col);
     buffer->writeChar(c);
     buffer->setCursor(0, 0);
     //buffer->flush();
 }
 
+void Mapa::startTempestade(int row, int col, int raio) {
+    for (int i = -raio; i <= raio; ++i) {
+        for (int j = -raio; j <= raio; ++j) {
+            int linhaAtual = (row + i + rows) % rows;
+            int colunaAtual = (col + j + cols) % cols;
+
+            for (const auto &caravana: caravanas) {
+                if (caravana->getRow() == linhaAtual && caravana->getCol() == colunaAtual && !caravana->getEstado()) {
+                    caravana->tempestade();
+                }
+            }
+        }
+    }
+}

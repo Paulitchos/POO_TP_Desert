@@ -11,6 +11,7 @@ private:
     int row, col;
     std::string nome;
     int vidaUtil;
+
 public:
     Item(std::string nome, int vidaUtil);
 

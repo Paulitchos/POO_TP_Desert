@@ -3,13 +3,18 @@
 using namespace std;
 
 ComandoCompraC::ComandoCompraC()
-: Comando("comprac", " Compra, na cidade C uma caravana do tipo T. T indica o tipo da caravana: C – Comercio, M – Militar, S – Secreta.", "<C> <T>") { }
+    : Comando("comprac",
+              " Compra, na cidade C uma caravana do tipo T. T indica o tipo da caravana: C – Comercio, M – Militar, S – Secreta.",
+              "<C> <T>") {
+}
 
 void ComandoCompraC::execute(const std::string &args, Simulador &sim) {
     vector<string> inputs = split(args, ' ');
 
     if (inputs.size() != 3) {
-        cout << "O comando " << getNome() << " apenas aceita dois argumentos <C> que e uma letra minuscula e corresponde a uma cidade <T> corresponde ao tipo da caravana!!" << endl;
+        cout << "O comando " << getNome() <<
+                " apenas aceita dois argumentos <C> que e uma letra minuscula e corresponde a uma cidade <T> corresponde ao tipo da caravana!!"
+                << endl;
         return;
     }
 
@@ -20,17 +25,20 @@ void ComandoCompraC::execute(const std::string &args, Simulador &sim) {
         return;
     }
 
-    if (inputs[2].size() != 1 || !isupper(inputs[2][0]) || (inputs[2][0] != 'C' && inputs[2][0] != 'M' && inputs[2][0] != 'S')) {
-        cout << "Argumento <T> precisa de ser uma letra maiúscula e corresponder a um tipo de caravana: C, M ou S!!" << endl;
+    if (inputs[2].size() != 1 || !isupper(inputs[2][0]) || (
+            inputs[2][0] != 'C' && inputs[2][0] != 'M' && inputs[2][0] != 'S')) {
+        cout << "Argumento <T> precisa de ser uma letra maiúscula e corresponder a um tipo de caravana: C, M ou S!!" <<
+                endl;
         return;
     }
 
-    Cidade* aux = sim.getMapCidade(index);
+    Cidade *aux = sim.getMapCidade(index);
 
     if (aux) {
-        if(aux->buyCaravana(inputs[2][0])) {
+        if (aux->buyCaravana(inputs[2][0])) {
             auto lastCaravana = sim.getLastCaravana();
-            cout << endl <<  "Comprou uma caravana na cidade " << aux->getName() << " que ficou com ID: " << lastCaravana->getID() << endl;
+            cout << endl << "Comprou uma caravana na cidade " << aux->getName() << " que ficou com ID: " << lastCaravana
+                    ->getID() << endl;
             cout << "O utiliziador ficou com " << sim.getMapCoins() << " moedas restantes" << endl << endl;
         }
     } else {

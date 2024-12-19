@@ -3,13 +3,12 @@
 
 #include "Comando.h"
 
-class ComandoCompra : public Comando{
-    public:
+class ComandoCompra : public Comando {
+public:
     ComandoCompra();
 
     void execute(const std::string &args, Simulador &sim) override;
 };
-
 
 
 #endif //COMANDOCOMPRA_H

@@ -4,12 +4,11 @@
 
 
 class ComandoMove : public Comando {
-    public:
+public:
     ComandoMove();
 
     void execute(const std::string &args, Simulador &sim) override;
 };
-
 
 
 #endif //COMANDOMOVE_H

@@ -23,22 +23,21 @@ string Militar::showInfo() const {
     return os.str();
 }
 
-bool Militar::tempestade() {
+void Militar::tempestade() {
     srand(time(0));
     int randomDead;
 
-    setNPessoas(getNPessoas() - getNPessoas()*0.1);
+    setNPessoas(getNPessoas() - getNPessoas() * 0.1);
+    cout << "A caravana " << getID() << " perdeu 10% dos seus tripulantes devido a tempestade de areia" << endl;
 
-    if (getMercadoria() > getMaxMercadoria()/2) {
+    if (getMercadoria() > getMaxMercadoria() / 2) {
         randomDead = rand() % 3 + 1;
 
         if (randomDead == 1) {
-            //morre
-            return true;
+            setDestruida();
+            cout << "A caravana " << getID() << " vai ser destruida este turno devido a tempestade de areia" << endl;
         }
     }
-
-    return false;
 }
 
 void Militar::semTripulantes() {

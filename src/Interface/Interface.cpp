@@ -1,9 +1,11 @@
 #include "Interface.h"
 
 #include <iostream>
+
 using namespace std;
 
-Interface::Interface(Simulador &s) : sim(&s) { }
+Interface::Interface(Simulador &s) : sim(&s) {
+}
 
 void Interface::startSimulation() {
     sim->showMapDetails();
@@ -63,7 +65,7 @@ bool Interface::iniciateSimulation() {
     return true;
 }
 
-bool Interface::fileCommandSet(std::map<string, int> & map, const string &key, const int &valor) {
+bool Interface::fileCommandSet(std::map<string, int> &map, const string &key, const int &valor) {
     if (map.find(key) != map.end()) {
         cout << "Erro: '" << key << "' ja foi definido!" << endl;
         return false;
@@ -85,7 +87,6 @@ bool Interface::fileCommandSet(std::map<string, int> & map, const string &key, c
 }
 
 bool Interface::readMapFromFile(std::string fileName) {
-
     std::map<std::string, int> keysFile;
 
     ifstream file(fileName);
@@ -117,7 +118,6 @@ bool Interface::readMapFromFile(std::string fileName) {
 
                 sim->setMapRows(value);
                 keysFile["linhas"] = value;
-
             } else if (key == "colunas") {
                 if (!fileCommandSet(keysFile, key, value)) {
                     file.close();
@@ -127,40 +127,35 @@ bool Interface::readMapFromFile(std::string fileName) {
                 sim->setMapCols(value);
                 keysFile["colunas"] = value;
                 sim->startBuffer();
-            }
-            else if (key == "moedas") {
+            } else if (key == "moedas") {
                 if (!fileCommandSet(keysFile, key, value)) {
                     file.close();
                     return false;
                 }
 
                 sim->setMapCoins(value);
-            }
-            else if (key == "instantes_entre_novos_itens") {
+            } else if (key == "instantes_entre_novos_itens") {
                 if (!fileCommandSet(keysFile, key, value)) {
                     file.close();
                     return false;
                 }
 
                 sim->setMapInsNewItem(value);
-            }
-            else if (key == "duração_item") {
+            } else if (key == "duração_item") {
                 if (!fileCommandSet(keysFile, key, value)) {
                     file.close();
                     return false;
                 }
 
                 sim->setMapDurItem(value);
-            }
-            else if (key == "max_itens") {
+            } else if (key == "max_itens") {
                 if (!fileCommandSet(keysFile, key, value)) {
                     file.close();
                     return false;
                 }
 
                 sim->setMapMaxItem(value);
-            }
-            else if (key == "preço_venda_mercadoria") {
+            } else if (key == "preço_venda_mercadoria") {
                 if (pSellMerchSet) {
                     cout << "Erro: 'preço_venda_mercadoria' ja foi definido!" << endl;
                     file.close();
@@ -172,8 +167,7 @@ bool Interface::readMapFromFile(std::string fileName) {
                 } else
                     sim->setMapSellMerch(value);
                 pSellMerchSet = true;
-            }
-            else if (key == "preço_compra_mercadoria") {
+            } else if (key == "preço_compra_mercadoria") {
                 if (pBuyMerchSet) {
                     cout << "Erro: 'preço_compra_mercadoria' ja foi definido!" << endl;
                     file.close();
@@ -185,24 +179,21 @@ bool Interface::readMapFromFile(std::string fileName) {
                 } else
                     sim->setMapBuyMerch(value);
                 pBuyMerchSet = true;
-            }
-            else if (key == "preço_caravana") {
+            } else if (key == "preço_caravana") {
                 if (!fileCommandSet(keysFile, key, value)) {
                     file.close();
                     return false;
                 }
 
                 sim->setMapPCaravan(value);
-            }
-            else if (key == "instantes_entre_novos_barbaros") {
+            } else if (key == "instantes_entre_novos_barbaros") {
                 if (!fileCommandSet(keysFile, key, value)) {
                     file.close();
                     return false;
                 }
 
                 sim->setMapInsNewBarb(value);
-            }
-            else if (key == "duração_barbaros") {
+            } else if (key == "duração_barbaros") {
                 if (!fileCommandSet(keysFile, key, value)) {
                     file.close();
                     return false;
@@ -316,7 +307,7 @@ void Interface::loadCommands() {
     commands["comprac"] = make_unique<ComandoCompraC>();
     commands["precos"] = make_unique<ComandoPrecos>(sim->getMapSellMerch(), sim->getMapBuyMerch());
     commands["cidade"] = make_unique<ComandoCidade>();
-    commands["caravana"] =  make_unique<ComandoCaravana>();
+    commands["caravana"] = make_unique<ComandoCaravana>();
     commands["compra"] = make_unique<ComandoCompra>();
     commands["vende"] = make_unique<ComandoVende>();
     commands["move"] = make_unique<ComandoMove>();
@@ -325,6 +316,7 @@ void Interface::loadCommands() {
     commands["barbaro"] = make_unique<ComandoBarbaro>();
     commands["moedas"] = make_unique<ComandoMoedas>();
     commands["tripul"] = make_unique<ComandoTripul>();
+    commands["areia"] = make_unique<ComandoAreia>();
 }
 
 void Interface::helpCommands() const {

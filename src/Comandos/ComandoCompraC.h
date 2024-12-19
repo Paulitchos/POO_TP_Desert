@@ -14,5 +14,4 @@ public:
 };
 
 
-
 #endif //COMANDOCOMPRAC_H

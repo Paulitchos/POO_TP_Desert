@@ -26,31 +26,32 @@ string Comercio::showInfo() const {
     return os.str();
 }
 
-bool Comercio::tempestade() {
+void Comercio::tempestade() {
     srand(time(0));
     int randomDead;
 
-    if (getMercadoria() > getMaxMercadoria()/2) {
+    if (getMercadoria() > getMaxMercadoria() / 2) {
         randomDead = rand() % 2 + 1;
 
         if (randomDead == 1) {
             setDestruida();
-            return true;
-        } else {
-            removeMercadoria(getMercadoria() / 4);
+            cout << "A caravana " << getID() << " vai ser destruida este turno devido a tempestade de areia" << endl;
+            return;
         }
+        removeMercadoria(getMercadoria() / 4);
+        cout << "A caravana " << getID() << " perdeu 25% da sua mercadoria devida a tempestade de areia" << endl;
     } else {
         randomDead = rand() % 4 + 1;
 
         if (randomDead == 1) {
             setDestruida();
-            return true;
-        } else {
-            removeMercadoria(getMercadoria() / 4);
+            cout << "A caravana " << getID() << " vai ser destruida este turno devido a tempestade de areia" << endl;
+            return;
         }
-    }
 
-    return false;
+        removeMercadoria(getMercadoria() / 4);
+        cout << "A caravana " << getID() << " perdeu 25% da sua mercadoria devida a tempestade de areia" << endl;
+    }
 }
 
 void Comercio::semTripulantes() {

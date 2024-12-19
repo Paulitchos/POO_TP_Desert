@@ -2,14 +2,16 @@
 
 using namespace std;
 
-ComandoBarbaro::ComandoBarbaro() : Comando("barbaro","Cria uma caravana barbara nas coordenadas (l, c)", "<l> <c>") { }
+ComandoBarbaro::ComandoBarbaro() : Comando("barbaro", "Cria uma caravana barbara nas coordenadas (l, c)", "<l> <c>") {
+}
 
 void ComandoBarbaro::execute(const std::string &args, Simulador &sim) {
     vector<string> inputs = split(args, ' ');
 
     if (inputs.size() != 3) {
-        cout << "O comando " << getNome() << " apenas aceita dois argumentos <l> que e um numero e corresponde a linha e"
-                                             " <c> que e um numero e corresponde a coluna para criar a caravana de barbaros!!" << endl;
+        cout << "O comando " << getNome() <<
+                " apenas aceita dois argumentos <l> que e um numero e corresponde a linha e"
+                " <c> que e um numero e corresponde a coluna para criar a caravana de barbaros!!" << endl;
         return;
     }
 
@@ -25,4 +27,3 @@ void ComandoBarbaro::execute(const std::string &args, Simulador &sim) {
 
     sim.addCaravanaBarbaro(stoi(inputs[1]), stoi(inputs[2]));
 }
-

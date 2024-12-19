@@ -25,7 +25,7 @@ class Mapa {
     std::unique_ptr<Buffer> buffer;
     std::vector<Montanha> montanhas;
     std::vector<Cidade> cidades;
-    std::vector<std::shared_ptr<Caravana>> caravanas;
+    std::vector<std::shared_ptr<Caravana> > caravanas;
 
 public:
     Mapa();
@@ -106,7 +106,7 @@ public:
 
     void addCaravanaBarbaro(int row, int col);
 
-    void addCaravana(const std::shared_ptr<Caravana>& caravana);
+    void addCaravana(const std::shared_ptr<Caravana> &caravana);
 
     int getCaravanaIndex(char caravanaID) const;
 
@@ -116,7 +116,7 @@ public:
 
     std::shared_ptr<Caravana> getCaravana(int index) const;
 
-    bool isCaravana(int row, int col, const Caravana* self) const;
+    bool isCaravana(int row, int col, const Caravana *self) const;
 
     void parkCaravana(char caravanaID, char cidadeName);
 
@@ -125,6 +125,8 @@ public:
     bool isItem(int row, int col) const;
 
     void writeCharToBuffer(int row, int col, char c) const;
+
+    void startTempestade(int row, int col, int raio);
 };
 
 #endif //MAPA_H

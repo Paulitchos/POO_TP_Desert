@@ -7,8 +7,10 @@ using namespace std;
 
 Caravana::Caravana(int row, int col, char id, int nPessoas, int maxPessoas, int maxAgua,
                    int maxJogadasPTurno, double maxMercadoria, bool controlavel, Mapa *onde)
-        : row(row), col(col), caravanaID(id) , nPessoas(nPessoas), nMercadoria(0), maxPessoas(maxPessoas), maxAgua(maxAgua),
-          movimentos(0), maxJogadasPTurno(maxJogadasPTurno), maxMercadoria(maxMercadoria), controlavel(controlavel), cidadeName(' '), onde(onde) {}
+    : row(row), col(col), caravanaID(id), nPessoas(nPessoas), nMercadoria(0), maxPessoas(maxPessoas), maxAgua(maxAgua),
+      movimentos(0), maxJogadasPTurno(maxJogadasPTurno), maxMercadoria(maxMercadoria), controlavel(controlavel),
+      cidadeName(' '), onde(onde), destruida(false), autoPilot(false), randomMode(false), turnosParaDesparecer(-1) {
+}
 
 Caravana::~Caravana() {
     cout << "Caravana destruida" << endl;
@@ -24,7 +26,7 @@ int Caravana::getmaxPessoas() const {
 }
 
 void Caravana::adicionaPessoas(int pessoasAAdicionar) {
-    if(onde->getCoins() - pessoasAAdicionar < 0) {
+    if (onde->getCoins() - pessoasAAdicionar < 0) {
         cout << "Nao tem dinheiro para comprar " << pessoasAAdicionar << " tripulantes" << endl;
         return;
     }
@@ -127,18 +129,23 @@ void Caravana::removeMercadoria(int mercadoriaARemover) {
 }
 
 //MOVIMENTOS
-void Caravana::move(const string& direction) {
-    if(autoPilot) {
+void Caravana::move(const string &direction) {
+    if (getEstado()) {
+        cout << "Caravana nao pode mover devido a ter sido declarada como destruida" << endl;
+        return;
+    }
+
+    if (autoPilot) {
         cout << "Caravana esta a andar de forma autonoma" << endl;
         return;
     }
 
-    if(randomMode) {
+    if (randomMode) {
         cout << "Caravana esta a andar de forma aleatoria devido a nao ter tripulantes" << endl;
         return;
     }
 
-    if(movimentos == maxJogadasPTurno) {
+    if (movimentos == maxJogadasPTurno) {
         cout << "Caravana ja excedeu o seus movimentos este turno!!" << endl;
         return;
     }
@@ -171,7 +178,7 @@ void Caravana::move(const string& direction) {
         return;
     }
 
-    if(onde->isMontanha(getRow(), getCol())) {
+    if (onde->isMontanha(getRow(), getCol())) {
         cout << "Movimento invalido devido a tentar conduzir contra uma montanha!!" << endl;
         setRow(auxRow);
         setCol(auxCol);
@@ -195,15 +202,15 @@ void Caravana::move(const string& direction) {
     if (onde->isCidade(getRow(), getCol())) {
         char cidadeNome = onde->getNomeCidade(getRow(), getCol());
         onde->parkCaravana(getID(), cidadeNome);
+        onde->writeCharToBuffer(auxRow, auxCol, '.');
         cout << "A caravana " << getID() << " entrou na cidade " << cidadeNome << endl;
         movimentos++;
     } else {
         cout << "Caravana " << getID() << " moveu-se para a linha " << getRow() << " e coluna " << getCol() << endl;
-        if(getCidadeName() != ' ') {
+        if (getCidadeName() != ' ') {
             onde->unparkCaravana(getID(), getCidadeName());
             onde->writeCharToBuffer(getRow(), getCol(), getID());
-        }
-        else {
+        } else {
             onde->writeCharToBuffer(auxRow, auxCol, '.');
             onde->writeCharToBuffer(getRow(), getCol(), getID());
         }
@@ -280,8 +287,9 @@ bool Caravana::getRandomMode() {
 string Caravana::showInfo() const {
     ostringstream os;
     os << "ID: " << caravanaID << " Pessoas: " << nPessoas << "/" << maxPessoas
-        << " Agua: " << nivelAgua << "/" << maxAgua << " Mercadoria: " << nMercadoria << "/" << maxMercadoria << endl
-        << "Linha: " << getRow() << " Coluna: " << getCol() << endl;
+            << " Agua: " << nivelAgua << "/" << maxAgua << " Mercadoria: " << nMercadoria << "/" << maxMercadoria <<
+            endl
+            << "Linha: " << getRow() << " Coluna: " << getCol() << endl;
     return os.str();
 }
 
@@ -293,7 +301,6 @@ void Caravana::setDestruida() {
     destruida = true;
 }
 
-char Caravana::getCidadeName() const { return cidadeName;}
+char Caravana::getCidadeName() const { return cidadeName; }
 
 void Caravana::setCidadeName(char cidadeName) { this->cidadeName = cidadeName; }
-

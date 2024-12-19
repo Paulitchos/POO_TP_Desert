@@ -11,5 +11,4 @@ public:
 };
 
 
-
 #endif //COMANDOSTOP_H

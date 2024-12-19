@@ -56,7 +56,7 @@ public:
     void setMercadoria(int novaMercadoria);
 
     //MOVIMENTOS
-    void move(const std::string& direction);
+    void move(const std::string &direction);
 
     int getRow() const;
 
@@ -97,7 +97,7 @@ public:
     void setDestruida();
 
     //EXTRA
-    virtual bool tempestade() = 0;
+    virtual void tempestade() = 0;
 
     virtual std::string showInfo() const;
 
@@ -114,12 +114,12 @@ private:
     int nPessoas, maxPessoas;
     int nivelAgua, maxAgua;
     double nMercadoria, maxMercadoria;
-    bool controlavel, destruida = false, autoPilot = false, randomMode = false;
+    bool controlavel, destruida, autoPilot, randomMode;
     bool vidaInfinita;
 
     const int maxJogadasPTurno;
     int movimentos;
-    int turnosParaDesparecer = -1, lifeTime;
+    int turnosParaDesparecer, lifeTime;
 };
 
 
