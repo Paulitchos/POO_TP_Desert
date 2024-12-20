@@ -5,7 +5,4 @@ Item::Item(std::string nome, Mapa *onde) : nome(nome), onde(onde), vidaUtil(onde
 
 }
 
-void Item::addCoins(double perc) {
-    int coins = static_cast<int>(onde->getCoins() * perc);
-    onde->addCoins(coins);
-}
+Mapa *Item::getMapa() { return onde; }

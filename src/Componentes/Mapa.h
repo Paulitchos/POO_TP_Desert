@@ -130,6 +130,8 @@ public:
 
     void unparkCaravana(char caravanaID, char cidadeName);
 
+    void removeCaravana(const std::shared_ptr<Caravana> &caravana);
+
     bool isItem(int row, int col) const;
 
     void writeCharToBuffer(int row, int col, char c) const;

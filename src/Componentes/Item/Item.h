@@ -27,7 +27,7 @@ public:
 
     void setVidaUtil(int vidaUtil);
 
-    void addCoins(double perc);
+    Mapa *getMapa();
 };
 
 

@@ -278,6 +278,22 @@ void Mapa::unparkCaravana(char caravanaID, char cidadeName) {
     cidades[indexCidade].unparkCaravana(caravanas[indexCaravana]);
 }
 
+void Mapa::removeCaravana(const std::shared_ptr<Caravana>& caravana) {
+    auto it = find(caravanas.begin(), caravanas.end(), caravana);
+
+    if (it != caravanas.end()) {
+        caravanas.erase(it);
+        cout << "Caravana removida do mapa." << endl;
+    } else {
+        cout << "Erro: Caravana nao encontrada no mapa!" << endl;
+        return;
+    }
+
+    for (auto& cidade : cidades) {
+        cidade.unparkCaravana(caravana);
+    }
+}
+
 bool Mapa::isItem(int row, int col) const {
     return false;
 }
