@@ -72,4 +72,6 @@ add_executable(src main.cpp
         Comandos/ComandoTermina.h
         Componentes/Item/Tesouro.cpp
         Componentes/Item/Tesouro.h
+        Componentes/Item/Jaula.cpp
+        Componentes/Item/Jaula.h
 )
