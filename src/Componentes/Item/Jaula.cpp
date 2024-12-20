@@ -3,7 +3,6 @@
 using namespace std;
 
 Jaula::Jaula(Mapa *m) : Item("Jaula", m) {
-
 }
 
 void Jaula::execute(std::shared_ptr<Caravana> car) {
@@ -18,4 +17,3 @@ void Jaula::execute(std::shared_ptr<Caravana> car) {
 
     cout << "Foram adicionados " << espacoDisponivel << " tripulantes a caravana " << car->getID() << endl;
 }
-

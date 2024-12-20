@@ -4,7 +4,6 @@
 using namespace std;
 
 Tesouro::Tesouro(Mapa *m) : Item("Tesouro", m) {
-
 }
 
 void Tesouro::execute(std::shared_ptr<Caravana> car) {

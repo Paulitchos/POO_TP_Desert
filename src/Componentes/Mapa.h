@@ -24,7 +24,7 @@ class Mapa {
             insNewItem, durItem, maxItem, pSellMerch, pBuyMerch,
             pCaravan, insNewBarb, durBarb, turn, nFightsWon;
     std::unique_ptr<Buffer> buffer;
-    std::map<std::string, std::vector<std::string>> savedBuffers;
+    std::map<std::string, std::vector<std::string> > savedBuffers;
     std::vector<Montanha> montanhas;
     std::vector<Cidade> cidades;
     std::vector<std::shared_ptr<Caravana> > caravanas;
@@ -140,13 +140,13 @@ public:
 
     std::vector<std::string> captureBufferState() const;
 
-    void saveBuffer(const std::string& nome);
+    void saveBuffer(const std::string &nome);
 
-    void loadBuffer(const std::string& nome);
+    void loadBuffer(const std::string &nome);
 
     void listSavedBuffers() const;
 
-    void deleteSavedBuffer(const std::string& nome);
+    void deleteSavedBuffer(const std::string &nome);
 
     void termina();
 };

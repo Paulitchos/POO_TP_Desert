@@ -86,7 +86,8 @@ void Mapa::showDetails() const {
     cout << "*** Detalhes ***" << endl << endl;
     cout << "Linhas: " << rows << " Colunas: " << cols << endl
             << "Turno: " << getTurn() << " || Cidades: " << cidades.size() << endl <<
-            "Caravanas do Utilizador: " << nCaravansUtilizador << " || Caravanas Barbaras: " << caravanas.size() - nCaravansUtilizador << endl <<
+            "Caravanas do Utilizador: " << nCaravansUtilizador << " || Caravanas Barbaras: " << caravanas.size() -
+            nCaravansUtilizador << endl <<
             "Moedas: " << getCoins() << endl
             << "Preco da caravana: " << getPCaravan() << endl << endl;
 }
@@ -278,7 +279,7 @@ void Mapa::unparkCaravana(char caravanaID, char cidadeName) {
     cidades[indexCidade].unparkCaravana(caravanas[indexCaravana]);
 }
 
-void Mapa::removeCaravana(const std::shared_ptr<Caravana>& caravana) {
+void Mapa::removeCaravana(const std::shared_ptr<Caravana> &caravana) {
     auto it = find(caravanas.begin(), caravanas.end(), caravana);
 
     if (it != caravanas.end()) {
@@ -289,7 +290,7 @@ void Mapa::removeCaravana(const std::shared_ptr<Caravana>& caravana) {
         return;
     }
 
-    for (auto& cidade : cidades) {
+    for (auto &cidade: cidades) {
         cidade.unparkCaravana(caravana);
     }
 }
@@ -343,7 +344,7 @@ vector<string> Mapa::captureBufferState() const {
 }
 
 
-void Mapa::saveBuffer(const string& nome) {
+void Mapa::saveBuffer(const string &nome) {
     if (savedBuffers.find(nome) != savedBuffers.end()) {
         cout << "Erro: Já existe um buffer salvo com o nome \"" << nome << "\"!" << endl;
         return;
@@ -353,7 +354,7 @@ void Mapa::saveBuffer(const string& nome) {
     cout << "Buffer salvo com sucesso como \"" << nome << "\"." << endl;
 }
 
-void Mapa::loadBuffer(const string& ficheiro) {
+void Mapa::loadBuffer(const string &ficheiro) {
     auto it = savedBuffers.find(ficheiro);
     if (it == savedBuffers.end()) {
         cout << "Erro: Nenhum buffer salvo com o nome \"" << ficheiro << "\"!" << endl;
@@ -361,7 +362,7 @@ void Mapa::loadBuffer(const string& ficheiro) {
     }
 
     cout << "Estado do buffer \"" << ficheiro << "\":" << endl;
-    for (const auto& line : it->second) {
+    for (const auto &line: it->second) {
         cout << line << endl;
     }
 }
@@ -373,12 +374,12 @@ void Mapa::listSavedBuffers() const {
     }
 
     cout << "Buffers salvos:" << endl;
-    for (const auto& [name, _] : savedBuffers) {
+    for (const auto &[name, _]: savedBuffers) {
         cout << "- " << name << endl;
     }
 }
 
-void Mapa::deleteSavedBuffer(const std::string& nome) {
+void Mapa::deleteSavedBuffer(const std::string &nome) {
     auto it = savedBuffers.find(nome);
     if (it == savedBuffers.end()) {
         cout << "Erro: Nenhum buffer salvo com o nome \"" << nome << "\" encontrado!" << endl;
