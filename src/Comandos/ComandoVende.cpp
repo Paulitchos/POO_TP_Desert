@@ -33,7 +33,7 @@ void ComandoVende::execute(const std::string &args, Simulador &sim) {
             cout << "Erro: Caravana nao esta numa cidade!" << endl;
         } else {
             if (aux->getMercadoria() != 0) {
-                sim.setMapCoins(sim.getMapCoins() + (aux->getMercadoria() * sim.getMapSellMerch()));
+                sim.addMapCoins(aux->getMercadoria() * sim.getMapSellMerch());
                 cout << "Utilizador vendeu " << aux->getMercadoria() << " toneladas de mercadoria da caravana " << aux->
                         getID() << endl;
                 aux->setMercadoria(0);

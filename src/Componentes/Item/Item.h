@@ -5,15 +5,17 @@
 #include <memory>
 #include "../Caravanas/Caravana.h"
 
+class Mapa;
 
 class Item {
-private:
     int row, col;
     std::string nome;
     int vidaUtil;
 
+    Mapa *onde;
+
 public:
-    Item(std::string nome, int vidaUtil);
+    Item(std::string nome, Mapa *onde);
 
     virtual void execute(std::shared_ptr<Caravana> car) = 0;
 
@@ -24,6 +26,8 @@ public:
     int getVidaUtil() const;
 
     void setVidaUtil(int vidaUtil);
+
+    void addCoins(double perc);
 };
 
 

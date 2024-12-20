@@ -43,10 +43,10 @@ void ComandoCompra::execute(const std::string &args, Simulador &sim) {
         } else {
             if (aux->adicionaMercadoria(aux->getMercadoria() + mercadoria) && sim.getMapBuyMerch() * mercadoria <= sim.
                 getMapCoins()) {
-                sim.setMapCoins(sim.getMapCoins() - (sim.getMapBuyMerch() * mercadoria));
+                sim.addMapCoins(-(sim.getMapBuyMerch() * mercadoria));
                 cout << "A carava " << aux->getID() << " ficou com " << aux->getMercadoria() <<
                         " toneladas de mercadoria" << endl;
-                cout << "O utiliziador ficou com " << sim.getMapCoins() << " moedas restantes" << endl << endl;
+
             }
         }
     } else {

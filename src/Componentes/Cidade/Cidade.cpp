@@ -42,7 +42,7 @@ bool Cidade::buyCaravana(char tipoCar) {
         newCaravana->setCidadeName(getName());
         parked.emplace_back(newCaravana);
         onde->addCaravana(newCaravana);
-        onde->setCoins(onde->getCoins() - onde->getPCaravan());
+        onde->addCoins(-onde->getPCaravan());
         return true;
     }
 
@@ -53,7 +53,7 @@ bool Cidade::buyCaravana(char tipoCar) {
         newCaravana->setCidadeName(getName());
         parked.emplace_back(newCaravana);
         onde->addCaravana(newCaravana);
-        onde->setCoins(onde->getCoins() - onde->getPCaravan());
+        onde->addCoins(-onde->getPCaravan());
         return true;
     }
 

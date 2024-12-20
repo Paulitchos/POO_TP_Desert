@@ -20,6 +20,12 @@ void Interface::startSimulation() {
             case 1:
                 cout << "Comportamentos auto - verifica continuidade";
                 break;
+            case 2:
+                cout << "Barbaros";
+                break;
+            case 3:
+                cout << "Combates";
+                break;
             case 4:
                 running = false;
                 break;

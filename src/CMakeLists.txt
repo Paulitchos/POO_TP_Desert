@@ -70,4 +70,6 @@ add_executable(src main.cpp
         Comandos/ComandoDel.h
         Comandos/ComandoTermina.cpp
         Comandos/ComandoTermina.h
+        Componentes/Item/Tesouro.cpp
+        Componentes/Item/Tesouro.h
 )
