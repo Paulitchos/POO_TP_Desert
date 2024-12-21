@@ -1,9 +1,9 @@
 #include "Barbaros.h"
-
+#include "../Mapa.h"
 using namespace std;
 
 Barbaros::Barbaros(int row, int col, char id, int lifeTime, Mapa *m)
-    : Caravana(row, col, id, 40, 80, -1, -1, -1, false, m)
+    : Caravana(row, col, id, 40, 80, -1, 1, -1, false, m)
       , lifeTime(lifeTime) {
 }
 
@@ -45,7 +45,63 @@ void Barbaros::tempestade() {
 }
 
 void Barbaros::moveAuto() {
+    Mapa *m = getMapa();
+    while(getMovimentos() != getMaxJogadasPTurno()) {
+        if (m->getNCaravanasUtilizador() > 0) {
+            if(moveCloserToCaravana(m)) {
+                setMovimentos();
+                continue;
+            }
+        }
 
+        break;
+    }
+}
+
+bool Barbaros::moveCloserToCaravana(Mapa *m) {
+    Item *nearestItem = nullptr;
+
+    auto nearestCaravana = m->getNearCaravanaUtilizador(getRow(), getCol(), this, 8);
+
+    nearestItem = m->getNearItem(getRow(), getCol(), 1);
+
+    if (nearestItem) {
+        int targetRow = nearestItem->getRow();
+        int targetCol = nearestItem->getCol();
+
+        int rowDiff = abs(getRow() - targetRow);
+        int colDiff = abs(getCol() - targetCol);
+
+        int currentDistance = max(rowDiff, colDiff);
+
+        if (currentDistance <= 1) {
+            m->applyItem(nearestItem, this);
+        }
+    }
+
+    if (!nearestCaravana || getEstado()) {
+        return false;
+    }
+
+    int targetRow = nearestCaravana->getRow();
+    int targetCol = nearestCaravana->getCol();
+
+    int rowDiff = abs(getRow() - targetRow);
+    int colDiff = abs(getCol() - targetCol );
+
+    int currentDistance = max(rowDiff, colDiff);
+
+    if (currentDistance <= 1) {
+        return false;
+    }
+
+    string bestMove = getBestMove(m, targetRow, targetCol);
+
+    if (!bestMove.empty()) {
+        return move(bestMove);
+    }
+
+    return false;
 }
 
 bool Barbaros::verificaContinuidade() {

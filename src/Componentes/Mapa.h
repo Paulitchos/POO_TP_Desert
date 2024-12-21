@@ -139,7 +139,7 @@ public:
 
     void autoCaravanaMove();
 
-    std::shared_ptr<Caravana> getNearCaravanaUtilizador(int row, int col, const Caravana *self);
+    std::shared_ptr<Caravana> getNearCaravanaUtilizador(int row, int col, const Caravana *self, int distance);
 
     std::shared_ptr<Caravana> getNearCaravanaBarbara(int row, int col, int distance);
 

@@ -17,6 +17,8 @@ public:
 
     void moveAuto() override;
 
+    bool moveCloserToCaravana(Mapa *m);
+
     //verificar
     void semTripulantes() override;
 

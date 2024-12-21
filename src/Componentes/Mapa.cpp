@@ -160,9 +160,10 @@ bool Mapa::isCidade(int row, int col) const {
 }
 
 void Mapa::addCaravanaInicial(int row, int col, char id) {
-    if (id == '!')
+    if (id == '!') {
         caravanas.emplace_back(make_shared<Barbaros>(row, col, id, getDurBarb(), this));
-    else {
+        caravanas.back()->setAutoPilot();
+    } else {
         caravanas.emplace_back(make_shared<Comercio>(row, col, id, this));
     }
     //cout << "Caravana adicionada em (" << row << ", " << col << ")" << endl;
@@ -316,18 +317,18 @@ void Mapa::autoCaravanaMove() {
     }
 }
 
-std::shared_ptr<Caravana> Mapa::getNearCaravanaUtilizador(int row, int col, const Caravana *self) {
+std::shared_ptr<Caravana> Mapa::getNearCaravanaUtilizador(int row, int col, const Caravana *self, int distance) {
     std::shared_ptr<Caravana> nearestCaravana = nullptr;
     int minDistance = std::numeric_limits<int>::max();
 
     for (auto& caravana : caravanas) {
-        if(caravana && caravana.get() != self) {
+        if(caravana && caravana.get() != self && caravana->getID() != '!') {
             int distanceRows = abs(caravana->getRow() - row);
             int distanceCols = abs(caravana->getCol() - col);
-            int distance = distanceRows + distanceCols;
+            int currentDistance = distanceRows + distanceCols;
 
-            if (distance < minDistance) {
-                minDistance = distance;
+            if (currentDistance <= distance && currentDistance < minDistance) {
+                minDistance = currentDistance;
                 nearestCaravana = caravana;
             }
         }
