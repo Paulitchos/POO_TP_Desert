@@ -73,6 +73,8 @@ public:
 
     void resetMovimento();
 
+    std::string getBestMove(Mapa *m, int targetRow, int targetCol);
+
     int getMaxJogadasPTurno() const;
 
     //RANDOM MODE / AUTO MODE

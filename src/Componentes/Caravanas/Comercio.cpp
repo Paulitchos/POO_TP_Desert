@@ -53,16 +53,16 @@ void Comercio::tempestade() {
 
 void Comercio::moveAuto() {
     Mapa *m = getMapa();
-    while(getMovimentos() != getMaxJogadasPTurno()) {
+    while (getMovimentos() != getMaxJogadasPTurno()) {
         if (m->getNItems() > 0) {
-            if(tryToPickItem(m)) {
+            if (tryToPickItem(m)) {
                 setMovimentos();
                 continue;
             }
         }
 
         if (m->getNCaravanasUtilizador() > 1) {
-            if(moveCloserToCaravana(m)) {
+            if (moveCloserToCaravana(m)) {
                 setMovimentos();
                 continue;
             }
@@ -78,36 +78,29 @@ bool Comercio::tryToPickItem(Mapa *m) {
 
     nearestItem = m->getNearItem(getRow(), getCol(), shortestDistance);
 
-    if (nearestItem) {
-        int deltaRow = nearestItem->getRow() - getRow();
-        int deltaCol = nearestItem->getCol() - getCol();
-
-        if (abs(deltaRow) <= 1 && abs(deltaCol) <= 1) {
-            m->applyItem(nearestItem, this);
-            return true;
-        }
-
-        vector<string> moves;
-
-        if (abs(deltaRow) > 0 && abs(deltaCol) > 0) {
-            // Diagonal moves (down-right, down-left, up-right, up-left)
-            moves = {"BD", "BE", "CD", "CE"};
-        } else if (abs(deltaRow) > abs(deltaCol)) {
-            // Vertical moves (up, down)
-            moves = { "C", "B" };
-        } else {
-            // Horizontal moves (left, right)
-            moves = { "E", "D" };
-        }
-
-        for (auto& mov : moves) {
-            if (move(mov)) {
-                return true;
-            }
-        }
-    } else {
+    if (!nearestItem) {
         return false;
     }
+
+    int targetRow = nearestItem->getRow();
+    int targetCol = nearestItem->getCol();
+
+    int rowDiff = abs(getRow() - targetRow);
+    int colDiff = abs(getCol() - targetCol);
+
+    int currentDistance = max(rowDiff, colDiff);
+
+    if (currentDistance <= 1) {
+        m->applyItem(nearestItem, this);
+        return true;
+    }
+
+    string bestMove = getBestMove(m, targetRow, targetCol);
+
+    if (!bestMove.empty()) {
+        return move(bestMove);
+    }
+
 
     return false;
 }
@@ -123,7 +116,7 @@ bool Comercio::moveCloserToCaravana(Mapa *m) {
     int targetCol = nearestCaravana->getCol();
 
     int rowDiff = abs(getRow() - targetRow);
-    int colDiff = abs(getCol() - targetCol );
+    int colDiff = abs(getCol() - targetCol);
 
     int currentDistance = max(rowDiff, colDiff);
 
@@ -131,36 +124,7 @@ bool Comercio::moveCloserToCaravana(Mapa *m) {
         return false;
     }
 
-    std::vector<std::tuple<std::string, int, int>> moves = {
-        {"C", -1, 0},    // Up
-        {"B", 1, 0},     // Down
-        {"E", 0, -1},    // Left
-        {"D", 0, 1},     // Right
-        {"CE", -1, -1},  // Up-Left
-        {"CD", -1, 1},   // Up-Right
-        {"BE", 1, -1},   // Down-Left
-        {"BD", 1, 1}     // Down-Right
-    };
-
-    std::string bestMove;
-    int minDistance = std::numeric_limits<int>::max();
-
-    for (const auto& [direction, rowOffset, colOffset] : moves) {
-        int newRow = (getRow() + rowOffset + m->getRows()) % m->getRows();
-        int newCol = (getCol() + colOffset + m->getCols()) % m->getCols();
-
-        if (m->isMontanha(newRow, newCol) || m->isCaravana(newRow, newCol,nullptr) || m->isItem(newRow, newCol)) {
-            continue;
-        }
-
-        // Calculate Manhattan distance to the target
-        int distance = abs(newRow - targetRow) + abs(newCol - targetCol);
-
-        if (distance < minDistance) {
-            minDistance = distance;
-            bestMove = direction;
-        }
-    }
+    string bestMove = getBestMove(m, targetRow, targetCol);
 
     if (!bestMove.empty()) {
         return move(bestMove);
@@ -170,7 +134,6 @@ bool Comercio::moveCloserToCaravana(Mapa *m) {
 }
 
 void Comercio::semTripulantes() {
-
 }
 
 bool Comercio::verificaContinuidade() {

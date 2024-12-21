@@ -72,36 +72,7 @@ bool Militar::moveCloserToCaravanaBarbara(Mapa *m) {
         return false;
     }
     
-    vector<tuple<string, int, int>> moves = {
-        {"C", -1, 0},    // Up
-        {"B", 1, 0},     // Down
-        {"E", 0, -1},    // Left
-        {"D", 0, 1},     // Right
-        {"CE", -1, -1},  // Up-Left
-        {"CD", -1, 1},   // Up-Right
-        {"BE", 1, -1},   // Down-Left
-        {"BD", 1, 1}     // Down-Right
-    };
-
-    string bestMove;
-    int minDistance = numeric_limits<int>::max();
-    
-    for (const auto& [direction, rowOffset, colOffset] : moves) {
-        int newRow = (getRow() + rowOffset + m->getRows()) % m->getRows();
-        int newCol = (getCol() + colOffset + m->getCols()) % m->getCols();
-        
-        if (m->isMontanha(newRow, newCol) || m->isCaravana(newRow, newCol,nullptr) || m->isItem(newRow, newCol)) {
-            continue;
-        }
-
-        // Calculate Manhattan distance to the target
-        int distance = abs(newRow - targetRow) + abs(newCol - targetCol);
-        
-        if (distance < minDistance) {
-            minDistance = distance;
-            bestMove = direction;
-        }
-    }
+    string bestMove = getBestMove(m, targetRow, targetCol);
     
     if (!bestMove.empty()) {
         return move(bestMove);
