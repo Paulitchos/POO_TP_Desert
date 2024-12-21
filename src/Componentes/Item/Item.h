@@ -15,13 +15,17 @@ class Item {
     Mapa *onde;
 
 public:
-    Item(std::string nome, Mapa *onde);
+    Item(int row, int col, std::string nome, Mapa *onde);
 
     virtual void execute(std::shared_ptr<Caravana> car) = 0;
 
     std::string getNome() const;
 
     void setNome(std::string nome);
+
+    int getRow() const;
+
+    int getCol() const;
 
     int getVidaUtil() const;
 

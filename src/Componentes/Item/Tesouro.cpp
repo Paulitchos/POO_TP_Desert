@@ -3,11 +3,11 @@
 
 using namespace std;
 
-Tesouro::Tesouro(Mapa *m) : Item("Tesouro", m) {
+Tesouro::Tesouro(int row, int col, Mapa *m) : Item(row, col, "Arca de Tesouro", m) {
 }
 
 void Tesouro::execute(std::shared_ptr<Caravana> car) {
-    cout << "Encontrou um Arca de Tesouro, foram adicionadas 10% do seu total de moedas" << endl;
+    cout << "Encontrou uma " << getNome() << ", foram adicionadas 10% do seu total de moedas" << endl;
     Mapa *m = this->getMapa();
     if (m) {
         int coins = static_cast<int>(m->getCoins() * 0.1);

@@ -3,10 +3,10 @@
 
 using namespace std;
 
-Mina::Mina(Mapa *m) : Item("Mina", m) {
+Mina::Mina(int row, int col, Mapa *m) : Item(row, col, "Mina", m) {
 }
 
 void Mina::execute(std::shared_ptr<Caravana> car) {
-    cout << "A caravana com ID " << car->getID() << " foi destruída pela mina!" << endl;
+    cout << "A caravana com ID " << car->getID() << " foi destruída pela " << getNome() << "!!" << endl;
     car->setDestruida();
 }

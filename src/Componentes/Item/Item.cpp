@@ -1,7 +1,15 @@
 #include "Item.h"
 #include "../Mapa.h"
 
-Item::Item(std::string nome, Mapa *onde) : nome(nome), onde(onde), vidaUtil(onde->getDurItem()) {
+using namespace std;
+
+Item::Item(int row, int col, string nome, Mapa *onde) : row(row), col(col), nome(nome), onde(onde), vidaUtil(onde->getDurItem()) {
 }
+
+std::string Item::getNome() const { return nome; }
+
+int Item::getRow() const { return row; }
+
+int Item::getCol() const { return col; }
 
 Mapa *Item::getMapa() { return onde; }

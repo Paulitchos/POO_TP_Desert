@@ -39,6 +39,10 @@ void Militar::tempestade() {
     }
 }
 
+void Militar::moveAuto() {
+
+}
+
 void Militar::semTripulantes() {
     setTurnosParaDesaparecer(turnos);
 }

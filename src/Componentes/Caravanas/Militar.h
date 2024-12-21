@@ -14,6 +14,8 @@ public:
 
     void tempestade() override;
 
+    void moveAuto() override;
+
     //verificar
     void semTripulantes() override;
 

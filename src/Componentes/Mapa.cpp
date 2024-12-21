@@ -92,7 +92,7 @@ void Mapa::showDetails() const {
             << "Preco da caravana: " << getPCaravan() << endl << endl;
 }
 
-void Mapa::startBuffer() { buffer = std::make_unique<Buffer>(rows, cols); }
+void Mapa::startBuffer() { buffer = make_unique<Buffer>(rows, cols); }
 
 void Mapa::imprimeBuffer() const {
     if (buffer != nullptr) {
@@ -161,9 +161,9 @@ bool Mapa::isCidade(int row, int col) const {
 
 void Mapa::addCaravanaInicial(int row, int col, char id) {
     if (id == '!')
-        caravanas.emplace_back(std::make_shared<Barbaros>(row, col, id, getDurBarb(), this));
+        caravanas.emplace_back(make_shared<Barbaros>(row, col, id, getDurBarb(), this));
     else {
-        caravanas.emplace_back(std::make_shared<Comercio>(row, col, id, this));
+        caravanas.emplace_back(make_shared<Comercio>(row, col, id, this));
     }
     //cout << "Caravana adicionada em (" << row << ", " << col << ")" << endl;
     writeCharToBuffer(row, col, id);
@@ -185,19 +185,19 @@ void Mapa::addCaravanaBarbaro(int row, int col) {
         return;
     }
 
-    caravanas.emplace_back(std::make_shared<Barbaros>(row, col, '!', getDurBarb(), this));
+    caravanas.emplace_back(make_shared<Barbaros>(row, col, '!', getDurBarb(), this));
     writeCharToBuffer(row, col, '!');
     cout << "Criada uma caravana barbaro na linha " << row << " e coluna " << col << endl;
 }
 
 
-void Mapa::addCaravana(const std::shared_ptr<Caravana> &caravana) {
+void Mapa::addCaravana(const shared_ptr<Caravana> &caravana) {
     caravanas.emplace_back(caravana);
 }
 
 int Mapa::getCaravanaIndex(char caravanaID) const {
     if (caravanaID < '0' || caravanaID > '9') {
-        std::cout << "ID da caravana deve ser entre '0' e '9'" << std::endl;
+        cout << "ID da caravana deve ser entre '0' e '9'" << endl;
         return -2;
     }
 
@@ -236,7 +236,7 @@ shared_ptr<Caravana> Mapa::getLastCaravana() const {
     return nullptr;
 }
 
-std::shared_ptr<Caravana> Mapa::getCaravana(int index) const {
+shared_ptr<Caravana> Mapa::getCaravana(int index) const {
     if (index >= 0 && index < caravanas.size()) {
         return caravanas[index];
     }
@@ -279,7 +279,7 @@ void Mapa::unparkCaravana(char caravanaID, char cidadeName) {
     cidades[indexCidade].unparkCaravana(caravanas[indexCaravana]);
 }
 
-void Mapa::removeCaravana(const std::shared_ptr<Caravana> &caravana) {
+void Mapa::removeCaravana(const shared_ptr<Caravana> &caravana) {
     auto it = find(caravanas.begin(), caravanas.end(), caravana);
 
     if (it != caravanas.end()) {
@@ -295,8 +295,71 @@ void Mapa::removeCaravana(const std::shared_ptr<Caravana> &caravana) {
     }
 }
 
+void Mapa::autoCaravanaMove() {
+    if(caravanas.empty())
+        return;
+    for (auto &caravana: caravanas) {
+        caravana->setAutoFase();
+        if(!caravana->getEstado() && caravana->getAutoPilot()) {
+            caravana->moveAuto();
+        } else if(!caravana->getEstado() && caravana->getRandomMode()) {
+            caravana->getRandomMode();
+        }
+    }
+}
+
+std::shared_ptr<Caravana> Mapa::getNearCaravanaUtilizador(int row, int col, const Caravana *self) {
+    std::shared_ptr<Caravana> nearestCaravana = nullptr;
+    int minDistance = std::numeric_limits<int>::max();
+
+    for (auto& caravana : caravanas) {
+        if(caravana && caravana.get() != self) {
+            int distanceRows = abs(caravana->getRow() - row);
+            int distanceCols = abs(caravana->getCol() - col);
+            int distance = distanceRows + distanceCols;
+
+            if (distance < minDistance) {
+                minDistance = distance;
+                nearestCaravana = caravana;
+            }
+        }
+    }
+
+    return nearestCaravana;
+}
+
 bool Mapa::isItem(int row, int col) const {
+    for (auto &item: items) {
+        if (item->getRow() == row && item->getCol() == col && item) {
+            return true;
+        }
+    }
     return false;
+}
+
+int Mapa::getNItems() const {
+    return items.size();
+}
+
+Item *Mapa::getNearItem(int row, int col,int distance) const {
+    for (auto& item : items) {
+        int distanceRows = abs(item->getRow() - row);
+        int distanceCols = abs(item->getCol() - col);
+
+        if (distanceRows <= distance && distanceCols <= distance) {
+            return item.get();
+        }
+    }
+
+    return nullptr;
+}
+
+void Mapa::applyItem(Item *item, const Caravana *self) {
+    for (auto &caravana: caravanas) {
+        if (caravana && caravana.get() == self) {
+            item->execute(caravana);
+        }
+    }
 }
 
 void Mapa::writeCharToBuffer(int row, int col, char c) const {
@@ -325,15 +388,15 @@ void Mapa::startTempestade(int row, int col, int raio) {
 }
 
 vector<string> Mapa::captureBufferState() const {
-    std::vector<std::string> state;
+    vector<string> state;
 
     if (!buffer) {
-        std::cout << "Erro: O buffer atual está vazio!" << std::endl;
+        cout << "Erro: O buffer atual está vazio!" << endl;
         return state;
     }
 
     for (int i = 0; i < getRows(); ++i) {
-        std::string line;
+        string line;
         for (int j = 0; j < getCols(); ++j) {
             line += buffer->getChar(i, j);
         }
@@ -379,7 +442,7 @@ void Mapa::listSavedBuffers() const {
     }
 }
 
-void Mapa::deleteSavedBuffer(const std::string &nome) {
+void Mapa::deleteSavedBuffer(const string &nome) {
     auto it = savedBuffers.find(nome);
     if (it == savedBuffers.end()) {
         cout << "Erro: Nenhum buffer salvo com o nome \"" << nome << "\" encontrado!" << endl;

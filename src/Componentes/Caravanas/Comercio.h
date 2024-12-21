@@ -14,13 +14,17 @@ public:
 
     void tempestade() override;
 
+    void moveAuto() override;
+
+    bool tryToPickItem(Mapa *m);
+
+    void moveCloserToCaravana(Mapa *m);
+
     //verificar
     void semTripulantes() override;
 
     bool verificaContinuidade() override;
 
-private:
-    static int turnos;
 };
 
 

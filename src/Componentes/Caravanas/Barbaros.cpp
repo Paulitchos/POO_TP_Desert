@@ -44,6 +44,9 @@ void Barbaros::tempestade() {
     }
 }
 
+void Barbaros::moveAuto() {
+
+}
 
 bool Barbaros::verificaContinuidade() {
     if (!getAutoPilot()) {

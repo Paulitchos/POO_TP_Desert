@@ -19,9 +19,10 @@ void Interface::startSimulation() {
                 break;
             case 1:
                 cout << "Comportamentos auto - verifica continuidade";
+                this->proxFase = sim->autoSimBehaviour();
                 break;
             case 2:
-                cout << "Barbaros";
+                this->proxFase = 1;
                 break;
             case 3:
                 cout << "Combates";

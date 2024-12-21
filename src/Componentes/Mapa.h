@@ -9,6 +9,7 @@
 #include <vector>
 #include <algorithm>
 #include <map>
+#include <limits>
 #include "../Interface/Buffer.h"
 
 #include "Caravanas/Caravana.h"
@@ -18,6 +19,7 @@
 
 #include "Montanha/Montanha.h"
 #include "Cidade/Cidade.h"
+#include "Item/Item.h"
 
 class Mapa {
     int rows, cols, coins,
@@ -28,6 +30,7 @@ class Mapa {
     std::vector<Montanha> montanhas;
     std::vector<Cidade> cidades;
     std::vector<std::shared_ptr<Caravana> > caravanas;
+    std::vector<std::unique_ptr<Item> > items;
 
 public:
     Mapa();
@@ -132,7 +135,17 @@ public:
 
     void removeCaravana(const std::shared_ptr<Caravana> &caravana);
 
+    void autoCaravanaMove();
+
+    std::shared_ptr<Caravana> getNearCaravanaUtilizador(int row, int col, const Caravana *self);
+
     bool isItem(int row, int col) const;
+
+    int getNItems() const;
+
+    Item *getNearItem(int row, int col, int distance) const;
+
+    void applyItem(Item *item, const Caravana *self);
 
     void writeCharToBuffer(int row, int col, char c) const;
 

@@ -55,7 +55,9 @@ public:
     void setMercadoria(int novaMercadoria);
 
     //MOVIMENTOS
-    void move(const std::string &direction);
+    bool move(const std::string &direction);
+
+    virtual void moveAuto() = 0;
 
     int getRow() const;
 
@@ -104,6 +106,12 @@ public:
 
     void setCidadeName(char newCidadeName);
 
+    Mapa *getMapa() const;
+
+    bool getAutoFase() const;
+
+    void setAutoFase();
+
 private:
     Mapa *onde;
     char caravanaID;
@@ -115,6 +123,7 @@ private:
     double nMercadoria, maxMercadoria;
     bool controlavel, destruida, autoPilot, randomMode;
     bool vidaInfinita;
+    bool autoFase;
 
     const int maxJogadasPTurno;
     int movimentos;

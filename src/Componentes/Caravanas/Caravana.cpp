@@ -9,7 +9,7 @@ Caravana::Caravana(int row, int col, char id, int nPessoas, int maxPessoas, int 
                    int maxJogadasPTurno, double maxMercadoria, bool controlavel, Mapa *onde)
     : row(row), col(col), caravanaID(id), nPessoas(nPessoas), nMercadoria(0), maxPessoas(maxPessoas), maxAgua(maxAgua),
       movimentos(0), maxJogadasPTurno(maxJogadasPTurno), maxMercadoria(maxMercadoria), controlavel(controlavel),
-      cidadeName(' '), onde(onde), destruida(false), autoPilot(false), randomMode(false), turnosParaDesparecer(-1) {
+      cidadeName(' '), onde(onde), destruida(false), autoPilot(false), randomMode(false), turnosParaDesparecer(-1), autoFase(false) {
 }
 
 Caravana::~Caravana() {
@@ -138,25 +138,25 @@ void Caravana::removeMercadoria(int mercadoriaARemover) {
 }
 
 //MOVIMENTOS
-void Caravana::move(const string &direction) {
+bool Caravana::move(const string &direction) {
     if (getEstado()) {
         cout << "Caravana nao pode mover devido a ter sido declarada como destruida" << endl;
-        return;
+        return false;
     }
 
-    if (autoPilot) {
+    if (autoPilot && !autoFase) {
         cout << "Caravana esta a andar de forma autonoma" << endl;
-        return;
+        return false;
     }
 
-    if (randomMode) {
+    if (randomMode && !autoFase) {
         cout << "Caravana esta a andar de forma aleatoria devido a nao ter tripulantes" << endl;
-        return;
+        return false;
     }
 
     if (movimentos == maxJogadasPTurno) {
         cout << "Caravana ja excedeu o seus movimentos este turno!!" << endl;
-        return;
+        return false;
     }
 
     int auxRow = getRow();
@@ -184,28 +184,31 @@ void Caravana::move(const string &direction) {
         setCol(col + 1);
     } else {
         cout << "Movimento invalido!" << endl;
-        return;
+        return false;
     }
 
     if (onde->isMontanha(getRow(), getCol())) {
-        cout << "Movimento invalido devido a tentar conduzir contra uma montanha!!" << endl;
+        if(!autoFase)
+            cout << "Movimento invalido devido a tentar conduzir contra uma montanha!!" << endl;
         setRow(auxRow);
         setCol(auxCol);
-        return;
+        return false;
     }
 
     if (onde->isCaravana(getRow(), getCol(), this)) {
-        cout << "Movimento invalido devido a tentar conduzir contra outra caravana!!" << endl;
+        if(!autoFase)
+            cout << "Movimento invalido devido a tentar conduzir contra outra caravana!!" << endl;
         setRow(auxRow);
         setCol(auxCol);
-        return;
+        return false;
     }
 
     if (onde->isItem(getRow(), getCol())) {
-        cout << "Movimento invalido devido a tentar conduzir contra um item!!" << endl;
+        if(!autoFase)
+            cout << "Movimento invalido devido a tentar conduzir contra um item!!" << endl;
         setRow(auxRow);
         setCol(auxCol);
-        return;
+        return false;
     }
 
     if (onde->isCidade(getRow(), getCol())) {
@@ -226,6 +229,7 @@ void Caravana::move(const string &direction) {
         movimentos++;
     }
     onde->imprimeBuffer();
+    return true;
 }
 
 int Caravana::getRow() const { return row; }
@@ -286,6 +290,7 @@ bool Caravana::getAutoPilot() {
 
 void Caravana::setRandomMode() {
     randomMode = !randomMode;
+    autoPilot = false;
 }
 
 bool Caravana::getRandomMode() {
@@ -313,3 +318,10 @@ void Caravana::setDestruida() {
 char Caravana::getCidadeName() const { return cidadeName; }
 
 void Caravana::setCidadeName(char cidadeName) { this->cidadeName = cidadeName; }
+
+Mapa *Caravana::getMapa() const { return onde; }
+
+bool Caravana::getAutoFase() const { return autoFase; }
+
+void Caravana::setAutoFase() { autoFase = !autoFase; }
+

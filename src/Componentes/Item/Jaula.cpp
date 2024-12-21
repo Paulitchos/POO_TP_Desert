@@ -2,7 +2,7 @@
 
 using namespace std;
 
-Jaula::Jaula(Mapa *m) : Item("Jaula", m) {
+Jaula::Jaula(int row, int col, Mapa *m) : Item(row, col, "Jaula", m) {
 }
 
 void Jaula::execute(std::shared_ptr<Caravana> car) {
@@ -15,5 +15,5 @@ void Jaula::execute(std::shared_ptr<Caravana> car) {
 
     car->setNPessoas(car->getNPessoas() + espacoDisponivel);
 
-    cout << "Foram adicionados " << espacoDisponivel << " tripulantes a caravana " << car->getID() << endl;
+    cout << "Apanhou o item " << getNome() << " foram adicionados " << espacoDisponivel << " tripulantes a caravana " << car->getID() << endl;
 }

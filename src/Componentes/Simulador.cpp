@@ -84,6 +84,12 @@ void Simulador::listMapSavedBuffers() const { mapa->listSavedBuffers(); }
 
 void Simulador::deleteSavedBuffer(const string& nome) { mapa->deleteSavedBuffer(nome); }
 
+int Simulador::autoSimBehaviour() {
+    mapa->autoCaravanaMove();
+
+    return 2;
+}
+
 void Simulador::terminaMapa() {
     if (mapa) {
         cout << "Encerrando a simulacao e limpando os recursos do mapa..." << endl;
