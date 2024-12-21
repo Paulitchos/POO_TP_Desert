@@ -4,8 +4,9 @@
 #include "Caravana.h"
 
 class Militar : public Caravana {
+    std::string lastMove;
 public:
-    Militar(int row, int col, char id, Mapa *m) : Caravana(row, col, id, 20, 40, 400, 3, 5, true, m) {
+    Militar(int row, int col, char id, Mapa *m) : Caravana(row, col, id, 20, 40, 400, 3, 5, true, m), lastMove("") {
     }
 
     void perdeAgua();
@@ -14,7 +15,11 @@ public:
 
     void tempestade() override;
 
+    bool move(const std::string &direction) override;
+
     void moveAuto() override;
+
+    void moveRandom() override;
 
     bool moveCloserToCaravanaBarbara(Mapa *m);
 
@@ -22,6 +27,12 @@ public:
     void semTripulantes() override;
 
     bool verificaContinuidade() override;
+
+    //movimento
+
+    std::string getLastMove();
+
+    void setLastMove(std::string lastMove);
 };
 
 

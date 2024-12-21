@@ -72,6 +72,43 @@ void Comercio::moveAuto() {
     }
 }
 
+void Comercio::moveRandom() {
+    Mapa *m = getMapa();
+
+    while (getMovimentos() != getMaxJogadasPTurno()) {
+        Item *nearestItem = nullptr;
+        nearestItem = m->getNearItem(getRow(), getCol(), 1);
+
+        if (nearestItem) {
+            m->applyItem(nearestItem, this);
+        }
+
+        if (getEstado() || !getRandomMode()) {
+            return;
+        }
+
+        vector<string> possibleMoves = {"D", "E", "C", "B", "CE", "CD", "BE", "BD"};
+        vector<bool> triedMoves(possibleMoves.size(), false);
+        int attempts = 0;
+
+        while (attempts < possibleMoves.size()) {
+            int randomIndex = rand() % possibleMoves.size();
+
+            if (!triedMoves[randomIndex]) {
+                triedMoves[randomIndex] = true;
+                if (move(possibleMoves[randomIndex])) {
+                    break;
+                }
+                attempts++;
+            }
+        }
+
+        if (attempts >= possibleMoves.size()) {
+            break;
+        }
+    }
+}
+
 bool Comercio::tryToPickItem(Mapa *m) {
     Item *nearestItem = nullptr;
     int shortestDistance = 2;
@@ -107,7 +144,7 @@ bool Comercio::tryToPickItem(Mapa *m) {
 bool Comercio::moveCloserToCaravana(Mapa *m) {
     auto nearestCaravana = m->getNearCaravanaUtilizador(getRow(), getCol(), this, 100);
 
-    if (!nearestCaravana || getEstado()) {
+    if (!nearestCaravana || getEstado() || getRandomMode()) {
         return false;
     }
 

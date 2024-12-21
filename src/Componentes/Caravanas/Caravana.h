@@ -55,9 +55,11 @@ public:
     void setMercadoria(int novaMercadoria);
 
     //MOVIMENTOS
-    bool move(const std::string &direction);
+    virtual bool move(const std::string &direction);
 
     virtual void moveAuto() = 0;
+
+    virtual void moveRandom() = 0;
 
     int getRow() const;
 

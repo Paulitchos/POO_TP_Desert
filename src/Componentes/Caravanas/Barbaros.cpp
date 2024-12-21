@@ -66,20 +66,10 @@ bool Barbaros::moveCloserToCaravana(Mapa *m) {
     nearestItem = m->getNearItem(getRow(), getCol(), 1);
 
     if (nearestItem) {
-        int targetRow = nearestItem->getRow();
-        int targetCol = nearestItem->getCol();
-
-        int rowDiff = abs(getRow() - targetRow);
-        int colDiff = abs(getCol() - targetCol);
-
-        int currentDistance = max(rowDiff, colDiff);
-
-        if (currentDistance <= 1) {
-            m->applyItem(nearestItem, this);
-        }
+        m->applyItem(nearestItem, this);
     }
 
-    if (!nearestCaravana || getEstado()) {
+    if (!nearestCaravana || getEstado() || getRandomMode()) {
         return false;
     }
 

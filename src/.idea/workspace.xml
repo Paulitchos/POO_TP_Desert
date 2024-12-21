@@ -392,7 +392,7 @@
       <workItem from="1734534807265" duration="32842000" />
       <workItem from="1734620635885" duration="15835000" />
       <workItem from="1734706006607" duration="27388000" />
-      <workItem from="1734806116406" duration="8711000" />
+      <workItem from="1734806116406" duration="13144000" />
     </task>
     <servers />
   </component>
@@ -403,16 +403,5 @@
     <isAutomaticCheckingOnLaunch value="false" />
     <isAutomaticFoundErrors value="true" />
     <isAutomaticReloadCMake value="true" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/Componentes/Caravanas/Caravana.cpp</url>
-          <line>141</line>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

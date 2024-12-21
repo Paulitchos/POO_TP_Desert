@@ -38,6 +38,15 @@ void Militar::tempestade() {
     }
 }
 
+bool Militar::move(const std::string &direction) {
+    if(Caravana::move(direction)) {
+        setLastMove(direction);
+        return true;
+    }
+
+    return false;
+}
+
 void Militar::moveAuto() {
     Mapa *m = getMapa();
     while(getMovimentos() != getMaxJogadasPTurno()) {
@@ -52,6 +61,26 @@ void Militar::moveAuto() {
     }
 }
 
+void Militar::moveRandom() {
+    Mapa *m = getMapa();
+
+    while (getMovimentos() != getMaxJogadasPTurno()) {
+        Item *nearestItem = nullptr;
+        nearestItem = m->getNearItem(getRow(), getCol(), 1);
+
+        if (nearestItem) {
+            m->applyItem(nearestItem, this);
+        }
+
+        if (getEstado() || !getRandomMode()) {
+            return;
+        }
+
+        if (!move(lastMove))
+            break;
+    }
+}
+
 bool Militar::moveCloserToCaravanaBarbara(Mapa *m) {
     Item *nearestItem = nullptr;
 
@@ -60,20 +89,10 @@ bool Militar::moveCloserToCaravanaBarbara(Mapa *m) {
     nearestItem = m->getNearItem(getRow(), getCol(), 1);
 
     if (nearestItem) {
-        int targetRow = nearestItem->getRow();
-        int targetCol = nearestItem->getCol();
-
-        int rowDiff = abs(getRow() - targetRow);
-        int colDiff = abs(getCol() - targetCol);
-
-        int currentDistance = max(rowDiff, colDiff);
-
-        if (currentDistance <= 1) {
-            m->applyItem(nearestItem, this);
-        }
+        m->applyItem(nearestItem, this);
     }
 
-    if (!nearestCaravana || getEstado()) {
+    if (!nearestCaravana || getEstado() || getRandomMode()) {
         return false;
     }
 
@@ -92,6 +111,7 @@ bool Militar::moveCloserToCaravanaBarbara(Mapa *m) {
     string bestMove = getBestMove(m, targetRow, targetCol);
     
     if (!bestMove.empty()) {
+        setLastMove(bestMove);
         return move(bestMove);
     }
 
@@ -129,3 +149,9 @@ bool Militar::verificaContinuidade() {
 
     return true;
 }
+
+string Militar::getLastMove() { return lastMove; }
+
+void Militar::setLastMove(std::string lastMove) { this->lastMove = lastMove; }
+
+

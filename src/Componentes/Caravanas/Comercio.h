@@ -16,6 +16,8 @@ public:
 
     void moveAuto() override;
 
+    void moveRandom() override;
+
     bool tryToPickItem(Mapa *m);
 
     bool moveCloserToCaravana(Mapa *m);

@@ -30,6 +30,8 @@ void ComandoStop::execute(const std::string &args, Simulador &sim) {
         }
         if (!aux->getAutoPilot()) {
             cout << "Caravana nao se encontra em modo auto-gestao" << endl;
+        } else if (aux->getRandomMode()) {
+            cout << "Caravana esta a andar aleatoriamente devido a nao ter tripulantes!!" << endl;
         } else {
             aux->setAutoPilot();
             cout << "A caravana " << aux->getID() << " ficou sem o modo auto-gestao" << endl;
