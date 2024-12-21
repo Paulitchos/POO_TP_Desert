@@ -69,7 +69,7 @@ public:
 
     int getMovimentos() const;
 
-    void setMovimentos(int movimentosADefinir);
+    void setMovimentos();
 
     void resetMovimento();
 

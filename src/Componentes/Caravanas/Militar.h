@@ -16,13 +16,12 @@ public:
 
     void moveAuto() override;
 
+    bool moveCloserToCaravanaBarbara(Mapa *m);
+
     //verificar
     void semTripulantes() override;
 
     bool verificaContinuidade() override;
-
-private:
-    static int turnos;
 };
 
 

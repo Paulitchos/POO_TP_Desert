@@ -258,12 +258,12 @@ int Caravana::getMovimentos() const {
     return movimentos;
 }
 
-void Caravana::setMovimentos(int movimentosADefinir) {
-    movimentos = movimentosADefinir;
+void Caravana::setMovimentos() {
+    movimentos = movimentos++;
 }
 
 void Caravana::resetMovimento() {
-    setMovimentos(0);
+    movimentos = 0;
 }
 
 int Caravana::getMaxJogadasPTurno() const {

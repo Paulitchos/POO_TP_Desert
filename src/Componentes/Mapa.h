@@ -127,6 +127,8 @@ public:
 
     int getNCaravanasUtilizador() const;
 
+    int getNCaravanasBarbaras() const;
+
     bool isCaravana(int row, int col, const Caravana *self) const;
 
     void parkCaravana(char caravanaID, char cidadeName);
@@ -138,6 +140,8 @@ public:
     void autoCaravanaMove();
 
     std::shared_ptr<Caravana> getNearCaravanaUtilizador(int row, int col, const Caravana *self);
+
+    std::shared_ptr<Caravana> getNearCaravanaBarbara(int row, int col, int distance);
 
     bool isItem(int row, int col) const;
 

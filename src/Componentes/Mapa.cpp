@@ -255,6 +255,11 @@ int Mapa::getNCaravanasUtilizador() const {
     return nCaravanas;
 }
 
+int Mapa::getNCaravanasBarbaras() const {
+    return (caravanas.size() - getNCaravanasUtilizador());
+}
+
+
 bool Mapa::isCaravana(int row, int col, const Caravana *self) const {
     for (auto &caravana: caravanas) {
         if (caravana->getRow() == row && caravana->getCol() == col && caravana && caravana.get() != self) {
@@ -305,6 +310,9 @@ void Mapa::autoCaravanaMove() {
         } else if(!caravana->getEstado() && caravana->getRandomMode()) {
             caravana->getRandomMode();
         }
+
+        caravana->setAutoFase();
+        caravana->resetMovimento();
     }
 }
 
@@ -328,6 +336,26 @@ std::shared_ptr<Caravana> Mapa::getNearCaravanaUtilizador(int row, int col, cons
     return nearestCaravana;
 }
 
+std::shared_ptr<Caravana> Mapa::getNearCaravanaBarbara(int row, int col, int distance) {
+    std::shared_ptr<Caravana> nearestCaravana = nullptr;
+    int minDistance = std::numeric_limits<int>::max();
+
+    for (auto& caravana : caravanas) {
+        if(caravana && caravana->getID() == '!') {
+            int distanceRows = abs(caravana->getRow() - row);
+            int distanceCols = abs(caravana->getCol() - col);
+            int currentDistance = distanceRows + distanceCols;
+
+            if (currentDistance <= distance && currentDistance < minDistance) {
+                minDistance = currentDistance;
+                nearestCaravana = caravana;
+            }
+        }
+    }
+
+    return nearestCaravana;
+}
+
 bool Mapa::isItem(int row, int col) const {
     for (auto &item: items) {
         if (item->getRow() == row && item->getCol() == col && item) {
@@ -342,16 +370,21 @@ int Mapa::getNItems() const {
 }
 
 Item *Mapa::getNearItem(int row, int col,int distance) const {
-    for (auto& item : items) {
+    Item* nearestItem = nullptr;
+    int minDistance = std::numeric_limits<int>::max();
+
+    for (const auto& item : items) {
         int distanceRows = abs(item->getRow() - row);
         int distanceCols = abs(item->getCol() - col);
+        int currentDistance = distanceRows + distanceCols;
 
-        if (distanceRows <= distance && distanceCols <= distance) {
-            return item.get();
+        if (currentDistance <= distance && currentDistance < minDistance) {
+            minDistance = currentDistance;
+            nearestItem = item.get();
         }
     }
 
-    return nullptr;
+    return nearestItem;
 }
 
 void Mapa::applyItem(Item *item, const Caravana *self) {
