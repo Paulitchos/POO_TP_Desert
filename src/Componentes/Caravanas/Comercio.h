@@ -18,7 +18,7 @@ public:
 
     bool tryToPickItem(Mapa *m);
 
-    void moveCloserToCaravana(Mapa *m);
+    bool moveCloserToCaravana(Mapa *m);
 
     //verificar
     void semTripulantes() override;

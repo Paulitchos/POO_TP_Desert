@@ -16,9 +16,9 @@ string Comercio::showInfo() const {
     ostringstream os;
     os << "Caravana Comercio " << endl;
     if (getCidadeName() == ' ') {
-        os << "A caravana nao esta numa cidade." << std::endl;
+        os << "A caravana nao esta numa cidade." << endl;
     } else {
-        os << "A caravana esta na cidade " << getCidadeName() << std::endl;
+        os << "A caravana esta na cidade " << getCidadeName() << endl;
     }
     os << Caravana::showInfo();
     return os.str();
@@ -63,10 +63,10 @@ void Comercio::moveAuto() {
         }
 
         if (m->getNCaravanasUtilizador() > 1) {
-            moveCloserToCaravana(m);
-            moves++;
-            continue;
-
+            if(moveCloserToCaravana(m)) {
+                moves++;
+                continue;
+            }
         }
 
         break;
@@ -84,7 +84,7 @@ bool Comercio::tryToPickItem(Mapa *m) {
         int deltaRow = nearestItem->getRow() - getRow();
         int deltaCol = nearestItem->getCol() - getCol();
 
-        if (std::abs(deltaRow) <= 1 && std::abs(deltaCol) <= 1) {
+        if (abs(deltaRow) <= 1 && abs(deltaCol) <= 1) {
             m->applyItem(nearestItem, this);
             return true;
         }
@@ -114,13 +114,40 @@ bool Comercio::tryToPickItem(Mapa *m) {
     return false;
 }
 
-void Comercio::moveCloserToCaravana(Mapa *m) {
+bool Comercio::moveCloserToCaravana(Mapa *m) {
     auto nearestCaravana = m->getNearCaravanaUtilizador(getRow(), getCol(), this);
 
     if (nearestCaravana) {
-        
+        int deltaRow = nearestCaravana->getRow() - getRow();
+        int deltaCol = nearestCaravana->getCol() - getCol();
+
+        if (abs(deltaRow) <= 1 && abs(deltaCol) <= 1) {
+            return false;
+        }
+
+        vector<string> moves;
+
+        if (abs(deltaRow) > 0 && abs(deltaCol) > 0) {
+            // Diagonal moves (down-right, down-left, up-right, up-left)
+            moves = {"BD", "BE", "CD", "CE"};
+        } else if (abs(deltaRow) > abs(deltaCol)) {
+            // Vertical moves (up, down)
+            moves = { "C", "B" };
+        } else {
+            // Horizontal moves (left, right)
+            moves = { "E", "D" };
+        }
+
+        for (auto& mov : moves) {
+            if (move(mov)) {
+                return true;
+            }
+        }
+    } else {
+        return false;
     }
 
+    return false;
 }
 
 void Comercio::semTripulantes() {

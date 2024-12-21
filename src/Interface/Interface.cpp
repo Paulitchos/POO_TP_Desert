@@ -18,11 +18,11 @@ void Interface::startSimulation() {
                 this->proxFase = askCommands();
                 break;
             case 1:
-                cout << "Comportamentos auto - verifica continuidade";
+                cout << "Comportamentos auto - verifica continuidade" << endl;
                 this->proxFase = sim->autoSimBehaviour();
                 break;
             case 2:
-                this->proxFase = 1;
+                this->proxFase = 0;
                 break;
             case 3:
                 cout << "Combates";
