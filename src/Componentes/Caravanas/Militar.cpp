@@ -40,7 +40,6 @@ void Militar::tempestade() {
 
 void Militar::moveAuto() {
     Mapa *m = getMapa();
-    int moves = 0;
     while(getMovimentos() != getMaxJogadasPTurno()) {
         if (m->getNCaravanasBarbaras() > 0) {
             if(moveCloserToCaravanaBarbara(m)) {
@@ -54,9 +53,27 @@ void Militar::moveAuto() {
 }
 
 bool Militar::moveCloserToCaravanaBarbara(Mapa *m) {
+    Item *nearestItem = nullptr;
+
     auto nearestCaravana = m->getNearCaravanaBarbara(getRow(), getCol(), 6);
 
-    if (!nearestCaravana) {
+    nearestItem = m->getNearItem(getRow(), getCol(), 1);
+
+    if (nearestItem) {
+        int targetRow = nearestItem->getRow();
+        int targetCol = nearestItem->getCol();
+
+        int rowDiff = abs(getRow() - targetRow);
+        int colDiff = abs(getCol() - targetCol);
+
+        int currentDistance = max(rowDiff, colDiff);
+
+        if (currentDistance <= 1) {
+            m->applyItem(nearestItem, this);
+        }
+    }
+
+    if (!nearestCaravana || getEstado()) {
         return false;
     }
 

@@ -108,7 +108,7 @@ bool Comercio::tryToPickItem(Mapa *m) {
 bool Comercio::moveCloserToCaravana(Mapa *m) {
     auto nearestCaravana = m->getNearCaravanaUtilizador(getRow(), getCol(), this);
 
-    if (!nearestCaravana) {
+    if (!nearestCaravana || getEstado()) {
         return false;
     }
 
