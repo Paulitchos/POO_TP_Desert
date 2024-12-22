@@ -35,8 +35,8 @@ class Mapa {
     std::map<std::string, std::vector<std::string> > savedBuffers;
     std::vector<Montanha> montanhas;
     std::vector<Cidade> cidades;
-    std::vector<std::shared_ptr<Caravana> > caravanas;
-    std::vector<std::unique_ptr<Barbaro> > barbaras;
+    std::vector<std::shared_ptr<Caravana>> caravanas;
+    std::vector<std::unique_ptr<Barbaro>> barbaras;
     std::vector<std::unique_ptr<Item> > items;
 
 public:
@@ -120,6 +120,8 @@ public:
 
     void addCaravanaInicial(int row, int col, char id);
 
+    void setTurnosADesaparecerBarb();
+
     void addCaravanaBarbaro(int row, int col);
 
     void addCaravana(const std::shared_ptr<Caravana> &caravana);
@@ -127,8 +129,6 @@ public:
     int getCaravanaIndex(char caravanaID) const;
 
     char getAvailableCaravanaID() const;
-
-    std::shared_ptr<Caravana> getLastCaravana() const;
 
     std::shared_ptr<Caravana> getCaravana(int index) const;
 
@@ -159,6 +159,8 @@ public:
     bool isItem(int row, int col) const;
 
     int getNItems() const;
+
+    void removeItem(const Item *self);
 
     void refreshItems();
 

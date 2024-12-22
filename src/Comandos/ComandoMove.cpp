@@ -13,14 +13,14 @@ void ComandoMove::execute(const std::string &args, Simulador &sim) {
 
     if (inputs.size() != 3) {
         cout << "O comando " << getNome() << " apenas aceita dois argumentos <N> que e um numero e corresponde "
-                "a uma caravana <X> corresponde a direcao do movimento!!" << endl;
+                "a uma caravana <X> corresponde a direcao do movimento!!" << endl << endl;
         return;
     }
 
     int index = sim.caravanaNameAvailable(inputs[1][0]);
 
     if (inputs[1].size() != 1 || !isNumeric(inputs[1]) || index == -1) {
-        cout << "argumento <N> precisa de ser um numero e corresponder a uma caravana!!" << endl;
+        cout << "argumento <N> precisa de ser um numero e corresponder a uma caravana!!" << endl << endl;
         return;
     }
 
@@ -29,6 +29,6 @@ void ComandoMove::execute(const std::string &args, Simulador &sim) {
     if (aux) {
         aux->move(inputs[2]);
     } else {
-        cout << "Erro: Caravana nao encontrada!" << endl;
+        cout << "Erro: Caravana nao encontrada!" << endl << endl;
     }
 }

@@ -2,8 +2,8 @@
 #include "../Mapa.h"
 using namespace std;
 
-Barbaro::Barbaro(int row, int col, char id, Mapa *m)
-    : Caravana(row, col, id, 40, 80, -1, 1, -1, false, m, m->getDurationBarb())
+Barbaro::Barbaro(int row, int col, char id, Mapa *m, int turnosParaDesaparecer)
+    : Caravana(row, col, id, 40, 80, -1, 1, -1, false, m, turnosParaDesaparecer)
     {
 }
 

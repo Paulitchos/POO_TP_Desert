@@ -71,11 +71,11 @@ public:
 
     void addCaravanaInicial(int row, int col, char id);
 
+    void setTurnosADesaparecerBarb();
+
     void addCaravanaBarbaro(int row, int col);
 
     int caravanaNameAvailable(char caravanaID) const;
-
-    std::shared_ptr<Caravana> getLastCaravana() const;
 
     std::shared_ptr<Caravana> getMapCaravana(int index) const;
 

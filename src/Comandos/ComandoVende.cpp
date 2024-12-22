@@ -11,14 +11,14 @@ void ComandoVende::execute(const std::string &args, Simulador &sim) {
 
     if (inputs.size() != 2) {
         cout << "O comando " << getNome() <<
-                "apenas aceita um argumento <N> que e um numero e corresponde a uma caravana!!" << endl;
+                " tem um argumento <N> que e um numero e corresponde a uma caravana!!" << endl << endl;
         return;
     }
 
     int index = sim.caravanaNameAvailable(inputs[1][0]);
 
     if (inputs[1].size() != 1 || !isNumeric(inputs[1]) || index == -1) {
-        cout << "argumento <N> precisa de ser um numero e corresponder a uma caravana!!" << endl;
+        cout << "argumento <N> precisa de ser um numero e corresponder a uma caravana!!" << endl << endl;
         return;
     }
 
@@ -26,22 +26,22 @@ void ComandoVende::execute(const std::string &args, Simulador &sim) {
 
     if (aux) {
         if (aux->getEstado()) {
-            cout << "Caravana nao pode vender a sua mercadoria devido a ter sido declarada como destruida" << endl;
+            cout << "Caravana nao pode vender a sua mercadoria devido a ter sido declarada como destruida" << endl << endl;
             return;
         }
         if (aux->getCidadeName() == ' ') {
-            cout << "Erro: Caravana nao esta numa cidade!" << endl;
+            cout << "Erro: Caravana nao esta numa cidade!" << endl << endl;
         } else {
             if (aux->getMercadoria() != 0) {
                 sim.addMapCoins(aux->getMercadoria() * sim.getMapSellMerch());
                 cout << "Utilizador vendeu " << aux->getMercadoria() << " toneladas de mercadoria da caravana " << aux->
-                        getID() << endl;
+                        getID() << endl << endl;
                 aux->setMercadoria(0);
             } else {
-                cout << "Caravana " << aux->getID() << " nao tem mercadoria para vender!" << endl;
+                cout << "Caravana " << aux->getID() << " nao tem mercadoria para vender!" << endl << endl;
             }
         }
     } else {
-        cout << "Erro: Caravana nao encontrada!" << endl;
+        cout << "Erro: Caravana nao encontrada!" << endl << endl;
     }
 }

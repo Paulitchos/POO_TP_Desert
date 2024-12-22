@@ -8,6 +8,7 @@ Interface::Interface(Simulador &s) : sim(&s) {
 }
 
 void Interface::startSimulation() {
+    sim->setTurnosADesaparecerBarb();
     sim->showMapDetails();
     this->proxFase = 0;
     bool running = true;
@@ -23,7 +24,6 @@ void Interface::startSimulation() {
                 this->proxFase = sim->autoCaravanaUtilizadorBehaviour();
                 break;
             case 2:
-                sim->autoCaravanaBarbarasBehaviour();
                 this->proxFase = sim->autoCaravanaBarbarasBehaviour();
                 sim->showMapDetails();
                 break;
@@ -212,7 +212,7 @@ bool Interface::readMapFromFile(string fileName) {
                     return false;
                 }
 
-                sim->setMapDurItem(value);
+                sim->setMapDurBarb(value);
             }
         } else if (!line.empty() && currentRow < sim->getMapRows()) {
             //cout << line.size() << "+" << key.size() << "*" << " " << sim->getMapCols() << endl;

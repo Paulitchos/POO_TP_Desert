@@ -33,7 +33,7 @@ void Secreta::moveRandom() {
             int random;
 
             int water = nearestCaravana->getMaxAgua() - nearestCaravana->getnivelAgua();
-            int pessoas = nearestCaravana->setSecuredPessoas(getNPessoas() * 0.25);
+            int pessoas = nearestCaravana->getmaxPessoas() - nearestCaravana->getNPessoas();
             int mercadoria = nearestCaravana->getMaxMercadoria() - nearestCaravana->getMercadoria();
 
             random = rand() % 3 + 1;

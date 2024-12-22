@@ -66,11 +66,11 @@ bool Simulador::isMontanha(int row, int col) const { return mapa->isMontanha(row
 
 void Simulador::addCaravanaInicial(int row, int col, char id) { mapa->addCaravanaInicial(row, col, id); }
 
+void Simulador::setTurnosADesaparecerBarb() { mapa->setTurnosADesaparecerBarb(); }
+
 void Simulador::addCaravanaBarbaro(int row, int col) { mapa->addCaravanaBarbaro(row, col); }
 
 int Simulador::caravanaNameAvailable(char caravanaID) const { return mapa->getCaravanaIndex(caravanaID); }
-
-shared_ptr<Caravana> Simulador::getLastCaravana() const { return mapa->getLastCaravana(); }
 
 shared_ptr<Caravana> Simulador::getMapCaravana(int index) const { return mapa->getCaravana(index); }
 
@@ -93,9 +93,11 @@ int Simulador::autoCaravanaBarbarasBehaviour() {
     mapa->refreshBarbaros();
     if (mapa->getTurn() % mapa->getInstantNewBarb() == 0) {
         vector<pair<int,int>> availablePosition = mapa->getRandomAvailablePosition();
-        mapa->addCaravanaBarbaro(availablePosition[0].first, availablePosition[0].second);
+        if (!availablePosition.empty())
+            mapa->addCaravanaBarbaro(availablePosition[0].first, availablePosition[0].second);
+        else
+            cout << "Nao existem posicoes disponiveis para adicionar uma nova caravana barbara!" << endl << endl;
     }
-
     mapa->autoCaravanaBarbaraMove();
     return 3;
 }

@@ -162,7 +162,7 @@ bool Mapa::isCidade(int row, int col) const {
 
 void Mapa::addCaravanaInicial(int row, int col, char id) {
     if (id == '!') {
-        barbaras.emplace_back(make_unique<Barbaro>(row, col, id, this));
+        barbaras.emplace_back(make_unique<Barbaro>(row, col, id, this, 0));
         barbaras.back()->setAutoPilot();
     } else {
         auto newCaravana = std::make_shared<Comercio>(row, col, id, this);
@@ -171,6 +171,12 @@ void Mapa::addCaravanaInicial(int row, int col, char id) {
     }
     //cout << "Caravana adicionada em (" << row << ", " << col << ")" << endl;
     writeCharToBuffer(row, col, id);
+}
+
+void Mapa::setTurnosADesaparecerBarb() {
+    for (auto &caravana: barbaras) {
+        caravana->setTurnosParaDesaparecer(getDurationBarb());
+    }
 }
 
 void Mapa::addCaravanaBarbaro(int row, int col) {
@@ -189,7 +195,7 @@ void Mapa::addCaravanaBarbaro(int row, int col) {
         return;
     }
 
-    barbaras.emplace_back(make_unique<Barbaro>(row, col, '!', this));
+    barbaras.emplace_back(make_unique<Barbaro>(row, col, '!', this, getDurationBarb()));
     writeCharToBuffer(row, col, '!');
     cout << "Criada uma caravana barbaro na linha " << row << " e coluna " << col << endl << endl;
 }
@@ -231,13 +237,6 @@ char Mapa::getAvailableCaravanaID() const {
     }
 
     return ' ';
-}
-
-shared_ptr<Caravana> Mapa::getLastCaravana() const {
-    if (!caravanas.empty()) {
-        return caravanas.back();
-    }
-    return nullptr;
 }
 
 shared_ptr<Caravana> Mapa::getCaravana(int index) const {
@@ -292,10 +291,10 @@ void Mapa::removeCaravanaUtilizador(const shared_ptr<Caravana> &caravana) {
     if (it != caravanas.end()) {
         if(caravana->getCidadeName() == ' ')
             writeCharToBuffer(caravana->getRow(), caravana->getCol(), '.');
-        cout << "Caravana " << caravana->getID() << " removida do mapa." << endl;
+        cout << "Caravana " << caravana->getID() << " foi destruida e removida do mapa." << endl << endl;
         caravanas.erase(it);
     } else {
-        cout << "Erro: Caravana nao encontrada no mapa!" << endl;
+        cout << "Erro: Caravana nao encontrada no mapa!" << endl << endl;
     }
 
     // If the caravana is parked in a city, unpark it
@@ -311,7 +310,6 @@ void Mapa::removeCaravanaBarbara(const Caravana *self) {
         if (it->get() == self) {
             writeCharToBuffer(self->getRow(), self->getCol(), '.');
             barbaras.erase(it);
-            cout << "Caravana Barbara removida do mapa." << endl;
             return;
         }
     }
@@ -325,9 +323,12 @@ void Mapa::autoCaravanaUtilizadorMove() {
             caravana->setAutoFase();
             if(!caravana->getEstado() && caravana->getAutoPilot()) {
                 caravana->moveAuto();
+                caravana->setTurnosEmRandom(0);
             } else if(!caravana->getEstado() && caravana->getRandomMode()) {
-                caravana->getRandomMode();
+                caravana->moveRandom();
                 caravana->addTurnosEmRandom();
+            } else {
+                caravana->setTurnosEmRandom(0);
             }
 
             if (caravana->getEstado()) {
@@ -399,14 +400,13 @@ Caravana *Mapa::getNearCaravanaBarbara(int row, int col, int distance) {
 }
 
 void Mapa::refreshBarbaros() {
-    for (auto it = barbaras.begin(); it != barbaras.end();) {
-        if (getTurn() % (*it)->getTurnosParaDesaparecer() == 0) {
-            int tX = (*it)->getRow();
-            int tY = (*it)->getCol();
+    for (auto& caravana : barbaras) {
+        if(caravana && getTurn() % caravana->getTurnosParaDesaparecer() == 0) {
+            int tX = caravana->getRow();
+            int tY = caravana->getCol();
 
-            writeCharToBuffer(tX, tY, '.');
-            it = barbaras.erase(it);
-            cout << "Caravana Barbara da linha " << tX << " e coluna " << tY << "removida." << endl << endl;
+            removeCaravanaBarbara(caravana.get());
+            cout << "Caravana Barbara da linha " << tX << " e coluna " << tY << " foi removida" << endl << endl;
         }
     }
 }
@@ -424,7 +424,27 @@ int Mapa::getNItems() const {
     return items.size();
 }
 
+void Mapa::removeItem(const Item *self) {
+    for (auto it = items.begin(); it != items.end(); ++it) {
+        if (it->get() == self) {
+            writeCharToBuffer(self->getRow(), self->getCol(), '.');
+            items.erase(it);
+            return;
+        }
+    }
+}
+
 void Mapa::refreshItems() {
+    for (auto& item : items) {
+        if(item && getTurn() % item->getVidaUtil() == 0) {
+            int tX = item->getRow();
+            int tY = item->getCol();
+
+            writeCharToBuffer(tX, tY, '.');
+
+            cout << "Item da linha " << tX << " e coluna " << tY << " foi removido." << endl << endl;
+        }
+    }
     for (auto it = items.begin(); it != items.end();) {
         if (getTurn() % (*it)->getVidaUtil() == 0) {
             int tX = (*it)->getRow();
@@ -442,6 +462,13 @@ void Mapa::addRandomItem() {
     randomDead = rand() % 5 + 1;
 
     vector<pair<int, int>> availablePositions = getRandomAvailablePosition();
+
+    if(availablePositions.empty()) {
+        cout << "Nao existem posicoes disponiveis para adicionar um item!" << endl << endl;
+        return;
+    }
+
+    writeCharToBuffer(availablePositions[0].first, availablePositions[0].second, '?');
 
     switch (randomDead) {
         case 1:
@@ -563,12 +590,12 @@ vector<string> Mapa::captureBufferState() const {
 
 void Mapa::saveBuffer(const string &nome) {
     if (savedBuffers.find(nome) != savedBuffers.end()) {
-        cout << "Erro: Já existe um buffer salvo com o nome \"" << nome << "\"!" << endl;
+        cout << "Erro: Já existe um buffer salvo com o nome \"" << nome << "\"!" << endl << endl;
         return;
     }
 
     savedBuffers[nome] = captureBufferState();
-    cout << "Buffer salvo com sucesso como \"" << nome << "\"." << endl;
+    cout << "Buffer salvo com sucesso como \"" << nome << "\"." << endl << endl;
 }
 
 void Mapa::loadBuffer(const string &ficheiro) {

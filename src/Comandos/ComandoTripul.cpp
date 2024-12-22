@@ -10,19 +10,19 @@ void ComandoTripul::execute(const std::string &args, Simulador &sim) {
 
     if (inputs.size() != 3) {
         cout << "O comando " << getNome() << " apenas aceita dois argumentos <N> que e um numero e corresponde "
-                "a uma caravana e <T> que e o numero de tripulantes a comprar!!" << endl;
+                "a uma caravana e <T> que e o numero de tripulantes a comprar!!" << endl << endl;
         return;
     }
 
     int index = sim.caravanaNameAvailable(inputs[1][0]);
 
     if (inputs[1].size() != 1 || !isNumeric(inputs[1]) || index == -1) {
-        cout << "argumento <N> precisa de ser um numero e corresponder a uma caravana!!" << endl;
+        cout << "argumento <N> precisa de ser um numero e corresponder a uma caravana!!" << endl << endl;
         return;
     }
 
     if (!isNumeric(inputs[2]) || stoi(inputs[2]) < 0) {
-        cout << "argumento <T> precisa de ser um numero e positivo!!" << endl;
+        cout << "argumento <T> precisa de ser um numero e positivo!!" << endl << endl;
         return;
     }
 
@@ -30,11 +30,11 @@ void ComandoTripul::execute(const std::string &args, Simulador &sim) {
 
     if (aux) {
         if (aux->getEstado()) {
-            cout << "Caravana nao pode adquirir mais tripulantes devido a ter sido declarada como destruida" << endl;
+            cout << "Caravana nao pode adquirir mais tripulantes devido a ter sido declarada como destruida" << endl << endl;
             return;
         }
         aux->adicionaPessoas(stoi(inputs[2]));
     } else {
-        cout << "Erro: Caravana nao encontrada!" << endl;
+        cout << "Erro: Caravana nao encontrada!" << endl << endl;
     }
 }

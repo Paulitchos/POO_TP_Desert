@@ -5,7 +5,7 @@
 
 class Barbaro : public Caravana {
 public:
-    Barbaro(int row, int col, char id, Mapa *m);
+    Barbaro(int row, int col, char id, Mapa *m, int turnosParaDesaparecer);
 
     //reduzir o tempo de vida a cada turno
 

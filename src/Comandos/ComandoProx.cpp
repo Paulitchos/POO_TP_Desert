@@ -8,7 +8,7 @@ ComandoProx::ComandoProx()
 
 bool ComandoProx::setInstantes(int n) {
     if (n <= 0) {
-        cout << "Erro: Número de instantes deve ser maior que 0." << endl;
+        cout << "Erro: Número de instantes deve ser maior que 0." << endl << endl;
         return false;
     }
     instants = n;
@@ -21,19 +21,19 @@ void ComandoProx::execute(const string &args, Simulador &sim) {
     inputs = split(args, ' ');
 
     if (inputs.size() > 2) {
-        cout << "O comando " << getNome() << " apenas aceita um argumento opcional <n> que e um numero inteiro!!" << endl;
+        cout << "O comando " << getNome() << " apenas aceita um argumento opcional <n> que e um numero inteiro!!" << endl << endl;
         return;
     }
 
     if(inputs.size() == 2) {
         if (!isNumeric(inputs[1])) {
-            cout << "argumento <n> precisa de ser um numero inteiro!!" << endl;
+            cout << "argumento <n> precisa de ser um numero inteiro!!" << endl << endl;
             return;
         }
 
         if(setInstantes(stoi(inputs[1]))) {
             sim.setTurnAAvancar(instants);
-            cout << "Simulacao ira avancar " << instants << " turnos" << endl;
+            cout << "Simulacao ira avancar " << instants << " turnos" << endl << endl;
         }
     }
 }

@@ -10,7 +10,7 @@ void ComandoTermina::execute(const std::string &args, Simulador &sim) {
     vector<string> inputs = split(args, ' ');
 
     if (inputs.size() != 1) {
-        cout << "O comando " << getNome() << " nao tem argumentos!!" << endl;
+        cout << "O comando " << getNome() << " nao tem argumentos!!" << endl << endl;
         return;
     }
 
