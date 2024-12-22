@@ -85,7 +85,7 @@ void Caravana::removerAgua(int aguaARemover) {
     if (getnivelAgua() - aguaARemover < 0) {
         setNivelAgua(0);
         removePessoas(-1);
-        cout << "Caravana sem agua!" << endl;
+        cout << "Caravana " << getID() << " sem agua!" << endl;
         return;
     }
 

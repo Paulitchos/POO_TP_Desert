@@ -75,7 +75,7 @@ void Interface::iniciateSimulation() {
     iniciateSimulation();
 }
 
-bool Interface::fileCommandSet(std::map<string, int> &map, const string &key, const int &valor) {
+bool Interface::fileCommandSet(map<string, int> &map, const string &key, const int &valor) {
     if (map.find(key) != map.end()) {
         cout << "Erro: '" << key << "' ja foi definido!" << endl;
         return false;
@@ -96,8 +96,8 @@ bool Interface::fileCommandSet(std::map<string, int> &map, const string &key, co
     return true;
 }
 
-bool Interface::readMapFromFile(std::string fileName) {
-    std::map<std::string, int> keysFile;
+bool Interface::readMapFromFile(string fileName) {
+    map<string, int> keysFile;
 
     ifstream file(fileName);
 
@@ -271,7 +271,7 @@ bool Interface::readMapFromFile(std::string fileName) {
     }
 
     if (currentRow != sim->getMapRows()) {
-        std::cout << "Erro: O numero de linhas no mapa nao corresponde a 'linhas'" << std::endl;
+        cout << "Erro: O numero de linhas no mapa nao corresponde a 'linhas'" << endl;
         file.close();
         return false;
     }
@@ -302,7 +302,7 @@ int Interface::askCommands() {
         // Read the rest of the line as arguments
         it->second->execute(input, *sim);
     } else {
-        std::cout << "Comando invalido: " << input << std::endl;
+        cout << "Comando invalido: " << input << endl;
         return 0;
     }
 
@@ -340,7 +340,7 @@ void Interface::loadCommands() {
 void Interface::helpCommands() const {
     cout << "Lista de comandos disponiveis:\n";
     for (const auto &commandPair: commands) {
-        std::cout << commandPair.second->getAsString() << "\n\n"; // Call getAsString on each command
+        cout << commandPair.second->getAsString() << "\n\n"; // Call getAsString on each command
     }
 }
 

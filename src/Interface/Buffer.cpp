@@ -7,7 +7,7 @@ Buffer::Buffer(int r, int c) : rows(r > 0 ? r : 1), cols(c > 0 ? c : 1)
     data = new char *[rows];
     for (int i = 0; i < rows; ++i) {
         data[i] = new char[cols];
-        std::fill_n(data[i], cols, '.');
+        fill_n(data[i], cols, '.');
     }
 }
 
@@ -20,7 +20,7 @@ Buffer::~Buffer() {
 
 void Buffer::clear() {
     for (int i = 0; i < rows; ++i) {
-        std::fill_n(data[i], cols, ' ');
+        fill_n(data[i], cols, ' ');
     }
     cursorRow = cursorCol = 0;
 }
@@ -55,9 +55,9 @@ void Buffer::writeInt(int number) {
 void Buffer::flush() {
     for (int i = 0; i < rows; ++i) {
         for (int j = 0; j < cols; ++j) {
-            std::cout << data[i][j];
+            cout << data[i][j];
         }
-        std::cout << std::endl;
+        cout << endl;
     }
 }
 

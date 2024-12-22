@@ -16,32 +16,17 @@ string Barbaros::showInfo() const {
 
 void Barbaros::tempestade() {
     int randomDead;
+    Mapa *m = getMapa();
+    randomDead = rand() % 4 + 1;
 
-    if (getMercadoria() > getMaxMercadoria() / 2) {
-        randomDead = rand() % 2 + 1;
-
-        if (randomDead == 1) {
-            setDestruida();
-            cout << "A caravana barbara na posicao " << getRow() << " " << getCol() <<
-                    " vai ser destruida este turno devido a tempestade de areia" << endl;
-            return;
-        }
-        removeMercadoria(getMercadoria() / 4);
-        cout << "A caravana barbara na posicao " << getRow() << " " << getCol() <<
-                " perdeu 25% da sua mercadoria devida a tempestade de areia" << endl;
-    } else {
-        randomDead = rand() % 4 + 1;
-
-        if (randomDead == 1) {
-            setDestruida();
-            cout << "A caravana barbara na posicao " << getRow() << " " << getCol() <<
-                    " vai ser destruida este turno devido a tempestade de areia" << endl;
-            return;
-        }
-        removeMercadoria(getMercadoria() / 4);
-        cout << "A caravana barbara na posicao " << getRow() << " " << getCol() <<
-                " perdeu 25% da sua mercadoria devida a tempestade de areia" << endl;
+    if (randomDead == 1) {
+        cout << "Caravana Barbara ficou destroida na tempestade de areia" << endl;
+        m->removeCaravanaBarbara(this);
+        return;
     }
+
+    removePessoas(getNPessoas() / 10);
+    cout << "Caravana barbara perdeu 10% da sua tripulacao, ficou com um restante de " << getNPessoas() << " tripulantes" << endl;
 }
 
 void Barbaros::moveAuto() {

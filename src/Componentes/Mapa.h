@@ -30,6 +30,7 @@ class Mapa {
     std::vector<Montanha> montanhas;
     std::vector<Cidade> cidades;
     std::vector<std::shared_ptr<Caravana> > caravanas;
+    std::vector<std::unique_ptr<Caravana> > barbaras;
     std::vector<std::unique_ptr<Item> > items;
 
 public:
@@ -135,13 +136,15 @@ public:
 
     void unparkCaravana(char caravanaID, char cidadeName);
 
-    void removeCaravana(const std::shared_ptr<Caravana> &caravana);
+    void removeCaravanaUtilizador(const std::shared_ptr<Caravana> &caravana);
 
-    void autoCaravanaMove();
+    void removeCaravanaBarbara(const Caravana *self);
+
+    void autoCaravanaUtilizadorMove();
 
     std::shared_ptr<Caravana> getNearCaravanaUtilizador(int row, int col, const Caravana *self, int distance);
 
-    std::shared_ptr<Caravana> getNearCaravanaBarbara(int row, int col, int distance);
+    Caravana *getNearCaravanaBarbara(int row, int col, int distance);
 
     bool isItem(int row, int col) const;
 

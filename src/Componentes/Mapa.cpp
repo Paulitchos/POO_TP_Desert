@@ -86,8 +86,7 @@ void Mapa::showDetails() const {
     cout << "*** Detalhes ***" << endl << endl;
     cout << "Linhas: " << rows << " Colunas: " << cols << endl
             << "Turno: " << getTurn() << " || Cidades: " << cidades.size() << endl <<
-            "Caravanas do Utilizador: " << nCaravansUtilizador << " || Caravanas Barbaras: " << caravanas.size() -
-            nCaravansUtilizador << endl <<
+            "Caravanas do Utilizador: " << nCaravansUtilizador << " || Caravanas Barbaras: " << barbaras.size() << endl <<
             "Moedas: " << getCoins() << endl
             << "Preco da caravana: " << getPCaravan() << endl << endl;
 }
@@ -161,10 +160,12 @@ bool Mapa::isCidade(int row, int col) const {
 
 void Mapa::addCaravanaInicial(int row, int col, char id) {
     if (id == '!') {
-        caravanas.emplace_back(make_shared<Barbaros>(row, col, id, getDurBarb(), this));
-        caravanas.back()->setAutoPilot();
+        barbaras.emplace_back(make_unique<Barbaros>(row, col, id, getDurBarb(), this));
+        barbaras.back()->setAutoPilot();
     } else {
-        caravanas.emplace_back(make_shared<Comercio>(row, col, id, this));
+        auto newCaravana = std::make_shared<Comercio>(row, col, id, this);
+        newCaravana->setNivelAgua(10);
+        caravanas.emplace_back(newCaravana);
     }
     //cout << "Caravana adicionada em (" << row << ", " << col << ")" << endl;
     writeCharToBuffer(row, col, id);
@@ -186,7 +187,7 @@ void Mapa::addCaravanaBarbaro(int row, int col) {
         return;
     }
 
-    caravanas.emplace_back(make_shared<Barbaros>(row, col, '!', getDurBarb(), this));
+    barbaras.emplace_back(make_unique<Barbaros>(row, col, '!', getDurBarb(), this));
     writeCharToBuffer(row, col, '!');
     cout << "Criada uma caravana barbaro na linha " << row << " e coluna " << col << endl;
 }
@@ -246,23 +247,22 @@ shared_ptr<Caravana> Mapa::getCaravana(int index) const {
 }
 
 int Mapa::getNCaravanasUtilizador() const {
-    int nCaravanas = 0;
-    for (auto &caravana: caravanas) {
-        if (caravana->getID() != '!') {
-            nCaravanas++;
-        }
-    }
-
-    return nCaravanas;
+    return caravanas.size();
 }
 
 int Mapa::getNCaravanasBarbaras() const {
-    return (caravanas.size() - getNCaravanasUtilizador());
+    return barbaras.size();
 }
 
 
 bool Mapa::isCaravana(int row, int col, const Caravana *self) const {
     for (auto &caravana: caravanas) {
+        if (caravana->getRow() == row && caravana->getCol() == col && caravana && caravana.get() != self) {
+            return true;
+        }
+    }
+
+    for (auto &caravana: barbaras) {
         if (caravana->getRow() == row && caravana->getCol() == col && caravana && caravana.get() != self) {
             return true;
         }
@@ -285,35 +285,56 @@ void Mapa::unparkCaravana(char caravanaID, char cidadeName) {
     cidades[indexCidade].unparkCaravana(caravanas[indexCaravana]);
 }
 
-void Mapa::removeCaravana(const shared_ptr<Caravana> &caravana) {
-    auto it = find(caravanas.begin(), caravanas.end(), caravana);
-
+void Mapa::removeCaravanaUtilizador(const shared_ptr<Caravana> &caravana) {
+    auto it = std::find(caravanas.begin(), caravanas.end(), caravana);
     if (it != caravanas.end()) {
+        if(caravana->getCidadeName() == ' ')
+            writeCharToBuffer(caravana->getRow(), caravana->getCol(), '.');
+        cout << "Caravana " << caravana->getID() << " removida do mapa." << endl;
         caravanas.erase(it);
-        cout << "Caravana removida do mapa." << endl;
     } else {
         cout << "Erro: Caravana nao encontrada no mapa!" << endl;
-        return;
     }
 
-    for (auto &cidade: cidades) {
-        cidade.unparkCaravana(caravana);
+    // If the caravana is parked in a city, unpark it
+    if (caravana->getCidadeName() != ' ') {
+        for (auto& cidade : cidades) {
+            cidade.unparkCaravana(caravana);
+        }
     }
 }
 
-void Mapa::autoCaravanaMove() {
+void Mapa::removeCaravanaBarbara(const Caravana *self) {
+    for (auto it = barbaras.begin(); it != barbaras.end(); ++it) {
+        if (it->get() == self) {
+            writeCharToBuffer(self->getRow(), self->getCol(), '.');
+            barbaras.erase(it);
+            cout << "Caravana Barbara removida do mapa." << endl;
+            return;
+        }
+    }
+}
+
+void Mapa::autoCaravanaUtilizadorMove() {
     if(caravanas.empty())
         return;
     for (auto &caravana: caravanas) {
-        caravana->setAutoFase();
-        if(!caravana->getEstado() && caravana->getAutoPilot()) {
-            caravana->moveAuto();
-        } else if(!caravana->getEstado() && caravana->getRandomMode()) {
-            caravana->getRandomMode();
+        if (caravana) {
+            caravana->setAutoFase();
+            if(!caravana->getEstado() && caravana->getAutoPilot()) {
+                caravana->moveAuto();
+            } else if(!caravana->getEstado() && caravana->getRandomMode()) {
+                caravana->getRandomMode();
+            }
+
+            if (caravana->getEstado()) {
+                removeCaravanaUtilizador(caravana);
+            } else {
+                caravana->perdeAgua();
+                caravana->setAutoFase();
+                caravana->resetMovimento();
+            }
         }
-        caravana->perdeAgua();
-        caravana->setAutoFase();
-        caravana->resetMovimento();
     }
 }
 
@@ -322,7 +343,7 @@ std::shared_ptr<Caravana> Mapa::getNearCaravanaUtilizador(int row, int col, cons
     int minDistance = std::numeric_limits<int>::max();
 
     for (auto& caravana : caravanas) {
-        if(caravana && caravana.get() != self && caravana->getID() != '!') {
+        if(caravana && caravana.get() != self) {
             int distanceRows = abs(caravana->getRow() - row);
             int distanceCols = abs(caravana->getCol() - col);
             int currentDistance = distanceRows + distanceCols;
@@ -337,19 +358,19 @@ std::shared_ptr<Caravana> Mapa::getNearCaravanaUtilizador(int row, int col, cons
     return nearestCaravana;
 }
 
-std::shared_ptr<Caravana> Mapa::getNearCaravanaBarbara(int row, int col, int distance) {
-    std::shared_ptr<Caravana> nearestCaravana = nullptr;
+Caravana *Mapa::getNearCaravanaBarbara(int row, int col, int distance) {
+    Caravana* nearestCaravana = nullptr;
     int minDistance = std::numeric_limits<int>::max();
 
-    for (auto& caravana : caravanas) {
-        if(caravana && caravana->getID() == '!') {
+    for (auto& caravana : barbaras) {
+        if(caravana) {
             int distanceRows = abs(caravana->getRow() - row);
             int distanceCols = abs(caravana->getCol() - col);
             int currentDistance = distanceRows + distanceCols;
 
             if (currentDistance <= distance && currentDistance < minDistance) {
                 minDistance = currentDistance;
-                nearestCaravana = caravana;
+                nearestCaravana = caravana.get();
             }
         }
     }
@@ -411,6 +432,12 @@ void Mapa::startTempestade(int row, int col, int raio) {
             int colunaAtual = (col + j + cols) % cols;
 
             for (const auto &caravana: caravanas) {
+                if (caravana->getRow() == linhaAtual && caravana->getCol() == colunaAtual && !caravana->getEstado()) {
+                    caravana->tempestade();
+                }
+            }
+
+            for (const auto &caravana: barbaras) {
                 if (caravana->getRow() == linhaAtual && caravana->getCol() == colunaAtual && !caravana->getEstado()) {
                     caravana->tempestade();
                 }

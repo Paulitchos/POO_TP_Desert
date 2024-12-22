@@ -86,10 +86,9 @@ void Cidade::unparkCaravana(const std::shared_ptr<Caravana> &caravana) {
     caravana->setCidadeName(' ');
     for (auto it = parked.begin(); it != parked.end(); ++it) {
         if (*it == caravana) {
+            cout << "Caravana " << caravana->getID() << " saiu da cidade " << getName() << endl;
             parked.erase(it);
             break;
         }
     }
-
-    cout << "Caravana " << caravana->getID() << " saiu da cidade " << getName() << endl;
 }
