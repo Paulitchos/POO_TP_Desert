@@ -9,9 +9,12 @@ class Mapa;
 
 class Caravana {
 public:
-    Caravana(int row, int col, char id, int nPessoas, int maxPessoas, int maxAgua,
+    Caravana(int row, int col, char id, int nPessoas,
+             int maxPessoas, int maxAgua,
              int maxJogadasPTurno,
-             double maxMercadoria, bool controlavel, Mapa *onde);
+             double maxMercadoria,
+             bool controlavel, Mapa *onde,
+             int turnosParaDesaparecer);
 
     ~Caravana();
 
@@ -21,6 +24,8 @@ public:
     int getmaxPessoas() const;
 
     void adicionaPessoas(int pessoasAAdicionar);
+
+    int setSecuredPessoas(int pessoas);
 
     void removePessoas(int pessoasARemover);
 
@@ -53,6 +58,8 @@ public:
     void adicionaMercadoria(int mercadoriaAAdicionar);
 
     void removeMercadoria(int mercadoriaARemover);
+
+    int setSecuredMercadoria(int mercadoria);
 
     void setMercadoria(int novaMercadoria);
 
@@ -98,6 +105,12 @@ public:
 
     bool getRandomMode();
 
+    int getTurnosEmRandom() const ;
+
+    void addTurnosEmRandom();
+
+    void setTurnosEmRandom(int turnos);
+
     //DESTRUIR
     bool getEstado() const;
 
@@ -133,7 +146,7 @@ private:
 
     const int maxJogadasPTurno;
     int movimentos;
-    int turnosParaDesparecer, lifeTime;
+    int turnosParaDesparecer, turnosEmRandom;
 };
 
 

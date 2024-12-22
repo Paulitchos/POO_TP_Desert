@@ -1,20 +1,20 @@
-#include "Barbaros.h"
+#include "Barbaro.h"
 #include "../Mapa.h"
 using namespace std;
 
-Barbaros::Barbaros(int row, int col, char id, int lifeTime, Mapa *m)
-    : Caravana(row, col, id, 40, 80, -1, 1, -1, false, m)
-      , lifeTime(lifeTime) {
+Barbaro::Barbaro(int row, int col, char id, Mapa *m)
+    : Caravana(row, col, id, 40, 80, -1, 1, -1, false, m, m->getDurationBarb())
+    {
 }
 
-string Barbaros::showInfo() const {
+string Barbaro::showInfo() const {
     ostringstream os;
-    os << "Caravana Barbaros " << endl;
+    os << "Caravana Barbaro " << endl;
     os << Caravana::showInfo();
     return os.str();
 }
 
-void Barbaros::tempestade() {
+void Barbaro::tempestade() {
     int randomDead;
     Mapa *m = getMapa();
     randomDead = rand() % 4 + 1;
@@ -29,7 +29,7 @@ void Barbaros::tempestade() {
     cout << "Caravana barbara perdeu 10% da sua tripulacao, ficou com um restante de " << getNPessoas() << " tripulantes" << endl;
 }
 
-void Barbaros::moveAuto() {
+void Barbaro::moveAuto() {
     Mapa *m = getMapa();
     while(getMovimentos() != getMaxJogadasPTurno()) {
         if (m->getNCaravanasUtilizador() > 0) {
@@ -43,7 +43,7 @@ void Barbaros::moveAuto() {
     }
 }
 
-bool Barbaros::moveCloserToCaravana(Mapa *m) {
+bool Barbaro::moveCloserToCaravana(Mapa *m) {
     Item *nearestItem = nullptr;
 
     auto nearestCaravana = m->getNearCaravanaUtilizador(getRow(), getCol(), this, 8);
@@ -79,15 +79,15 @@ bool Barbaros::moveCloserToCaravana(Mapa *m) {
     return false;
 }
 
-void Barbaros::moveRandom() {
+void Barbaro::moveRandom() {
 
 }
 
-void Barbaros::perdeAgua() {
+void Barbaro::perdeAgua() {
 
 }
 
-bool Barbaros::verificaContinuidade() {
+bool Barbaro::verificaContinuidade() {
     if (!getAutoPilot()) {
         if (!getRandomMode()) {
             if (getNPessoas() == 0) {
@@ -115,9 +115,5 @@ bool Barbaros::verificaContinuidade() {
     return true;
 }
 
-void Barbaros::semTripulantes() {
-}
-
-int Barbaros::getLifetime() const {
-    return lifeTime;
+void Barbaro::semTripulantes() {
 }

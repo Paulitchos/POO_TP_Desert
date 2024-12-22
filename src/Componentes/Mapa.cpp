@@ -4,7 +4,7 @@ using namespace std;
 
 Mapa::Mapa()
     : rows(0), cols(0), coins(0),
-      insNewItem(0), durItem(0), maxItem(0),
+      insNewItem(0), durItem(0), maxItems(0),
       pSellMerch(0), pBuyMerch(0), pCaravan(0),
       insNewBarb(0), durBarb(0), turn(1), nFightsWon(0), buffer(nullptr) {
 }
@@ -41,17 +41,17 @@ void Mapa::addCoins(int coins) {
     }
 }
 
-int Mapa::getInsNewItem() const { return insNewItem; }
+int Mapa::getInstantNewItem() const { return insNewItem; }
 
-void Mapa::setInsNewItem(int insNewItem) { this->insNewItem = insNewItem; }
+void Mapa::setInstantNewItem(int instantNewItem) { this->insNewItem = instantNewItem; }
 
-int Mapa::getDurItem() const { return durItem; }
+int Mapa::getDurationItem() const { return durItem; }
 
-void Mapa::setDurItem(int durItem) { this->durItem = durItem; }
+void Mapa::setDurationItem(int durationItem) { this->durItem = durationItem; }
 
-int Mapa::getMaxItem() const { return maxItem; }
+int Mapa::getMaxItems() const { return maxItems; }
 
-void Mapa::setMaxItem(int maxItem) { this->maxItem = maxItem; }
+void Mapa::setMaxItems(int maxItems) { this->maxItems = maxItems; }
 
 int Mapa::getSellMerch() const { return pSellMerch; }
 
@@ -65,13 +65,13 @@ int Mapa::getPCaravan() const { return pCaravan; }
 
 void Mapa::setPCaravan(int pcaravan) { this->pCaravan = pcaravan; }
 
-int Mapa::getInsNewBarb() const { return insNewBarb; }
+int Mapa::getInstantNewBarb() const { return insNewBarb; }
 
-void Mapa::setInsNewBarb(int insNewBarb) { this->insNewBarb = insNewBarb; }
+void Mapa::setInstantNewBarb(int instantNewBarb) { this->insNewBarb = instantNewBarb; }
 
-int Mapa::getDurBarb() const { return durBarb; }
+int Mapa::getDurationBarb() const { return durBarb; }
 
-void Mapa::setDurBarb(int durBarb) { this->durBarb = durBarb; }
+void Mapa::setDurationBarb(int durationBarb) { this->durBarb = durationBarb; }
 
 int Mapa::getTurn() const { return turn; }
 
@@ -162,7 +162,7 @@ bool Mapa::isCidade(int row, int col) const {
 
 void Mapa::addCaravanaInicial(int row, int col, char id) {
     if (id == '!') {
-        barbaras.emplace_back(make_unique<Barbaros>(row, col, id, getDurBarb(), this));
+        barbaras.emplace_back(make_unique<Barbaro>(row, col, id, this));
         barbaras.back()->setAutoPilot();
     } else {
         auto newCaravana = std::make_shared<Comercio>(row, col, id, this);
@@ -189,7 +189,7 @@ void Mapa::addCaravanaBarbaro(int row, int col) {
         return;
     }
 
-    barbaras.emplace_back(make_unique<Barbaros>(row, col, '!', getDurBarb(), this));
+    barbaras.emplace_back(make_unique<Barbaro>(row, col, '!', this));
     writeCharToBuffer(row, col, '!');
     cout << "Criada uma caravana barbaro na linha " << row << " e coluna " << col << endl << endl;
 }
@@ -244,7 +244,7 @@ shared_ptr<Caravana> Mapa::getCaravana(int index) const {
     if (index >= 0 && index < caravanas.size()) {
         return caravanas[index];
     }
-    cout << "Cidade nao encontrada" << endl << endl;
+    cout << "Caravana nao encontrada" << endl << endl;
     return nullptr;
 }
 
@@ -327,6 +327,7 @@ void Mapa::autoCaravanaUtilizadorMove() {
                 caravana->moveAuto();
             } else if(!caravana->getEstado() && caravana->getRandomMode()) {
                 caravana->getRandomMode();
+                caravana->addTurnosEmRandom();
             }
 
             if (caravana->getEstado()) {
@@ -397,6 +398,19 @@ Caravana *Mapa::getNearCaravanaBarbara(int row, int col, int distance) {
     return nearestCaravana;
 }
 
+void Mapa::refreshBarbaros() {
+    for (auto it = barbaras.begin(); it != barbaras.end();) {
+        if (getTurn() % (*it)->getTurnosParaDesaparecer() == 0) {
+            int tX = (*it)->getRow();
+            int tY = (*it)->getCol();
+
+            writeCharToBuffer(tX, tY, '.');
+            it = barbaras.erase(it);
+            cout << "Caravana Barbara da linha " << tX << " e coluna " << tY << "removida." << endl << endl;
+        }
+    }
+}
+
 bool Mapa::isItem(int row, int col) const {
     for (auto &item: items) {
         if (item->getRow() == row && item->getCol() == col && item) {
@@ -408,6 +422,66 @@ bool Mapa::isItem(int row, int col) const {
 
 int Mapa::getNItems() const {
     return items.size();
+}
+
+void Mapa::refreshItems() {
+    for (auto it = items.begin(); it != items.end();) {
+        if (getTurn() % (*it)->getVidaUtil() == 0) {
+            int tX = (*it)->getRow();
+            int tY = (*it)->getCol();
+
+            it = items.erase(it);
+            cout << "Item da linha " << tX << " e coluna " << tY << "removido." << endl << endl;
+        }
+    }
+}
+
+void Mapa::addRandomItem() {
+    int randomDead;
+
+    randomDead = rand() % 5 + 1;
+
+    vector<pair<int, int>> availablePositions = getRandomAvailablePosition();
+
+    switch (randomDead) {
+        case 1:
+            items.emplace_back(make_unique<Pandora>(availablePositions[0].first, availablePositions[0].second, this));
+
+        case 2:
+            items.emplace_back(make_unique<Tesouro>(availablePositions[0].first, availablePositions[0].second, this));
+
+        case 3:
+            items.emplace_back(make_unique<Jaula>(availablePositions[0].first, availablePositions[0].second, this));
+
+        case 4:
+            items.emplace_back(make_unique<Mina>(availablePositions[0].first, availablePositions[0].second, this));
+
+            //case 5:
+            //items.emplace_back(make_unique<Surpresa>(availablePositions[0].first, availablePositions[0].second, this));
+    }
+}
+
+vector<pair<int,int>> Mapa::getRandomAvailablePosition() {
+    vector <pair<int, int>> availablePositions = getAvailablePositions();
+
+    if (availablePositions.empty())
+        return availablePositions;
+
+    return {availablePositions[rand() % availablePositions.size()]};
+}
+
+vector<pair<int, int>> Mapa::getAvailablePositions() const {
+    vector<pair<int, int>> availablePositions;
+
+    for (int i = 0; i < getRows(); ++i) {
+        for (int j = 0; j < getCols(); ++j) {
+            if (!isCaravana(i, j, nullptr) && !isCidade(i, j) && !isMontanha(i, j)) {
+                availablePositions.emplace_back(i, j);
+            }
+        }
+    }
+
+    return availablePositions;
 }
 
 Item *Mapa::getNearItem(int row, int col,int distance) const {

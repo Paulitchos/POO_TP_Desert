@@ -3,9 +3,9 @@
 
 #include "Caravana.h"
 
-class Barbaros : public Caravana {
+class Barbaro : public Caravana {
 public:
-    Barbaros(int row, int col, char id, int lifeTime, Mapa *m);
+    Barbaro(int row, int col, char id, Mapa *m);
 
     //reduzir o tempo de vida a cada turno
 
@@ -29,8 +29,6 @@ public:
     bool verificaContinuidade() override;
 
 private:
-    bool vidaInfinita = false;
-    int lifeTime;
 };
 
 

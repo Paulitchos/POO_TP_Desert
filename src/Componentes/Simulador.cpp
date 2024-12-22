@@ -24,11 +24,11 @@ void Simulador::setMapCoins(const int coins) { mapa->setCoins(coins); }
 
 void Simulador::addMapCoins(int coins) { mapa->addCoins(coins); }
 
-void Simulador::setMapInsNewItem(const int insNewItem) { mapa->setInsNewItem(insNewItem); }
+void Simulador::setMapInsNewItem(const int insNewItem) { mapa->setInstantNewItem(insNewItem); }
 
-void Simulador::setMapDurItem(int durItem) { mapa->setDurItem(durItem); }
+void Simulador::setMapDurItem(int durItem) { mapa->setDurationItem(durItem); }
 
-void Simulador::setMapMaxItem(int maxItem) { mapa->setMaxItem(maxItem); }
+void Simulador::setMapMaxItem(int maxItem) { mapa->setMaxItems(maxItem); }
 
 int Simulador::getMapSellMerch() const { return mapa->getSellMerch(); }
 
@@ -40,9 +40,9 @@ void Simulador::setMapBuyMerch(int pBuyMerch) { mapa->setBuyMerch(pBuyMerch); }
 
 void Simulador::setMapPCaravan(int pCaravan) { mapa->setPCaravan(pCaravan); }
 
-void Simulador::setMapInsNewBarb(int insNewBarb) { mapa->setInsNewBarb(insNewBarb); }
+void Simulador::setMapInsNewBarb(int insNewBarb) { mapa->setInstantNewBarb(insNewBarb); }
 
-void Simulador::setMapDurBarb(int durBarb) { mapa->setDurBarb(durBarb); }
+void Simulador::setMapDurBarb(int durBarb) { mapa->setDurationBarb(durBarb); }
 
 int Simulador::getTurnAAvancar() const { return turnAAvancar; }
 
@@ -68,7 +68,7 @@ void Simulador::addCaravanaInicial(int row, int col, char id) { mapa->addCaravan
 
 void Simulador::addCaravanaBarbaro(int row, int col) { mapa->addCaravanaBarbaro(row, col); }
 
-int Simulador::caravaNameAvailable(char caravanaID) const { return mapa->getCaravanaIndex(caravanaID); }
+int Simulador::caravanaNameAvailable(char caravanaID) const { return mapa->getCaravanaIndex(caravanaID); }
 
 shared_ptr<Caravana> Simulador::getLastCaravana() const { return mapa->getLastCaravana(); }
 
@@ -90,8 +90,20 @@ int Simulador::autoCaravanaUtilizadorBehaviour() {
 }
 
 int Simulador::autoCaravanaBarbarasBehaviour() {
+    mapa->refreshBarbaros();
+    if (mapa->getTurn() % mapa->getInstantNewBarb() == 0) {
+        vector<pair<int,int>> availablePosition = mapa->getRandomAvailablePosition();
+        mapa->addCaravanaBarbaro(availablePosition[0].first, availablePosition[0].second);
+    }
+
     mapa->autoCaravanaBarbaraMove();
     return 3;
+}
+
+void Simulador::autoItemBehaviour() {
+    mapa->refreshItems();
+    if (mapa->getNItems() < mapa->getMaxItems() && mapa->getTurn() % mapa->getInstantNewItem() == 0)
+        mapa->addRandomItem();
 }
 
 void Simulador::terminaMapa() {

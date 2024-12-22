@@ -14,23 +14,29 @@
 
 #include "Caravanas/Caravana.h"
 #include "Caravanas/Comercio.h"
-#include "Caravanas/Barbaros.h"
+#include "Caravanas/Barbaro.h"
 #include "Caravanas/Militar.h"
+#include "Caravanas/Secreta.h"
 
 #include "Montanha/Montanha.h"
 #include "Cidade/Cidade.h"
 #include "Item/Item.h"
+#include "Item/Pandora.h"
+#include "Item/Tesouro.h"
+#include "Item/Mina.h"
+#include "Item/Jaula.h"
+#include "Item/Surpresa.h"
 
 class Mapa {
     int rows, cols, coins,
-            insNewItem, durItem, maxItem, pSellMerch, pBuyMerch,
+            insNewItem, durItem, maxItems, pSellMerch, pBuyMerch,
             pCaravan, insNewBarb, durBarb, turn, nFightsWon;
     std::unique_ptr<Buffer> buffer;
     std::map<std::string, std::vector<std::string> > savedBuffers;
     std::vector<Montanha> montanhas;
     std::vector<Cidade> cidades;
     std::vector<std::shared_ptr<Caravana> > caravanas;
-    std::vector<std::unique_ptr<Caravana> > barbaras;
+    std::vector<std::unique_ptr<Barbaro> > barbaras;
     std::vector<std::unique_ptr<Item> > items;
 
 public:
@@ -52,17 +58,17 @@ public:
 
     void addCoins(int coins);
 
-    int getInsNewItem() const;
+    int getInstantNewItem() const;
 
-    void setInsNewItem(int insNewItem);
+    void setInstantNewItem(int instantNewItem);
 
-    int getDurItem() const;
+    int getDurationItem() const;
 
-    void setDurItem(int durItem);
+    void setDurationItem(int durationItem);
 
-    int getMaxItem() const;
+    int getMaxItems() const;
 
-    void setMaxItem(int maxItem);
+    void setMaxItems(int maxItems);
 
     int getSellMerch() const;
 
@@ -76,13 +82,13 @@ public:
 
     void setPCaravan(int pcaravan);
 
-    int getInsNewBarb() const;
+    int getInstantNewBarb() const;
 
-    void setInsNewBarb(int insNewBarb);
+    void setInstantNewBarb(int instantNewBarb);
 
-    int getDurBarb() const;
+    int getDurationBarb() const;
 
-    void setDurBarb(int durBarb);
+    void setDurationBarb(int durationBarb);
 
     int getTurn() const;
 
@@ -148,9 +154,19 @@ public:
 
     Caravana *getNearCaravanaBarbara(int row, int col, int distance);
 
+    void refreshBarbaros();
+
     bool isItem(int row, int col) const;
 
     int getNItems() const;
+
+    void refreshItems();
+
+    void addRandomItem();
+
+    std::vector<std::pair<int,int>> getRandomAvailablePosition();
+
+    std::vector<std::pair<int, int>> getAvailablePositions() const;
 
     Item *getNearItem(int row, int col, int distance) const;
 

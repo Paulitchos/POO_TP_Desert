@@ -6,10 +6,10 @@ using namespace std;
 #include <sstream>
 
 Caravana::Caravana(int row, int col, char id, int nPessoas, int maxPessoas, int maxAgua,
-                   int maxJogadasPTurno, double maxMercadoria, bool controlavel, Mapa *onde)
+                   int maxJogadasPTurno, double maxMercadoria, bool controlavel, Mapa *onde, int turnosParaDesaparecer)
     : row(row), col(col), caravanaID(id), nPessoas(nPessoas), nMercadoria(0), maxPessoas(maxPessoas), maxAgua(maxAgua),
-      movimentos(0), maxJogadasPTurno(maxJogadasPTurno), maxMercadoria(maxMercadoria), controlavel(controlavel),
-      cidadeName(' '), onde(onde), destruida(false), autoPilot(false), randomMode(false), turnosParaDesparecer(-1), autoFase(false) {
+      movimentos(0), maxJogadasPTurno(maxJogadasPTurno), maxMercadoria(maxMercadoria), controlavel(controlavel), turnosParaDesparecer(turnosParaDesaparecer),
+      cidadeName(' '), onde(onde), destruida(false), autoPilot(false), randomMode(false), autoFase(false) {
 }
 
 Caravana::~Caravana() {
@@ -55,6 +55,28 @@ void Caravana::adicionaPessoas(int pessoasAAdicionar) {
     }
 }
 
+int Caravana::setSecuredPessoas(int pessoas) {
+    int espacoDisponivel = getmaxPessoas() - getNPessoas();
+
+    if (espacoDisponivel == 0) {
+        cout << "A caravana ja atingiu o limite maximo de tripulantes." << endl << endl;
+        return -1;
+    }
+
+    int nPessoasAAdicionar = std::min(espacoDisponivel, pessoas);
+
+    setNPessoas(getNPessoas() + nPessoasAAdicionar);
+
+    cout << "Foram adicionados " << nPessoasAAdicionar << " tripulantes a caravana " << getID() << endl << endl;
+
+    if (nPessoasAAdicionar < pessoas) {
+        cout << "Nao foi possivel adicionar todos os tripulantes solicitados devido ao limite maximo de "
+             << getmaxPessoas() << " tripulantes." << endl << endl;
+    }
+
+    return nPessoasAAdicionar;
+}
+
 void Caravana::removePessoas(int pessoasARemover) {
     if (getNPessoas() - pessoasARemover < 0) {
         setNPessoas(0);
@@ -98,7 +120,7 @@ void Caravana::setNivelAgua(int nivelAgua) {
 
 void Caravana::abastecerAgua() {
     cout << "Agua abastecida no poco da cidade" << endl;
-    setNivelAgua(getMaxMercadoria());
+    setNivelAgua(getMaxAgua());
 }
 
 //ID
@@ -147,6 +169,27 @@ void Caravana::adicionaMercadoria(int mercadoriaAAdicionar) {
         cout << "Nao foi possivel adicionar todas as toneladas solicitados devido ao limite maximo de "
              << getMaxMercadoria() << " toneladas desta caravana." << endl;
     }
+}
+
+int Caravana::setSecuredMercadoria(int mercadoria) {
+    int espacoDisponivel = getMaxMercadoria() - getMercadoria();
+
+    if (espacoDisponivel == 0) {
+        cout << "A caravana ja atingiu o limite maximo de mercadoria." << endl;
+    }
+
+    int numeroAAdicionar = std::min(espacoDisponivel, mercadoria);
+
+    setMercadoria(getMercadoria() + numeroAAdicionar);
+
+    cout << "Foram adicionados " << numeroAAdicionar << " toneladas de mercadoria a caravana " << getID() << endl;
+
+    if (numeroAAdicionar < mercadoria) {
+        cout << "Nao foi possivel adicionar todas as toneladas solicitados devido ao limite maximo de "
+             << getMaxMercadoria() << " toneladas desta caravana." << endl;
+    }
+
+    return mercadoria;
 }
 
 void Caravana::removeMercadoria(int mercadoriaARemover) {
@@ -235,6 +278,7 @@ bool Caravana::move(const string &direction) {
     if (onde->isCidade(getRow(), getCol())) {
         char cidadeNome = onde->getNomeCidade(getRow(), getCol());
         onde->parkCaravana(getID(), cidadeNome);
+        abastecerAgua();
         onde->writeCharToBuffer(auxRow, auxCol, '.');
         cout << "A caravana " << getID() << " entrou na cidade " << cidadeNome << endl;
         movimentos++;
@@ -352,6 +396,17 @@ void Caravana::setRandomMode() {
 
 bool Caravana::getRandomMode() {
     return randomMode;
+}
+
+int Caravana::getTurnosEmRandom() const {
+    return turnosEmRandom;
+}
+
+void Caravana::addTurnosEmRandom() {
+    turnosEmRandom++;
+    if (turnosEmRandom == getTurnosParaDesaparecer()) {
+        setDestruida();
+    }
 }
 
 //EXTRA

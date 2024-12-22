@@ -28,8 +28,8 @@ add_executable(src main.cpp
         Componentes/Item/Item.h
         Componentes/Caravanas/Caravana.cpp
         Componentes/Caravanas/Caravana.h
-        Componentes/Caravanas/Barbaros.cpp
-        Componentes/Caravanas/Barbaros.h
+        Componentes/Caravanas/Barbaro.cpp
+        Componentes/Caravanas/Barbaro.h
         Componentes/Caravanas/Militar.cpp
         Componentes/Caravanas/Militar.h
         Componentes/Caravanas/Comercio.cpp
@@ -76,4 +76,6 @@ add_executable(src main.cpp
         Componentes/Item/Jaula.h
         Componentes/Item/Mina.cpp
         Componentes/Item/Mina.h
+        Componentes/Item/Surpresa.cpp
+        Componentes/Item/Surpresa.h
 )

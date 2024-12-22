@@ -6,7 +6,8 @@
 class Militar : public Caravana {
     std::string lastMove;
 public:
-    Militar(int row, int col, char id, Mapa *m) : Caravana(row, col, id, 20, 40, 400, 3, 5, true, m), lastMove("") {
+    Militar(int row, int col, char id, Mapa *m)
+    : Caravana(row, col, id, 20, 40, 400, 3, 5, true, m, 7), lastMove("") {
     }
 
     void perdeAgua() override;

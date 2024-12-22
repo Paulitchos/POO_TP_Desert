@@ -73,7 +73,7 @@ public:
 
     void addCaravanaBarbaro(int row, int col);
 
-    int caravaNameAvailable(char caravanaID) const;
+    int caravanaNameAvailable(char caravanaID) const;
 
     std::shared_ptr<Caravana> getLastCaravana() const;
 
@@ -92,6 +92,8 @@ public:
     int autoCaravanaUtilizadorBehaviour();
 
     int autoCaravanaBarbarasBehaviour();
+
+    void autoItemBehaviour();
 
     void terminaMapa();
 };

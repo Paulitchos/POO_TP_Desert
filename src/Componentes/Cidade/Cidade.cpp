@@ -5,7 +5,7 @@
 using namespace std;
 
 Cidade::Cidade(int row, int col, char name, Mapa *onde) : row(row), col(col), name(name), onde(onde), comprouC(false),
-                                                          comprouM(false) {
+                                                          comprouM(false), comprouS(false) {
 }
 
 char Cidade::getName() const { return name; }
@@ -18,9 +18,13 @@ bool Cidade::isComprouC() const { return comprouC; }
 
 bool Cidade::isComprouM() const { return comprouM; }
 
-void Cidade::setComprouC(bool comprou) { this->comprouC = comprou; }
+bool Cidade::isComprouS() const { return comprouS; }
 
-void Cidade::setComprouM(bool comprou) { this->comprouM = comprou; }
+void Cidade::setComprouC() { this->comprouC = true; }
+
+void Cidade::setComprouM() { this->comprouM = true; }
+
+void Cidade::setComprouS() { this->comprouS = true; }
 
 void Cidade::buyCaravana(char tipoCar) {
     if (onde->getCoins() < onde->getPCaravan()) {
@@ -37,7 +41,7 @@ void Cidade::buyCaravana(char tipoCar) {
 
     if (tipoCar == 'C' && !isComprouC()) {
         auto newCaravana = std::make_shared<Comercio>(getRow(), getCol(), newID, onde);
-        newCaravana->setNivelAgua(newCaravana->getMaxAgua());
+        newCaravana->abastecerAgua();
         newCaravana->setNPessoas(newCaravana->getmaxPessoas());
         newCaravana->setCidadeName(getName());
         parked.emplace_back(newCaravana);
@@ -45,12 +49,13 @@ void Cidade::buyCaravana(char tipoCar) {
         onde->addCoins(-onde->getPCaravan());
         cout << "Comprou uma caravana comercial na cidade " << newCaravana->getCidadeName() << " que ficou com ID: "
         << newCaravana->getID() << endl << endl;
+        setComprouC();
         return;
     }
 
     if (tipoCar == 'M' && !isComprouM()) {
         auto newCaravana = std::make_shared<Militar>(getRow(), getCol(), newID, onde);
-        newCaravana->setNivelAgua(newCaravana->getMaxAgua());
+        newCaravana->abastecerAgua();
         newCaravana->setNPessoas(newCaravana->getmaxPessoas());
         newCaravana->setCidadeName(getName());
         parked.emplace_back(newCaravana);
@@ -58,8 +63,26 @@ void Cidade::buyCaravana(char tipoCar) {
         onde->addCoins(-onde->getPCaravan());
         cout << "Comprou uma caravana militar na cidade " << newCaravana->getCidadeName() << " que ficou com ID: "
         << newCaravana->getID() << endl << endl;
+        setComprouM();
         return;
     }
+
+    if (tipoCar == 'S' && !isComprouS()) {
+        auto newCaravana = std::make_shared<Secreta>(getRow(), getCol(), newID, onde);
+        newCaravana->abastecerAgua();
+        newCaravana->setNPessoas(newCaravana->getmaxPessoas());
+        newCaravana->setCidadeName(getName());
+        newCaravana->setRandomMode();
+        parked.emplace_back(newCaravana);
+        onde->addCaravana(newCaravana);
+        onde->addCoins(-onde->getPCaravan());
+        cout << "Comprou uma caravana secreta na cidade " << newCaravana->getCidadeName() << " que ficou com ID: "
+        << newCaravana->getID() << endl << endl;
+        setComprouS();
+        return;
+    }
+
+    cout << "Ja comprou uma caravana do tipo " << tipoCar << " nesta cidade!!" << endl << endl;
 }
 
 void Cidade::showCaravanas() const {

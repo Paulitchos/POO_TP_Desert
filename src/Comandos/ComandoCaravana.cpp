@@ -14,7 +14,7 @@ void ComandoCaravana::execute(const std::string &args, Simulador &sim) {
         return;
     }
 
-    int index = sim.caravaNameAvailable(inputs[1][0]);
+    int index = sim.caravanaNameAvailable(inputs[1][0]);
 
     if (inputs[1].size() != 1 || !isNumeric(inputs[1]) || index == -1) {
         cout << "argumento <C> precisa de ser um numero e corresponder a uma caravana!!" << endl << endl;

@@ -12,11 +12,11 @@ class Mapa;
 class Cidade {
     int row, col;
     char name;
-    bool comprouC, comprouM;
+    bool comprouC, comprouM, comprouS;
 
     Mapa *onde;
 
-    std::vector<std::shared_ptr<Caravana> > parked;
+    std::vector<std::shared_ptr<Caravana>> parked;
 
 public:
     Cidade(int row, int col, char name, Mapa *onde);
@@ -31,9 +31,13 @@ public:
 
     bool isComprouM() const;
 
-    void setComprouC(bool comprou);
+    bool isComprouS() const;
 
-    void setComprouM(bool comprou);
+    void setComprouC();
+
+    void setComprouM();
+
+    void setComprouS();
 
     void buyCaravana(char tipoCar);
 

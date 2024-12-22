@@ -19,9 +19,11 @@ void Interface::startSimulation() {
                 break;
             case 1:
                 //cout << "Comportamentos auto - verifica continuidade" << endl;
+                sim->autoItemBehaviour();
                 this->proxFase = sim->autoCaravanaUtilizadorBehaviour();
                 break;
             case 2:
+                sim->autoCaravanaBarbarasBehaviour();
                 this->proxFase = sim->autoCaravanaBarbarasBehaviour();
                 sim->showMapDetails();
                 break;
@@ -254,7 +256,7 @@ bool Interface::readMapFromFile(string fileName) {
                         return false;
                     }
                 } else if (isdigit(cell)) {
-                    if (sim->caravaNameAvailable(cell) == -1) {
+                    if (sim->caravanaNameAvailable(cell) == -1) {
                         sim->addCaravanaInicial(currentRow, col, cell);
                     } else {
                         cout << "Id da caravana ja esta a ser utilizado!" << endl;
