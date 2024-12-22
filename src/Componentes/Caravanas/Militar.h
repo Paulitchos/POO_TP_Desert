@@ -9,7 +9,7 @@ public:
     Militar(int row, int col, char id, Mapa *m) : Caravana(row, col, id, 20, 40, 400, 3, 5, true, m), lastMove("") {
     }
 
-    void perdeAgua();
+    void perdeAgua() override;
 
     std::string showInfo() const override;
 

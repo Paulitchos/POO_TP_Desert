@@ -15,7 +15,7 @@ void Pandora::execute(std::shared_ptr<Caravana> car) {
         cout << "Encontrou uma " << getNome() << " vazia" << endl;
     }
 
-    if(car->getNPessoas() == 0 && car->getID() != '!') {
+    if(car->getNPessoas() == 0 && car->getID() != '!' && !car->getRandomMode()) {
         car->setRandomMode();
     } else if(car->getNPessoas() == 0 && car->getID() == '!') {
         car->setDestruida();

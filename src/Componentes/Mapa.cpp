@@ -311,7 +311,7 @@ void Mapa::autoCaravanaMove() {
         } else if(!caravana->getEstado() && caravana->getRandomMode()) {
             caravana->getRandomMode();
         }
-
+        caravana->perdeAgua();
         caravana->setAutoFase();
         caravana->resetMovimento();
     }

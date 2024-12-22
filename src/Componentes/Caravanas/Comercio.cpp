@@ -3,11 +3,10 @@
 using namespace std;
 
 void Comercio::perdeAgua() {
-    if (getNPessoas() == 0)
-        return;
-
-    if (getNPessoas() < getmaxPessoas() / 2)
+    if (getNPessoas() < getmaxPessoas() / 2) {
         removerAgua(1);
+        return;
+    }
 
     removerAgua(2);
 }
@@ -173,29 +172,6 @@ void Comercio::semTripulantes() {
 }
 
 bool Comercio::verificaContinuidade() {
-    if (!getAutoPilot()) {
-        if (!getRandomMode()) {
-            if (getNPessoas() == 0) {
-                semTripulantes();
-                setRandomMode();
-            } else {
-                removerAgua(getNPessoas() * 0.25);
-                if (getnivelAgua() == 0)
-                    removePessoas(1);
-            }
-        } else {
-            if (getTurnosParaDesaparecer() == 0) {
-                setDestruida();
-                return false;
-            } else {
-                setTurnosParaDesaparecer(getTurnosParaDesaparecer() - 1);
-            }
-        }
-    } else {
-        removerAgua(getNPessoas() * 0.25);
-        if (getnivelAgua() == 0)
-            removePessoas(1);
-    }
 
     return true;
 }

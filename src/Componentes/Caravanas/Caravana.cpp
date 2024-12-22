@@ -31,6 +31,10 @@ void Caravana::adicionaPessoas(int pessoasAAdicionar) {
         return;
     }
 
+    if (getNPessoas() == 0 && getRandomMode()) {
+        setRandomMode();
+    }
+
     int espacoDisponivel = getmaxPessoas() - getNPessoas();
 
     if (espacoDisponivel <= 0) {
@@ -54,7 +58,8 @@ void Caravana::adicionaPessoas(int pessoasAAdicionar) {
 void Caravana::removePessoas(int pessoasARemover) {
     if (getNPessoas() - pessoasARemover < 0) {
         setNPessoas(0);
-
+        if(!getRandomMode())
+            setRandomMode();
         cout << "Caravana sem pessoas!" << endl;
         return;
     }
@@ -79,7 +84,7 @@ int Caravana::getMaxAgua() const {
 void Caravana::removerAgua(int aguaARemover) {
     if (getnivelAgua() - aguaARemover < 0) {
         setNivelAgua(0);
-
+        removePessoas(-1);
         cout << "Caravana sem agua!" << endl;
         return;
     }

@@ -8,7 +8,7 @@ public:
     Comercio(int row, int col, int id, Mapa *m) : Caravana(row, col, id, 20, 30, 200, 2, 40, true, m) {
     }
 
-    void perdeAgua();
+    void perdeAgua() override;
 
     std::string showInfo() const override;
 

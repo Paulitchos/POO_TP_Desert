@@ -94,6 +94,14 @@ bool Barbaros::moveCloserToCaravana(Mapa *m) {
     return false;
 }
 
+void Barbaros::moveRandom() {
+
+}
+
+void Barbaros::perdeAgua() {
+
+}
+
 bool Barbaros::verificaContinuidade() {
     if (!getAutoPilot()) {
         if (!getRandomMode()) {

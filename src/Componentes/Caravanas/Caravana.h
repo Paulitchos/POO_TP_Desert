@@ -38,6 +38,8 @@ public:
 
     void abastecerAgua();
 
+    virtual void perdeAgua() = 0;
+
     //ID
     char getID() const;
 

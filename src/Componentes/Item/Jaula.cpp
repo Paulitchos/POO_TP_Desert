@@ -6,7 +6,7 @@ Jaula::Jaula(int row, int col, Mapa *m) : Item(row, col, "Jaula", m) {
 }
 
 void Jaula::execute(std::shared_ptr<Caravana> car) {
-    if(car->getNPessoas() == 0)
+    if(car->getNPessoas() == 0 && car->getRandomMode())
         car->setRandomMode();
 
     int espacoDisponivel = car->getmaxPessoas() - car->getNPessoas();

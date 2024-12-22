@@ -123,29 +123,6 @@ void Militar::semTripulantes() {
 }
 
 bool Militar::verificaContinuidade() {
-    if (!getAutoPilot()) {
-        if (!getRandomMode()) {
-            if (getNPessoas() == 0) {
-                semTripulantes();
-                //mesma direção
-            } else {
-                removerAgua(getNPessoas() * 0.5);
-                if (getnivelAgua() == 0)
-                    removePessoas(1);
-            }
-        } else {
-            if (getTurnosParaDesaparecer() == 0) {
-                setDestruida();
-                return false;
-            } else {
-                setTurnosParaDesaparecer(getTurnosParaDesaparecer() - 1);
-            }
-        }
-    } else {
-        removerAgua(getNPessoas() * 0.5);
-        if (getnivelAgua() == 0)
-            removePessoas(1);
-    }
 
     return true;
 }
