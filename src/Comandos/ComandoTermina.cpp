@@ -2,7 +2,7 @@
 
 using namespace std;
 
-ComandoTermina::ComandoTermina() : Comando("terminar", "Termina a simulação, sendo apresentada a pontuação.", "") {
+ComandoTermina::ComandoTermina() : Comando("terminar", "Termina a simulacaoo, sendo apresentada a pontuacao.", "") {
 
 }
 

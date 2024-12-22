@@ -29,7 +29,7 @@ void Mapa::addCoins(int coins) {
     if (coins > 0) {
         setCoins(coins + getCoins());
         cout << "Adicionou " << coins << " moedas ao utilizador, ficou com um total de " << getCoins() << " moedas" <<
-                endl;
+                endl << endl;
     } else {
         if (coins + getCoins() < 0) {
             setCoins(0);
@@ -37,7 +37,7 @@ void Mapa::addCoins(int coins) {
             setCoins(coins + getCoins());
         }
         cout << "Removeu " << coins << " moedas ao utilizador, ficando o utilizador com " << getCoins() << " moedas" <<
-                endl;
+                endl << endl;
     }
 }
 
@@ -83,7 +83,9 @@ void Mapa::setNFightsWon() { nFightsWon = nFightsWon++; }
 
 void Mapa::showDetails() const {
     int nCaravansUtilizador = getNCaravanasUtilizador();
-    cout << "*** Detalhes ***" << endl << endl;
+    cout << "*** Mapa ***" << endl;
+        imprimeBuffer();
+    cout << "\n*** Detalhes ***" << endl << endl;
     cout << "Linhas: " << rows << " Colunas: " << cols << endl
             << "Turno: " << getTurn() << " || Cidades: " << cidades.size() << endl <<
             "Caravanas do Utilizador: " << nCaravansUtilizador << " || Caravanas Barbaras: " << barbaras.size() << endl <<
@@ -133,7 +135,7 @@ Cidade *Mapa::getCidade(int index) {
     if (index >= 0 && index < cidades.size()) {
         return &cidades[index];
     }
-    cout << "Cidade nao encontrada" << endl;
+    cout << "Cidade nao encontrada" << endl << endl;
     return nullptr;
 }
 
@@ -173,23 +175,23 @@ void Mapa::addCaravanaInicial(int row, int col, char id) {
 
 void Mapa::addCaravanaBarbaro(int row, int col) {
     if (isMontanha(row, col)) {
-        cout << "Nao pode criar uma caravana barbara em cima de uma montanha!!" << endl;
+        cout << "Nao pode criar uma caravana barbara em cima de uma montanha!!" << endl << endl;
         return;
     }
 
     if (isCaravana(row, col, nullptr)) {
-        cout << "Nao pode criar uma caravana barbara em cima de outra caravana!!" << endl;
+        cout << "Nao pode criar uma caravana barbara em cima de outra caravana!!" << endl << endl;
         return;
     }
 
     if (isCidade(row, col)) {
-        cout << "Nao pode criar uma caravana barbara em cima de uma cidade!!" << endl;
+        cout << "Nao pode criar uma caravana barbara em cima de uma cidade!!" << endl << endl;
         return;
     }
 
     barbaras.emplace_back(make_unique<Barbaros>(row, col, '!', getDurBarb(), this));
     writeCharToBuffer(row, col, '!');
-    cout << "Criada uma caravana barbaro na linha " << row << " e coluna " << col << endl;
+    cout << "Criada uma caravana barbaro na linha " << row << " e coluna " << col << endl << endl;
 }
 
 
@@ -199,7 +201,7 @@ void Mapa::addCaravana(const shared_ptr<Caravana> &caravana) {
 
 int Mapa::getCaravanaIndex(char caravanaID) const {
     if (caravanaID < '0' || caravanaID > '9') {
-        cout << "ID da caravana deve ser entre '0' e '9'" << endl;
+        cout << "ID da caravana deve ser entre '0' e '9'" << endl << endl;
         return -2;
     }
 
@@ -242,7 +244,7 @@ shared_ptr<Caravana> Mapa::getCaravana(int index) const {
     if (index >= 0 && index < caravanas.size()) {
         return caravanas[index];
     }
-    cout << "Cidade nao encontrada" << endl;
+    cout << "Cidade nao encontrada" << endl << endl;
     return nullptr;
 }
 
@@ -338,6 +340,23 @@ void Mapa::autoCaravanaUtilizadorMove() {
     }
 }
 
+void Mapa::autoCaravanaBarbaraMove() {
+    if(barbaras.empty())
+        return;
+    for (auto &caravana: barbaras) {
+        if (caravana) {
+            caravana->setAutoFase();
+            caravana->moveAuto();
+            if (caravana->getEstado()) {
+                removeCaravanaBarbara(caravana.get());
+            } else {
+                caravana->setAutoFase();
+                caravana->resetMovimento();
+            }
+        }
+    }
+}
+
 std::shared_ptr<Caravana> Mapa::getNearCaravanaUtilizador(int row, int col, const Caravana *self, int distance) {
     std::shared_ptr<Caravana> nearestCaravana = nullptr;
     int minDistance = std::numeric_limits<int>::max();
@@ -425,7 +444,7 @@ void Mapa::writeCharToBuffer(int row, int col, char c) const {
 }
 
 void Mapa::startTempestade(int row, int col, int raio) {
-    cout << "Comecou uma tempestade de areia na linha " << row << " e coluna " << col << " de raio " << raio << endl;
+    cout << "Comecou uma tempestade de areia na linha " << row << " e coluna " << col << " de raio " << raio << endl << endl;
     for (int i = -raio; i <= raio; ++i) {
         for (int j = -raio; j <= raio; ++j) {
             int linhaAtual = (row + i + rows) % rows;
@@ -445,7 +464,7 @@ void Mapa::startTempestade(int row, int col, int raio) {
         }
     }
 
-    cout << "A tempestade de areia terminou" << endl;
+    cout << endl << "A tempestade de areia terminou" << endl << endl;
 }
 
 vector<string> Mapa::captureBufferState() const {
@@ -481,19 +500,21 @@ void Mapa::saveBuffer(const string &nome) {
 void Mapa::loadBuffer(const string &ficheiro) {
     auto it = savedBuffers.find(ficheiro);
     if (it == savedBuffers.end()) {
-        cout << "Erro: Nenhum buffer salvo com o nome \"" << ficheiro << "\"!" << endl;
+        cout << "Erro: Nenhum buffer salvo com o nome \"" << ficheiro << "\"!" << endl << endl;
         return;
     }
 
-    cout << "Estado do buffer \"" << ficheiro << "\":" << endl;
+    cout << "Estado do buffer \"" << ficheiro << "\":" << endl << endl;
     for (const auto &line: it->second) {
         cout << line << endl;
     }
+
+    cout << endl;
 }
 
 void Mapa::listSavedBuffers() const {
     if (savedBuffers.empty()) {
-        cout << "Nenhum buffer salvo." << endl;
+        cout << "Nenhum buffer salvo." << endl << endl;
         return;
     }
 
@@ -501,15 +522,17 @@ void Mapa::listSavedBuffers() const {
     for (const auto &[name, _]: savedBuffers) {
         cout << "- " << name << endl;
     }
+
+    cout << endl;
 }
 
 void Mapa::deleteSavedBuffer(const string &nome) {
     auto it = savedBuffers.find(nome);
     if (it == savedBuffers.end()) {
-        cout << "Erro: Nenhum buffer salvo com o nome \"" << nome << "\" encontrado!" << endl;
+        cout << "Erro: Nenhum buffer salvo com o nome \"" << nome << "\" encontrado!" << endl << endl;
         return;
     }
 
     savedBuffers.erase(it);
-    cout << "Buffer \"" << nome << "\" apagado com sucesso." << endl;
+    cout << "Buffer \"" << nome << "\" apagado com sucesso." << endl << endl;
 }

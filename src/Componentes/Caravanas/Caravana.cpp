@@ -27,7 +27,7 @@ int Caravana::getmaxPessoas() const {
 
 void Caravana::adicionaPessoas(int pessoasAAdicionar) {
     if (onde->getCoins() - pessoasAAdicionar < 0) {
-        cout << "Nao tem dinheiro para comprar " << pessoasAAdicionar << " tripulantes" << endl;
+        cout << "Nao tem dinheiro para comprar " << pessoasAAdicionar << " tripulantes" << endl << endl;
         return;
     }
 
@@ -37,8 +37,8 @@ void Caravana::adicionaPessoas(int pessoasAAdicionar) {
 
     int espacoDisponivel = getmaxPessoas() - getNPessoas();
 
-    if (espacoDisponivel <= 0) {
-        cout << "A caravana ja atingiu o limite maximo de tripulantes." << endl;
+    if (espacoDisponivel == 0) {
+        cout << "A caravana ja atingiu o limite maximo de tripulantes." << endl << endl;
         return;
     }
 
@@ -47,11 +47,11 @@ void Caravana::adicionaPessoas(int pessoasAAdicionar) {
     setNPessoas(getNPessoas() + nPessoasAAdicionar);
     onde->addCoins(-nPessoasAAdicionar);
 
-    cout << "Foram adicionados " << nPessoasAAdicionar << " tripulantes a caravana " << getID() << endl;
+    cout << "Foram adicionados " << nPessoasAAdicionar << " tripulantes a caravana " << getID() << endl << endl;
 
     if (nPessoasAAdicionar < pessoasAAdicionar) {
         cout << "Nao foi possivel adicionar todos os tripulantes solicitados devido ao limite maximo de "
-             << getmaxPessoas() << " tripulantes." << endl;
+             << getmaxPessoas() << " tripulantes." << endl << endl;
     }
 }
 
@@ -123,14 +123,30 @@ void Caravana::setMercadoria(int novaMercadoria) {
     nMercadoria = novaMercadoria;
 }
 
-bool Caravana::adicionaMercadoria(int mercadoriaAAdicionar) {
-    if (getMercadoria() + mercadoriaAAdicionar > getMaxMercadoria()) {
-        cout << "Caravana cheia de mercadoria!" << endl;
-        return false;
+void Caravana::adicionaMercadoria(int mercadoriaAAdicionar) {
+    if (onde->getCoins() - mercadoriaAAdicionar < 0) {
+        cout << "Nao tem dinheiro para comprar " << mercadoriaAAdicionar << " toneladas de mercadoria" << endl << endl;
+        return;
     }
 
-    setMercadoria(getMercadoria() + mercadoriaAAdicionar);
-    return true;
+    int espacoDisponivel = getMaxMercadoria() - getMercadoria();
+
+    if (espacoDisponivel == 0) {
+        cout << "A caravana ja atingiu o limite maximo de mercadoria." << endl;
+        return;
+    }
+
+    int numeroAAdicionar = std::min(espacoDisponivel, mercadoriaAAdicionar);
+
+    setMercadoria(getMercadoria() + numeroAAdicionar);
+    onde->addCoins(-numeroAAdicionar);
+
+    cout << "Foram adicionados " << numeroAAdicionar << " toneladas de mercadoria a caravana " << getID() << endl;
+
+    if (numeroAAdicionar < mercadoriaAAdicionar) {
+        cout << "Nao foi possivel adicionar todas as toneladas solicitados devido ao limite maximo de "
+             << getMaxMercadoria() << " toneladas desta caravana." << endl;
+    }
 }
 
 void Caravana::removeMercadoria(int mercadoriaARemover) {

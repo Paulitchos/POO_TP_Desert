@@ -35,7 +35,7 @@ public:
 
     void setComprouM(bool comprou);
 
-    bool buyCaravana(char tipoCar);
+    void buyCaravana(char tipoCar);
 
     void showCaravanas() const;
 

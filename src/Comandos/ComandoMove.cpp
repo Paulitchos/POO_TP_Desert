@@ -2,9 +2,9 @@
 
 using namespace std;
 
-ComandoMove::ComandoMove() : Comando("move", " Move a caravana com o número N uma posição na direção X: "
+ComandoMove::ComandoMove() : Comando("move", " Move a caravana com o numero N uma posicao na direcao X: "
                                      "D (direita), E (esquerda), C (cima), B (baixo) e as diagonais, "
-                                     "na mesma lógica: CE (cima-esquerda), CD (cima-direita), "
+                                     "na mesma logica: CE (cima-esquerda), CD (cima-direita), "
                                      "BE (baixo-esquerda), BD (baixo-direita)", "<N> <X>") {
 }
 

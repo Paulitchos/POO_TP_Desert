@@ -84,10 +84,14 @@ void Simulador::listMapSavedBuffers() const { mapa->listSavedBuffers(); }
 
 void Simulador::deleteSavedBuffer(const string& nome) { mapa->deleteSavedBuffer(nome); }
 
-int Simulador::autoSimBehaviour() {
+int Simulador::autoCaravanaUtilizadorBehaviour() {
     mapa->autoCaravanaUtilizadorMove();
-
     return 2;
+}
+
+int Simulador::autoCaravanaBarbarasBehaviour() {
+    mapa->autoCaravanaBarbaraMove();
+    return 3;
 }
 
 void Simulador::terminaMapa() {

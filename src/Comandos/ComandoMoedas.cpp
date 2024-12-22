@@ -10,13 +10,13 @@ void ComandoMoedas::execute(const std::string &args, Simulador &sim) {
 
     if (inputs.size() != 2) {
         cout << "O comando " << getNome() <<
-                " apenas aceita um argumento <N> que e um numero e corresponde a um valor das moedas "
-                "a adicionar ou retirar ao utilizador" << endl;
+                " tem um argumento <N> que e um numero e corresponde a um valor das moedas "
+                "a adicionar ou retirar ao utilizador" << endl << endl;
         return;
     }
 
     if (!isNumeric(inputs[1])) {
-        cout << "argumento <N> precisa de ser um numero!!" << endl;
+        cout << "argumento <N> precisa de ser um numero!!" << endl << endl;
         return;
     }
 

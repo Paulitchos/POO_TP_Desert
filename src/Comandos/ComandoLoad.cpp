@@ -2,14 +2,14 @@
 
 using namespace std;
 
-ComandoLoad::ComandoLoad() : Comando("loads", "Recupera a cópia do buffer previamente armazenado em memória com o nome indicado", "<nome>") {
+ComandoLoad::ComandoLoad() : Comando("loads", "Recupera a copia do buffer previamente armazenado em memoria com o nome indicado", "<nome>") {
 }
 
 void ComandoLoad::execute(const std::string &args, Simulador &sim) {
     vector<string> inputs = split(args, ' ');
 
     if (inputs.size() != 2) {
-        cout << "O comando " << getNome() << " apenas aceita um argumento <nome> que e um nome do ficheiro!!" << endl;
+        cout << "O comando " << getNome() << " tem um argumento <nome> que e um nome do ficheiro!!" << endl << endl;
         return;
     }
 

@@ -10,7 +10,7 @@ void ComandoDel::execute(const std::string &args, Simulador &sim) {
     vector<string> inputs = split(args, ' ');
 
     if (inputs.size() != 2) {
-        cout << "O comando " << getNome() << " aceita apenas um argumento <nome>, que é o nome do buffer a ser apagado!" << endl;
+        cout << "O comando " << getNome() << " tem um argumento <nome>, que é o nome do buffer a ser apagado!" << endl << endl;
         return;
     }
 

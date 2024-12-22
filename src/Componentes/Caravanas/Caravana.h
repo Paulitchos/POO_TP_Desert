@@ -50,7 +50,7 @@ public:
 
     int getMaxMercadoria() const;
 
-    bool adicionaMercadoria(int mercadoriaAAdicionar);
+    void adicionaMercadoria(int mercadoriaAAdicionar);
 
     void removeMercadoria(int mercadoriaARemover);
 

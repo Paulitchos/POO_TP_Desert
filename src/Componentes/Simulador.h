@@ -89,7 +89,9 @@ public:
 
     void deleteSavedBuffer(const std::string& nome);
 
-    int autoSimBehaviour();
+    int autoCaravanaUtilizadorBehaviour();
+
+    int autoCaravanaBarbarasBehaviour();
 
     void terminaMapa();
 };

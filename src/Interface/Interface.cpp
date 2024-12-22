@@ -18,14 +18,16 @@ void Interface::startSimulation() {
                 this->proxFase = askCommands();
                 break;
             case 1:
-                cout << "Comportamentos auto - verifica continuidade" << endl;
-                this->proxFase = sim->autoSimBehaviour();
+                //cout << "Comportamentos auto - verifica continuidade" << endl;
+                this->proxFase = sim->autoCaravanaUtilizadorBehaviour();
                 break;
             case 2:
-                this->proxFase = 0;
+                this->proxFase = sim->autoCaravanaBarbarasBehaviour();
+                sim->showMapDetails();
                 break;
             case 3:
-                cout << "Combates";
+                cout << "Combates" << endl;
+                this->proxFase = 0;
                 break;
             case 4:
                 running = false;
@@ -44,7 +46,6 @@ void Interface::iniciateSimulation() {
     while (true) {
         cout << "> ";
         getline(cin, input);
-        cout << endl;
 
         if (input.empty()) {
             cout << "Comando invalido!" << endl << endl;
@@ -60,13 +61,13 @@ void Interface::iniciateSimulation() {
 
         if (inputs[0] == "config" && inputs.size() > 1) {
             if (readMapFromFile(inputs[1])) {
-                cout << "\nMapa lido com sucesso" << endl << endl;
+                //cout << "\nMapa lido com sucesso" << endl << endl;
                 break;
             }
             return;
         }
 
-        cout << "Comando invalido" << endl;
+        cout << "Comando invalido" << endl << endl;
     }
 
     loadCommands();
@@ -276,9 +277,8 @@ bool Interface::readMapFromFile(string fileName) {
         return false;
     }
 
-    sim->imprimeBuffer();
+    //sim->imprimeBuffer();
     file.close();
-
     return true;
 }
 
@@ -297,12 +297,17 @@ int Interface::askCommands() {
 
     inputs = split(input, ' ');
 
+    if(inputs[0] == "help") {
+        helpCommands();
+        return 0;
+    }
+
     auto it = commands.find(inputs[0]);
     if (it != commands.end()) {
         // Read the rest of the line as arguments
         it->second->execute(input, *sim);
     } else {
-        cout << "Comando invalido: " << input << endl;
+        cout << "Comando invalido: " << input << endl << endl;
         return 0;
     }
 
@@ -338,9 +343,9 @@ void Interface::loadCommands() {
 }
 
 void Interface::helpCommands() const {
-    cout << "Lista de comandos disponiveis:\n";
+    cout << "Lista de comandos disponiveis:" << endl;
     for (const auto &commandPair: commands) {
-        cout << commandPair.second->getAsString() << "\n\n"; // Call getAsString on each command
+        cout << commandPair.second->getAsString() << "\n\n";
     }
 }
 

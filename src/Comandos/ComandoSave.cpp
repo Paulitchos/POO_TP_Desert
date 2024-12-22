@@ -2,7 +2,7 @@
 
 using namespace std;
 
-ComandoSave::ComandoSave() : Comando("save", " Faz uma cópia do estado do buffer", "<nome>") {
+ComandoSave::ComandoSave() : Comando("save", " Faz uma copia do estado do buffer", "<nome>") {
 }
 
 void ComandoSave::execute(const std::string &args, Simulador &sim) {

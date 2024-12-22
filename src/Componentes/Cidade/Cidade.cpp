@@ -22,17 +22,17 @@ void Cidade::setComprouC(bool comprou) { this->comprouC = comprou; }
 
 void Cidade::setComprouM(bool comprou) { this->comprouM = comprou; }
 
-bool Cidade::buyCaravana(char tipoCar) {
+void Cidade::buyCaravana(char tipoCar) {
     if (onde->getCoins() < onde->getPCaravan()) {
-        cout << "Utilizador nao tem dinheiro para comprar a caravana" << endl;
-        return false;
+        cout << "Utilizador nao tem dinheiro para comprar a caravana" << endl << endl;
+        return;
     }
 
     char newID = onde->getAvailableCaravanaID();
 
     if (newID == ' ') {
-        cout << "Ja atingiu o maximo de caravanas possiveis no mapa!!" << endl;
-        return false;
+        cout << "Ja atingiu o maximo de caravanas possiveis no mapa!!" << endl << endl;
+        return;
     }
 
     if (tipoCar == 'C' && !isComprouC()) {
@@ -43,7 +43,9 @@ bool Cidade::buyCaravana(char tipoCar) {
         parked.emplace_back(newCaravana);
         onde->addCaravana(newCaravana);
         onde->addCoins(-onde->getPCaravan());
-        return true;
+        cout << "Comprou uma caravana comercial na cidade " << newCaravana->getCidadeName() << " que ficou com ID: "
+        << newCaravana->getID() << endl << endl;
+        return;
     }
 
     if (tipoCar == 'M' && !isComprouM()) {
@@ -54,25 +56,25 @@ bool Cidade::buyCaravana(char tipoCar) {
         parked.emplace_back(newCaravana);
         onde->addCaravana(newCaravana);
         onde->addCoins(-onde->getPCaravan());
-        return true;
+        cout << "Comprou uma caravana militar na cidade " << newCaravana->getCidadeName() << " que ficou com ID: "
+        << newCaravana->getID() << endl << endl;
+        return;
     }
-
-    return true;
 }
 
 void Cidade::showCaravanas() const {
     if (parked.empty()) {
-        cout << "Nenhuma caravana estacionada nesta cidade." << endl;
+        cout << "Nenhuma caravana estacionada nesta cidade." << endl << endl;
         return;
     }
 
-    cout << endl << "Caravanas estacionadas na cidade " << getName() << ":" << endl;
+    cout << "Caravanas estacionadas na cidade " << getName() << ":" << endl << endl;
 
     for (const auto &caravana: parked) {
         if (caravana) {
-            cout << caravana->showInfo() << endl << endl;
+            cout << caravana->showInfo() << endl;
         } else {
-            cout << "Caravana invalida encontrada!" << endl;
+            cout << "Caravana invalida encontrada!" << endl << endl;
         }
     }
 }

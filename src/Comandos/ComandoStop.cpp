@@ -2,7 +2,7 @@
 
 using namespace std;
 
-ComandoStop::ComandoStop() : Comando("stop", " A caravana com o número N para o comportamento automático.", "<N>") {
+ComandoStop::ComandoStop() : Comando("stop", " A caravana com o numero N para o comportamento automatico.", "<N>") {
 }
 
 void ComandoStop::execute(const std::string &args, Simulador &sim) {
