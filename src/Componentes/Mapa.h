@@ -31,8 +31,10 @@ class Mapa {
     int rows, cols, coins,
             insNewItem, durItem, maxItems, pSellMerch, pBuyMerch,
             pCaravan, insNewBarb, durBarb, turn, nFightsWon;
+
     std::unique_ptr<Buffer> buffer;
     std::map<std::string, std::vector<std::string> > savedBuffers;
+
     std::vector<Montanha> montanhas;
     std::vector<Cidade> cidades;
     std::vector<std::shared_ptr<Caravana>> caravanas;
@@ -43,6 +45,8 @@ public:
     Mapa();
 
     ~Mapa();
+
+    //GETTERS E SETTERS
 
     int getRows() const;
 
@@ -98,17 +102,23 @@ public:
 
     void setNFightsWon();
 
+    //FUNCOES
+
     void showDetails() const;
 
     void startBuffer();
 
     void imprimeBuffer() const;
 
+    //MONTANHAS
+
     void addMontanha(int row, int col);
 
-    void addCidade(int row, int col, char name);
-
     bool isMontanha(int row, int col) const;
+
+    //CIDADES
+
+    void addCidade(int row, int col, char name);
 
     int cidadeNameAvailable(char name) const;
 
@@ -118,11 +128,9 @@ public:
 
     bool isCidade(int row, int col) const;
 
+    //CARAVANA UTILIZADOR
+
     void addCaravanaInicial(int row, int col, char id);
-
-    void setTurnosADesaparecerBarb();
-
-    void addCaravanaBarbaro(int row, int col);
 
     void addCaravana(const std::shared_ptr<Caravana> &caravana);
 
@@ -134,8 +142,6 @@ public:
 
     int getNCaravanasUtilizador() const;
 
-    int getNCaravanasBarbaras() const;
-
     bool isCaravana(int row, int col, const Caravana *self) const;
 
     void parkCaravana(char caravanaID, char cidadeName);
@@ -144,17 +150,27 @@ public:
 
     void removeCaravanaUtilizador(const std::shared_ptr<Caravana> &caravana);
 
-    void removeCaravanaBarbara(const Caravana *self);
-
     void autoCaravanaUtilizadorMove();
+
+    Caravana *getNearCaravanaBarbara(int row, int col, int distance);
+
+    //CARAVANA BARBARO
+
+    void setTurnosADesaparecerBarb();
+
+    void addCaravanaBarbaro(int row, int col);
+
+    int getNCaravanasBarbaras() const;
+
+    void removeCaravanaBarbara(const Caravana *self);
 
     void autoCaravanaBarbaraMove();
 
     std::shared_ptr<Caravana> getNearCaravanaUtilizador(int row, int col, const Caravana *self, int distance);
 
-    Caravana *getNearCaravanaBarbara(int row, int col, int distance);
-
     void refreshBarbaros();
+
+    //ITEMS
 
     bool isItem(int row, int col) const;
 
@@ -166,13 +182,15 @@ public:
 
     void addRandomItem();
 
-    std::vector<std::pair<int,int>> getRandomAvailablePosition();
-
-    std::vector<std::pair<int, int>> getAvailablePositions() const;
-
     Item *getNearItem(int row, int col, int distance) const;
 
     void applyItem(Item *item, const Caravana *self);
+
+    //FUNCOES AUXILIARES
+
+    std::vector<std::pair<int,int>> getRandomAvailablePosition() const;
+
+    std::vector<std::pair<int, int>> getAvailablePositions() const;
 
     void writeCharToBuffer(int row, int col, char c) const;
 
@@ -187,8 +205,6 @@ public:
     void listSavedBuffers() const;
 
     void deleteSavedBuffer(const std::string &nome);
-
-    void termina();
 };
 
 #endif //MAPA_H

@@ -8,7 +8,7 @@ ComandoMove::ComandoMove() : Comando("move", " Move a caravana com o numero N um
                                      "BE (baixo-esquerda), BD (baixo-direita)", "<N> <X>") {
 }
 
-void ComandoMove::execute(const std::string &args, Simulador &sim) {
+void ComandoMove::execute(const string &args, Simulador &sim) {
     vector<string> inputs = split(args, ' ');
 
     if (inputs.size() != 3) {

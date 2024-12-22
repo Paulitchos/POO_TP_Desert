@@ -7,10 +7,6 @@ class Barbaro : public Caravana {
 public:
     Barbaro(int row, int col, char id, Mapa *m, int turnosParaDesaparecer);
 
-    //reduzir o tempo de vida a cada turno
-
-    int getLifetime() const;
-
     std::string showInfo() const override;
 
     void tempestade() override;
@@ -22,13 +18,6 @@ public:
     bool moveCloserToCaravana(Mapa *m);
 
     void perdeAgua() override;
-
-    //verificar
-    void semTripulantes() override;
-
-    bool verificaContinuidade() override;
-
-private:
 };
 
 

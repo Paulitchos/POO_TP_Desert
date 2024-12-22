@@ -15,13 +15,14 @@ class Comando {
 public:
     Comando(std::string n, std::string d, std::string args = "");
 
-    virtual ~Comando() = default;
-
+    // Getters
     std::string getNome() const;
 
     std::string getDescr() const;
 
     virtual std::string getAsString() const;
+
+    // Funções
 
     virtual void execute(const std::string &args, Simulador &sim) = 0;
 

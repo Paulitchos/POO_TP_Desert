@@ -8,6 +8,8 @@ Cidade::Cidade(int row, int col, char name, Mapa *onde) : row(row), col(col), na
                                                           comprouM(false), comprouS(false) {
 }
 
+//GETTERS E SETTERS
+
 char Cidade::getName() const { return name; }
 
 int Cidade::getRow() const { return row; }
@@ -25,6 +27,8 @@ void Cidade::setComprouC() { this->comprouC = true; }
 void Cidade::setComprouM() { this->comprouM = true; }
 
 void Cidade::setComprouS() { this->comprouS = true; }
+
+//FUNCOES
 
 void Cidade::buyCaravana(char tipoCar) {
     if (onde->getCoins() < onde->getPCaravan()) {

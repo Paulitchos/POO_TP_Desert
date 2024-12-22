@@ -6,7 +6,7 @@ ComandoTermina::ComandoTermina() : Comando("terminar", "Termina a simulacaoo, se
 
 }
 
-void ComandoTermina::execute(const std::string &args, Simulador &sim) {
+void ComandoTermina::execute(const string &args, Simulador &sim) {
     vector<string> inputs = split(args, ' ');
 
     if (inputs.size() != 1) {

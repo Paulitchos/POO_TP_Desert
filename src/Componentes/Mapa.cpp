@@ -13,6 +13,8 @@ Mapa::~Mapa() {
     cout << "Mapa destruido e todos os recursos foram libertados." << endl;
 }
 
+//GETTERS E SETTERS
+
 int Mapa::getRows() const { return rows; }
 
 void Mapa::setRows(int rows) { this->rows = rows; }
@@ -81,14 +83,17 @@ int Mapa::getNFightsWon() const { return nFightsWon; }
 
 void Mapa::setNFightsWon() { nFightsWon = nFightsWon++; }
 
+//FUNCOES
+
 void Mapa::showDetails() const {
     int nCaravansUtilizador = getNCaravanasUtilizador();
     cout << "*** Mapa ***" << endl;
-        imprimeBuffer();
+    imprimeBuffer();
     cout << "\n*** Detalhes ***" << endl << endl;
     cout << "Linhas: " << rows << " Colunas: " << cols << endl
             << "Turno: " << getTurn() << " || Cidades: " << cidades.size() << endl <<
-            "Caravanas do Utilizador: " << nCaravansUtilizador << " || Caravanas Barbaras: " << barbaras.size() << endl <<
+            "Caravanas do Utilizador: " << nCaravansUtilizador << " || Caravanas Barbaras: " << barbaras.size() << endl
+            <<
             "Moedas: " << getCoins() << endl
             << "Preco da caravana: " << getPCaravan() << endl << endl;
 }
@@ -101,16 +106,11 @@ void Mapa::imprimeBuffer() const {
     }
 }
 
+//MONTANHAS
+
 void Mapa::addMontanha(int row, int col) {
     montanhas.emplace_back(row, col);
-    //cout << "Montanha adicionada em (" << row << ", " << col << ")" << endl;
     writeCharToBuffer(row, col, '+');
-}
-
-void Mapa::addCidade(int row, int col, char name) {
-    cidades.emplace_back(row, col, name, this);
-    //cout << "Cidade adicionada em (" << row << ", " << col << ")" << endl;
-    writeCharToBuffer(row, col, name);
 }
 
 bool Mapa::isMontanha(int row, int col) const {
@@ -120,6 +120,13 @@ bool Mapa::isMontanha(int row, int col) const {
         }
     }
     return false;
+}
+
+//CIDADES
+
+void Mapa::addCidade(int row, int col, char name) {
+    cidades.emplace_back(row, col, name, this);
+    writeCharToBuffer(row, col, name);
 }
 
 int Mapa::cidadeNameAvailable(char name) const {
@@ -160,50 +167,21 @@ bool Mapa::isCidade(int row, int col) const {
     return false;
 }
 
+//CARAVANAS UTILIZADOR
+
 void Mapa::addCaravanaInicial(int row, int col, char id) {
     if (id == '!') {
         barbaras.emplace_back(make_unique<Barbaro>(row, col, id, this, 0));
         barbaras.back()->setAutoPilot();
     } else {
-        auto newCaravana = std::make_shared<Comercio>(row, col, id, this);
+        auto newCaravana = make_shared<Comercio>(row, col, id, this);
         newCaravana->setNivelAgua(10);
         caravanas.emplace_back(newCaravana);
     }
-    //cout << "Caravana adicionada em (" << row << ", " << col << ")" << endl;
     writeCharToBuffer(row, col, id);
 }
 
-void Mapa::setTurnosADesaparecerBarb() {
-    for (auto &caravana: barbaras) {
-        caravana->setTurnosParaDesaparecer(getDurationBarb());
-    }
-}
-
-void Mapa::addCaravanaBarbaro(int row, int col) {
-    if (isMontanha(row, col)) {
-        cout << "Nao pode criar uma caravana barbara em cima de uma montanha!!" << endl << endl;
-        return;
-    }
-
-    if (isCaravana(row, col, nullptr)) {
-        cout << "Nao pode criar uma caravana barbara em cima de outra caravana!!" << endl << endl;
-        return;
-    }
-
-    if (isCidade(row, col)) {
-        cout << "Nao pode criar uma caravana barbara em cima de uma cidade!!" << endl << endl;
-        return;
-    }
-
-    barbaras.emplace_back(make_unique<Barbaro>(row, col, '!', this, getDurationBarb()));
-    writeCharToBuffer(row, col, '!');
-    cout << "Criada uma caravana barbaro na linha " << row << " e coluna " << col << endl << endl;
-}
-
-
-void Mapa::addCaravana(const shared_ptr<Caravana> &caravana) {
-    caravanas.emplace_back(caravana);
-}
+void Mapa::addCaravana(const shared_ptr<Caravana> &caravana) { caravanas.emplace_back(caravana); }
 
 int Mapa::getCaravanaIndex(char caravanaID) const {
     if (caravanaID < '0' || caravanaID > '9') {
@@ -247,14 +225,7 @@ shared_ptr<Caravana> Mapa::getCaravana(int index) const {
     return nullptr;
 }
 
-int Mapa::getNCaravanasUtilizador() const {
-    return caravanas.size();
-}
-
-int Mapa::getNCaravanasBarbaras() const {
-    return barbaras.size();
-}
-
+int Mapa::getNCaravanasUtilizador() const { return caravanas.size(); }
 
 bool Mapa::isCaravana(int row, int col, const Caravana *self) const {
     for (auto &caravana: caravanas) {
@@ -287,9 +258,9 @@ void Mapa::unparkCaravana(char caravanaID, char cidadeName) {
 }
 
 void Mapa::removeCaravanaUtilizador(const shared_ptr<Caravana> &caravana) {
-    auto it = std::find(caravanas.begin(), caravanas.end(), caravana);
+    auto it = find(caravanas.begin(), caravanas.end(), caravana);
     if (it != caravanas.end()) {
-        if(caravana->getCidadeName() == ' ')
+        if (caravana->getCidadeName() == ' ')
             writeCharToBuffer(caravana->getRow(), caravana->getCol(), '.');
         cout << "Caravana " << caravana->getID() << " foi destruida e removida do mapa." << endl << endl;
         caravanas.erase(it);
@@ -297,34 +268,23 @@ void Mapa::removeCaravanaUtilizador(const shared_ptr<Caravana> &caravana) {
         cout << "Erro: Caravana nao encontrada no mapa!" << endl << endl;
     }
 
-    // If the caravana is parked in a city, unpark it
     if (caravana->getCidadeName() != ' ') {
-        for (auto& cidade : cidades) {
+        for (auto &cidade: cidades) {
             cidade.unparkCaravana(caravana);
         }
     }
 }
 
-void Mapa::removeCaravanaBarbara(const Caravana *self) {
-    for (auto it = barbaras.begin(); it != barbaras.end(); ++it) {
-        if (it->get() == self) {
-            writeCharToBuffer(self->getRow(), self->getCol(), '.');
-            barbaras.erase(it);
-            return;
-        }
-    }
-}
-
 void Mapa::autoCaravanaUtilizadorMove() {
-    if(caravanas.empty())
+    if (caravanas.empty())
         return;
     for (auto &caravana: caravanas) {
         if (caravana) {
             caravana->setAutoFase();
-            if(!caravana->getEstado() && caravana->getAutoPilot()) {
+            if (!caravana->getEstado() && caravana->getAutoPilot()) {
                 caravana->moveAuto();
                 caravana->setTurnosEmRandom(0);
-            } else if(!caravana->getEstado() && caravana->getRandomMode()) {
+            } else if (!caravana->getEstado() && caravana->getRandomMode()) {
                 caravana->moveRandom();
                 caravana->addTurnosEmRandom();
             } else {
@@ -342,8 +302,69 @@ void Mapa::autoCaravanaUtilizadorMove() {
     }
 }
 
+Caravana *Mapa::getNearCaravanaBarbara(int row, int col, int distance) {
+    Caravana *nearestCaravana = nullptr;
+    int minDistance = numeric_limits<int>::max();
+
+    for (auto &caravana: barbaras) {
+        if (caravana) {
+            int distanceRows = abs(caravana->getRow() - row);
+            int distanceCols = abs(caravana->getCol() - col);
+            int currentDistance = distanceRows + distanceCols;
+
+            if (currentDistance <= distance && currentDistance < minDistance) {
+                minDistance = currentDistance;
+                nearestCaravana = caravana.get();
+            }
+        }
+    }
+
+    return nearestCaravana;
+}
+
+//CARAVANA BARBARO
+
+void Mapa::setTurnosADesaparecerBarb() {
+    for (auto &caravana: barbaras) {
+        caravana->setTurnosParaDesaparecer(getDurationBarb());
+    }
+}
+
+void Mapa::addCaravanaBarbaro(int row, int col) {
+    if (isMontanha(row, col)) {
+        cout << "Nao pode criar uma caravana barbara em cima de uma montanha!!" << endl << endl;
+        return;
+    }
+
+    if (isCaravana(row, col, nullptr)) {
+        cout << "Nao pode criar uma caravana barbara em cima de outra caravana!!" << endl << endl;
+        return;
+    }
+
+    if (isCidade(row, col)) {
+        cout << "Nao pode criar uma caravana barbara em cima de uma cidade!!" << endl << endl;
+        return;
+    }
+
+    barbaras.emplace_back(make_unique<Barbaro>(row, col, '!', this, getDurationBarb()));
+    writeCharToBuffer(row, col, '!');
+    cout << "Criada uma caravana barbaro na linha " << row << " e coluna " << col << endl << endl;
+}
+
+int Mapa::getNCaravanasBarbaras() const { return barbaras.size(); }
+
+void Mapa::removeCaravanaBarbara(const Caravana *self) {
+    for (auto it = barbaras.begin(); it != barbaras.end(); ++it) {
+        if (it->get() == self) {
+            writeCharToBuffer(self->getRow(), self->getCol(), '.');
+            barbaras.erase(it);
+            return;
+        }
+    }
+}
+
 void Mapa::autoCaravanaBarbaraMove() {
-    if(barbaras.empty())
+    if (barbaras.empty())
         return;
     for (auto &caravana: barbaras) {
         if (caravana) {
@@ -359,12 +380,12 @@ void Mapa::autoCaravanaBarbaraMove() {
     }
 }
 
-std::shared_ptr<Caravana> Mapa::getNearCaravanaUtilizador(int row, int col, const Caravana *self, int distance) {
-    std::shared_ptr<Caravana> nearestCaravana = nullptr;
-    int minDistance = std::numeric_limits<int>::max();
+shared_ptr<Caravana> Mapa::getNearCaravanaUtilizador(int row, int col, const Caravana *self, int distance) {
+    shared_ptr<Caravana> nearestCaravana = nullptr;
+    int minDistance = numeric_limits<int>::max();
 
-    for (auto& caravana : caravanas) {
-        if(caravana && caravana.get() != self) {
+    for (auto &caravana: caravanas) {
+        if (caravana && caravana.get() != self) {
             int distanceRows = abs(caravana->getRow() - row);
             int distanceCols = abs(caravana->getCol() - col);
             int currentDistance = distanceRows + distanceCols;
@@ -379,29 +400,9 @@ std::shared_ptr<Caravana> Mapa::getNearCaravanaUtilizador(int row, int col, cons
     return nearestCaravana;
 }
 
-Caravana *Mapa::getNearCaravanaBarbara(int row, int col, int distance) {
-    Caravana* nearestCaravana = nullptr;
-    int minDistance = std::numeric_limits<int>::max();
-
-    for (auto& caravana : barbaras) {
-        if(caravana) {
-            int distanceRows = abs(caravana->getRow() - row);
-            int distanceCols = abs(caravana->getCol() - col);
-            int currentDistance = distanceRows + distanceCols;
-
-            if (currentDistance <= distance && currentDistance < minDistance) {
-                minDistance = currentDistance;
-                nearestCaravana = caravana.get();
-            }
-        }
-    }
-
-    return nearestCaravana;
-}
-
 void Mapa::refreshBarbaros() {
-    for (auto& caravana : barbaras) {
-        if(caravana && getTurn() % caravana->getTurnosParaDesaparecer() == 0) {
+    for (auto &caravana: barbaras) {
+        if (caravana && getTurn() % caravana->getTurnosParaDesaparecer() == 0) {
             int tX = caravana->getRow();
             int tY = caravana->getCol();
 
@@ -410,6 +411,8 @@ void Mapa::refreshBarbaros() {
         }
     }
 }
+
+//ITEMS
 
 bool Mapa::isItem(int row, int col) const {
     for (auto &item: items) {
@@ -435,8 +438,8 @@ void Mapa::removeItem(const Item *self) {
 }
 
 void Mapa::refreshItems() {
-    for (auto& item : items) {
-        if(item && getTurn() % item->getVidaUtil() == 0) {
+    for (auto &item: items) {
+        if (item && getTurn() % item->getVidaUtil() == 0) {
             int tX = item->getRow();
             int tY = item->getCol();
 
@@ -461,9 +464,9 @@ void Mapa::addRandomItem() {
 
     randomDead = rand() % 5 + 1;
 
-    vector<pair<int, int>> availablePositions = getRandomAvailablePosition();
+    vector<pair<int, int> > availablePositions = getRandomAvailablePosition();
 
-    if(availablePositions.empty()) {
+    if (availablePositions.empty()) {
         cout << "Nao existem posicoes disponiveis para adicionar um item!" << endl << endl;
         return;
     }
@@ -483,39 +486,19 @@ void Mapa::addRandomItem() {
         case 4:
             items.emplace_back(make_unique<Mina>(availablePositions[0].first, availablePositions[0].second, this));
 
-            //case 5:
-            //items.emplace_back(make_unique<Surpresa>(availablePositions[0].first, availablePositions[0].second, this));
+        //case 5:
+        //items.emplace_back(make_unique<Surpresa>(availablePositions[0].first, availablePositions[0].second, this));
+        default:
+            cout << "Algo de inesperado aconteceu!!" << endl << endl;
+            break;
     }
 }
 
-vector<pair<int,int>> Mapa::getRandomAvailablePosition() {
-    vector <pair<int, int>> availablePositions = getAvailablePositions();
+Item *Mapa::getNearItem(int row, int col, int distance) const {
+    Item *nearestItem = nullptr;
+    int minDistance = numeric_limits<int>::max();
 
-    if (availablePositions.empty())
-        return availablePositions;
-
-    return {availablePositions[rand() % availablePositions.size()]};
-}
-
-vector<pair<int, int>> Mapa::getAvailablePositions() const {
-    vector<pair<int, int>> availablePositions;
-
-    for (int i = 0; i < getRows(); ++i) {
-        for (int j = 0; j < getCols(); ++j) {
-            if (!isCaravana(i, j, nullptr) && !isCidade(i, j) && !isMontanha(i, j)) {
-                availablePositions.emplace_back(i, j);
-            }
-        }
-    }
-
-    return availablePositions;
-}
-
-Item *Mapa::getNearItem(int row, int col,int distance) const {
-    Item* nearestItem = nullptr;
-    int minDistance = std::numeric_limits<int>::max();
-
-    for (const auto& item : items) {
+    for (const auto &item: items) {
         int distanceRows = abs(item->getRow() - row);
         int distanceCols = abs(item->getCol() - col);
         int currentDistance = distanceRows + distanceCols;
@@ -537,15 +520,40 @@ void Mapa::applyItem(Item *item, const Caravana *self) {
     }
 }
 
+//FUNCOES AUXILIARES
+
+vector<pair<int, int> > Mapa::getRandomAvailablePosition() const {
+    vector<pair<int, int> > availablePositions = getAvailablePositions();
+
+    if (availablePositions.empty())
+        return availablePositions;
+
+    return {availablePositions[rand() % availablePositions.size()]};
+}
+
+vector<pair<int, int> > Mapa::getAvailablePositions() const {
+    vector<pair<int, int> > availablePositions;
+
+    for (int i = 0; i < getRows(); ++i) {
+        for (int j = 0; j < getCols(); ++j) {
+            if (!isCaravana(i, j, nullptr) && !isCidade(i, j) && !isMontanha(i, j)) {
+                availablePositions.emplace_back(i, j);
+            }
+        }
+    }
+
+    return availablePositions;
+}
+
 void Mapa::writeCharToBuffer(int row, int col, char c) const {
     buffer->setCursor(row, col);
     buffer->writeChar(c);
     buffer->setCursor(0, 0);
-    //buffer->flush();
 }
 
 void Mapa::startTempestade(int row, int col, int raio) {
-    cout << "Comecou uma tempestade de areia na linha " << row << " e coluna " << col << " de raio " << raio << endl << endl;
+    cout << "Comecou uma tempestade de areia na linha " << row << " e coluna " << col << " de raio " << raio << endl <<
+            endl;
     for (int i = -raio; i <= raio; ++i) {
         for (int j = -raio; j <= raio; ++j) {
             int linhaAtual = (row + i + rows) % rows;

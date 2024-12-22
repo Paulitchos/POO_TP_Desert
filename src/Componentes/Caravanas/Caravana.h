@@ -12,13 +12,14 @@ public:
     Caravana(int row, int col, char id, int nPessoas,
              int maxPessoas, int maxAgua,
              int maxJogadasPTurno,
-             double maxMercadoria,
-             bool controlavel, Mapa *onde,
+             int maxMercadoria,
+             Mapa *onde,
              int turnosParaDesaparecer);
 
-    ~Caravana();
+    virtual ~Caravana() = default;
 
-    //PESSOAS
+    //PESSOAS GETTERS E SETTERS
+
     int getNPessoas() const;
 
     int getmaxPessoas() const;
@@ -31,12 +32,12 @@ public:
 
     void setNPessoas(int numeroPessoas);
 
-    //AGUA
+    //AGUA GETTERS E SETTERS
+
     int getnivelAgua() const;
 
     int getMaxAgua() const;
 
-    //TF - pode não ser preciso
     void removerAgua(int aguaARemover);
 
     void setNivelAgua(int nivelAgua);
@@ -45,12 +46,14 @@ public:
 
     virtual void perdeAgua() = 0;
 
-    //ID
+    //ID GETTERS E SETTERS
+
     char getID() const;
 
     void setID(char newID);
 
-    //MERCADORIA
+    //MERCADORIA GETTERS E SETTERS
+
     int getMercadoria() const;
 
     int getMaxMercadoria() const;
@@ -63,7 +66,8 @@ public:
 
     void setMercadoria(int novaMercadoria);
 
-    //MOVIMENTOS
+    //MOVIMENTOS GETTERS E SETTERS
+
     virtual bool move(const std::string &direction);
 
     virtual void moveAuto() = 0;
@@ -84,26 +88,23 @@ public:
 
     void resetMovimento();
 
-    std::string getBestMove(Mapa *m, int targetRow, int targetCol);
+    std::string getBestMove(Mapa *m, int targetRow, int targetCol) const;
 
     int getMaxJogadasPTurno() const;
 
-    //RANDOM MODE / AUTO MODE
+    //RANDOM MODE / AUTO MODE GETTERS E SETTERS
+
     void setTurnosParaDesaparecer(int turnos);
 
-    int getTurnosParaDesaparecer();
+    int getTurnosParaDesaparecer() const;
 
-    virtual void semTripulantes() = 0;
-
-    virtual bool verificaContinuidade() = 0;
-
-    bool getAutoPilot();
+    bool getAutoPilot() const;
 
     void setAutoPilot();
 
     void setRandomMode();
 
-    bool getRandomMode();
+    bool getRandomMode() const;
 
     int getTurnosEmRandom() const ;
 
@@ -111,12 +112,14 @@ public:
 
     void setTurnosEmRandom(int turnos);
 
-    //DESTRUIR
+    //DESTRUIR GETTERS E SETTERS
+
     bool getEstado() const;
 
     void setDestruida();
 
-    //EXTRA
+    //EXTRA GETTERS E SETTERS
+
     virtual void tempestade() = 0;
 
     virtual std::string showInfo() const;
@@ -139,9 +142,8 @@ private:
     int row, col;
     int nPessoas, maxPessoas;
     int nivelAgua, maxAgua;
-    double nMercadoria, maxMercadoria;
-    bool controlavel, destruida, autoPilot, randomMode;
-    bool vidaInfinita;
+    int nMercadoria, maxMercadoria;
+    bool destruida, autoPilot, randomMode;
     bool autoFase;
 
     const int maxJogadasPTurno;

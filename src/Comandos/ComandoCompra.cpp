@@ -7,7 +7,7 @@ ComandoCompra::ComandoCompra() : Comando(
     "<N> <M>") {
 }
 
-void ComandoCompra::execute(const std::string &args, Simulador &sim) {
+void ComandoCompra::execute(const string &args, Simulador &sim) {
     vector<string> inputs = split(args, ' ');
 
     if (inputs.size() != 3) {
@@ -43,7 +43,7 @@ void ComandoCompra::execute(const std::string &args, Simulador &sim) {
         } else {
             aux->adicionaMercadoria(aux->getMercadoria() + mercadoria);
             cout << "A carava " << aux->getID() << " ficou com " << aux->getMercadoria() <<
-                        " toneladas de mercadoria" << endl << endl;
+                    " toneladas de mercadoria" << endl << endl;
         }
     } else {
         cout << "Erro: Caravana nao encontrada!" << endl << endl;

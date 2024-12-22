@@ -5,7 +5,7 @@ using namespace std;
 ComandoCidade::ComandoCidade() : Comando("cidade", "Lista conteudo da cidade C (caravanas existentes)", "<C>") {
 }
 
-void ComandoCidade::execute(const std::string &args, Simulador &sim) {
+void ComandoCidade::execute(const string &args, Simulador &sim) {
     vector<string> inputs = split(args, ' ');
 
     if (inputs.size() != 2) {

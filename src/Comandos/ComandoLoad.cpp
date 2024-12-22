@@ -5,7 +5,7 @@ using namespace std;
 ComandoLoad::ComandoLoad() : Comando("loads", "Recupera a copia do buffer previamente armazenado em memoria com o nome indicado", "<nome>") {
 }
 
-void ComandoLoad::execute(const std::string &args, Simulador &sim) {
+void ComandoLoad::execute(const string &args, Simulador &sim) {
     vector<string> inputs = split(args, ' ');
 
     if (inputs.size() != 2) {

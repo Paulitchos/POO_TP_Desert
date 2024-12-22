@@ -5,7 +5,7 @@ using namespace std;
 ComandoList::ComandoList() : Comando("lists", "Lista os nomes das copias do buffer existentes" , "") {
 }
 
-void ComandoList::execute(const std::string &args, Simulador &sim) {
+void ComandoList::execute(const string &args, Simulador &sim) {
     vector<string> inputs = split(args, ' ');
 
     if (inputs.size() != 1) {

@@ -19,7 +19,6 @@ void Interface::startSimulation() {
                 this->proxFase = askCommands();
                 break;
             case 1:
-                //cout << "Comportamentos auto - verifica continuidade" << endl;
                 sim->autoItemBehaviour();
                 this->proxFase = sim->autoCaravanaUtilizadorBehaviour();
                 break;
@@ -35,7 +34,7 @@ void Interface::startSimulation() {
                 running = false;
                 break;
             default:
-                cout << "Algo de inesperado aconteceu!" << endl;
+                cout << "Algo de inesperado aconteceu!" << endl << endl;
         }
     }
 }
@@ -63,7 +62,6 @@ void Interface::iniciateSimulation() {
 
         if (inputs[0] == "config" && inputs.size() > 1) {
             if (readMapFromFile(inputs[1])) {
-                //cout << "\nMapa lido com sucesso" << endl << endl;
                 break;
             }
             return;
@@ -73,25 +71,24 @@ void Interface::iniciateSimulation() {
     }
 
     loadCommands();
-    //helpCommands();
     startSimulation();
     iniciateSimulation();
 }
 
 bool Interface::fileCommandSet(map<string, int> &map, const string &key, const int &valor) {
     if (map.find(key) != map.end()) {
-        cout << "Erro: '" << key << "' ja foi definido!" << endl;
+        cout << "Erro: '" << key << "' ja foi definido!" << endl << endl;
         return false;
     }
 
     if (key == "moedas") {
         if (valor < 0) {
-            cout << "Erro: '" << key << "' tem que ser maior que zero!" << endl;
+            cout << "Erro: '" << key << "' tem que ser maior que zero!" << endl << endl;
             return false;
         }
     } else {
         if (valor <= 0) {
-            cout << "Erro: '" << key << "' tem que ser maior que zero!" << endl;
+            cout << "Erro: '" << key << "' tem que ser maior que zero!" << endl << endl;
             return false;
         }
     }
@@ -116,8 +113,6 @@ bool Interface::readMapFromFile(string fileName) {
     bool pSellMerchSet = false, pBuyMerchSet = false;
 
     while (getline(file, line)) {
-        //cout << line << endl;
-
         istringstream iss(line);
         string key;
         int value;
@@ -182,12 +177,12 @@ bool Interface::readMapFromFile(string fileName) {
                 pSellMerchSet = true;
             } else if (key == "preço_compra_mercadoria") {
                 if (pBuyMerchSet) {
-                    cout << "Erro: 'preço_compra_mercadoria' ja foi definido!" << endl;
+                    cout << "Erro: 'preço_compra_mercadoria' ja foi definido!" << endl << endl;
                     file.close();
                     return false;
                 }
                 if (value <= 0) {
-                    cout << "Preco de compra de mercadoria ficou no valor de omissao de 1" << endl;
+                    cout << "Preco de compra de mercadoria ficou no valor de omissao de 1" << endl << endl;
                     sim->setMapBuyMerch(1);
                 } else
                     sim->setMapBuyMerch(value);
@@ -215,8 +210,6 @@ bool Interface::readMapFromFile(string fileName) {
                 sim->setMapDurBarb(value);
             }
         } else if (!line.empty() && currentRow < sim->getMapRows()) {
-            //cout << line.size() << "+" << key.size() << "*" << " " << sim->getMapCols() << endl;
-
             if (key.size() != sim->getMapCols()) {
                 cout << "Erro: Linha " << currentRow + 1 << " nao tem o numero correto de colunas (" << sim->
                         getMapCols() << ")" << endl;
@@ -228,13 +221,14 @@ bool Interface::readMapFromFile(string fileName) {
                 for (int col = 0; col < previousLine.size() && col < sim->getMapCols(); ++col) {
                     char cell = previousLine[col];
                     if (islower(cell)) {
-                        // It's a city
                         if (line[col] != '+') {
                             break;
-                        } else if (sim->isMontanha(currentRow - 1, col - 1) && sim->isMontanha(currentRow - 1, col + 1)
-                                   && sim->isMontanha(currentRow - 2, col) && line[col] == '+') {
+                        }
+
+                        if (sim->isMontanha(currentRow - 1, col - 1) && sim->isMontanha(currentRow - 1, col + 1)
+                            && sim->isMontanha(currentRow - 2, col) && line[col] == '+') {
                             cout << "Cidade na posicao " << currentRow - 1 << " " << col <<
-                                    " esta rodeada por montanhas" << endl;
+                                    " esta rodeada por montanhas" << endl << endl;
                             return false;
                         }
                     }
@@ -244,14 +238,12 @@ bool Interface::readMapFromFile(string fileName) {
             for (int col = 0; col < key.size() && col < sim->getMapCols(); ++col) {
                 char cell = key[col];
                 if (cell == '+') {
-                    //cout << "Montanha encontrada em (" << currentRow << ", " << col << ")" << endl;
                     sim->addMontanha(currentRow, col);
                 } else if (islower(cell)) {
-                    //cout << "Cidade encontrada em (" << currentRow << ", " << col << ")" << endl;
                     if (sim->cidadeNameAvailable(cell) == -1) {
                         sim->addCidade(currentRow, col, cell);
                     } else {
-                        cout << "Nome de cidade ja esta a ser utilizado!" << endl;
+                        cout << "Nome de cidade ja esta a ser utilizado!" << endl << endl;
                         file.close();
                         return false;
                     }
@@ -259,7 +251,7 @@ bool Interface::readMapFromFile(string fileName) {
                     if (sim->caravanaNameAvailable(cell) == -1) {
                         sim->addCaravanaInicial(currentRow, col, cell);
                     } else {
-                        cout << "Id da caravana ja esta a ser utilizado!" << endl;
+                        cout << "Id da caravana ja esta a ser utilizado!" << endl << endl;
                         file.close();
                         return false;
                     }
@@ -274,12 +266,11 @@ bool Interface::readMapFromFile(string fileName) {
     }
 
     if (currentRow != sim->getMapRows()) {
-        cout << "Erro: O numero de linhas no mapa nao corresponde a 'linhas'" << endl;
+        cout << "Erro: O numero de linhas no mapa nao corresponde a 'linhas'" << endl << endl;
         file.close();
         return false;
     }
 
-    //sim->imprimeBuffer();
     file.close();
     return true;
 }
@@ -299,14 +290,13 @@ int Interface::askCommands() {
 
     inputs = split(input, ' ');
 
-    if(inputs[0] == "help") {
+    if (inputs[0] == "help") {
         helpCommands();
         return 0;
     }
 
     auto it = commands.find(inputs[0]);
     if (it != commands.end()) {
-        // Read the rest of the line as arguments
         it->second->execute(input, *sim);
     } else {
         cout << "Comando invalido: " << input << endl << endl;
@@ -316,7 +306,7 @@ int Interface::askCommands() {
     if (inputs[0] == "prox")
         return 1;
 
-    if(inputs[0] == "termina")
+    if (inputs[0] == "termina")
         return 4;
 
     return 0;

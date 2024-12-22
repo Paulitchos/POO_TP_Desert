@@ -21,6 +21,8 @@ class Cidade {
 public:
     Cidade(int row, int col, char name, Mapa *onde);
 
+    //GETTERS E SETTERS
+
     char getName() const;
 
     int getRow() const;
@@ -38,6 +40,8 @@ public:
     void setComprouM();
 
     void setComprouS();
+
+    //FUNCOES
 
     void buyCaravana(char tipoCar);
 

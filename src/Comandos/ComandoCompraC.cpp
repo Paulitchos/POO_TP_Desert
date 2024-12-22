@@ -8,7 +8,7 @@ ComandoCompraC::ComandoCompraC()
               "<C> <T>") {
 }
 
-void ComandoCompraC::execute(const std::string &args, Simulador &sim) {
+void ComandoCompraC::execute(const string &args, Simulador &sim) {
     vector<string> inputs = split(args, ' ');
 
     if (inputs.size() != 3) {

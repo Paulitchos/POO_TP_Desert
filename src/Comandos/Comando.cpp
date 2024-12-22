@@ -5,16 +5,20 @@ using namespace std;
 Comando::Comando(string n, string d, string args) : nome(n), descr(d), args(args) {
 }
 
+// Getters
+
 string Comando::getNome() const { return nome; }
 
 string Comando::getDescr() const { return descr; }
 
 string Comando::getAsString() const {
     ostringstream os;
-    os << "Comando: " << nome << ' ' << args << "\n";
+    os << "Comando: " << nome << "args: " << args << endl;
     os << "Descricao: " << descr;
     return os.str();
 }
+
+// Funções
 
 vector<string> Comando::split(const string &s, char c) const {
     vector<string> result;
@@ -35,7 +39,7 @@ vector<string> Comando::split(const string &s, char c) const {
     return result;
 }
 
-bool Comando::isNumeric(const std::string &str) const {
+bool Comando::isNumeric(const string &str) const {
     if (str.empty()) {
         return false;
     }
@@ -49,7 +53,7 @@ bool Comando::isNumeric(const std::string &str) const {
     }
 
     for (size_t i = start; i < str.size(); ++i) {
-        if (!std::isdigit(str[i])) {
+        if (!isdigit(str[i])) {
             return false;
         }
     }

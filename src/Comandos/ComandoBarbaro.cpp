@@ -5,7 +5,7 @@ using namespace std;
 ComandoBarbaro::ComandoBarbaro() : Comando("barbaro", "Cria uma caravana barbara nas coordenadas (l, c)", "<l> <c>") {
 }
 
-void ComandoBarbaro::execute(const std::string &args, Simulador &sim) {
+void ComandoBarbaro::execute(const string &args, Simulador &sim) {
     vector<string> inputs = split(args, ' ');
 
     if (inputs.size() != 3) {

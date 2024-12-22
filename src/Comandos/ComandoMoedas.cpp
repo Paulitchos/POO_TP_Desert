@@ -5,7 +5,7 @@ using namespace std;
 ComandoMoedas::ComandoMoedas() : Comando("moedas", "Acrescenta N moedas ao jogador", "<N>") {
 }
 
-void ComandoMoedas::execute(const std::string &args, Simulador &sim) {
+void ComandoMoedas::execute(const string &args, Simulador &sim) {
     vector<string> inputs = split(args, ' ');
 
     if (inputs.size() != 2) {

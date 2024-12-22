@@ -5,8 +5,8 @@
 
 class Comercio : public Caravana {
 public:
-    Comercio(int row, int col, int id, Mapa *m)
-    : Caravana(row, col, id, 20, 30, 200, 2, 40, true, m, 5){}
+    Comercio(int row, int col, char id, Mapa *m)
+    : Caravana(row, col, id, 20, 30, 200, 2, 40, m, 5){}
 
     void perdeAgua() override;
 
@@ -21,11 +21,6 @@ public:
     bool tryToPickItem(Mapa *m);
 
     bool moveCloserToCaravana(Mapa *m);
-
-    //verificar
-    void semTripulantes() override;
-
-    bool verificaContinuidade() override;
 };
 
 

@@ -3,8 +3,7 @@
 using namespace std;
 
 Barbaro::Barbaro(int row, int col, char id, Mapa *m, int turnosParaDesaparecer)
-    : Caravana(row, col, id, 40, 80, -1, 1, -1, false, m, turnosParaDesaparecer)
-    {
+    : Caravana(row, col, id, 40, 80, -1, 1, -1, m, turnosParaDesaparecer) {
 }
 
 string Barbaro::showInfo() const {
@@ -15,9 +14,8 @@ string Barbaro::showInfo() const {
 }
 
 void Barbaro::tempestade() {
-    int randomDead;
     Mapa *m = getMapa();
-    randomDead = rand() % 4 + 1;
+    int randomDead = rand() % 4 + 1;
 
     if (randomDead == 1) {
         cout << "Caravana Barbara ficou destroida na tempestade de areia" << endl;
@@ -26,21 +24,18 @@ void Barbaro::tempestade() {
     }
 
     removePessoas(getNPessoas() / 10);
-    cout << "Caravana barbara perdeu 10% da sua tripulacao, ficou com um restante de " << getNPessoas() << " tripulantes" << endl;
+    cout << "Caravana barbara perdeu 10% da sua tripulacao, ficou com um restante de " << getNPessoas() <<
+            " tripulantes" << endl;
 }
 
 void Barbaro::moveAuto() {
     Mapa *m = getMapa();
-    while(getMovimentos() != getMaxJogadasPTurno()) {
-        if (m->getNCaravanasUtilizador() > 0) {
-            if(moveCloserToCaravana(m)) {
-                setMovimentos();
-                continue;
-            }
-        }
 
-        break;
-    }
+    if (m->getNCaravanasUtilizador() > 0)
+        moveCloserToCaravana(m);
+}
+
+void Barbaro::moveRandom() {
 }
 
 bool Barbaro::moveCloserToCaravana(Mapa *m) {
@@ -62,7 +57,7 @@ bool Barbaro::moveCloserToCaravana(Mapa *m) {
     int targetCol = nearestCaravana->getCol();
 
     int rowDiff = abs(getRow() - targetRow);
-    int colDiff = abs(getCol() - targetCol );
+    int colDiff = abs(getCol() - targetCol);
 
     int currentDistance = max(rowDiff, colDiff);
 
@@ -79,41 +74,5 @@ bool Barbaro::moveCloserToCaravana(Mapa *m) {
     return false;
 }
 
-void Barbaro::moveRandom() {
-
-}
-
 void Barbaro::perdeAgua() {
-
-}
-
-bool Barbaro::verificaContinuidade() {
-    if (!getAutoPilot()) {
-        if (!getRandomMode()) {
-            if (getNPessoas() == 0) {
-                semTripulantes();
-                setRandomMode();
-            } else {
-                removerAgua(getNPessoas() * 0.25);
-                if (getnivelAgua() == 0)
-                    removePessoas(1);
-            }
-        } else {
-            if (getTurnosParaDesaparecer() == 0) {
-                setDestruida();
-                return false;
-            } else {
-                setTurnosParaDesaparecer(getTurnosParaDesaparecer() - 1);
-            }
-        }
-    } else {
-        removerAgua(getNPessoas() * 0.25);
-        if (getnivelAgua() == 0)
-            removePessoas(1);
-    }
-
-    return true;
-}
-
-void Barbaro::semTripulantes() {
 }

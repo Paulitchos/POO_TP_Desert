@@ -5,7 +5,7 @@ using namespace std;
 ComandoCaravana::ComandoCaravana() : Comando("caravana", "Lista conteudo da caravana C", "<C>") {
 }
 
-void ComandoCaravana::execute(const std::string &args, Simulador &sim) {
+void ComandoCaravana::execute(const string &args, Simulador &sim) {
     vector<string> inputs = split(args, ' ');
 
     if (inputs.size() != 2) {

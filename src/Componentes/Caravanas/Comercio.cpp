@@ -55,14 +55,12 @@ void Comercio::moveAuto() {
     while (getMovimentos() != getMaxJogadasPTurno()) {
         if (m->getNItems() > 0) {
             if (tryToPickItem(m)) {
-                setMovimentos();
                 continue;
             }
         }
 
         if (m->getNCaravanasUtilizador() > 1) {
             if (moveCloserToCaravana(m)) {
-                setMovimentos();
                 continue;
             }
         }
@@ -166,12 +164,4 @@ bool Comercio::moveCloserToCaravana(Mapa *m) {
     }
 
     return false;
-}
-
-void Comercio::semTripulantes() {
-}
-
-bool Comercio::verificaContinuidade() {
-
-    return true;
 }

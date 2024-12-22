@@ -23,13 +23,11 @@ string Militar::showInfo() const {
 }
 
 void Militar::tempestade() {
-    int randomDead;
-
-    setNPessoas(getNPessoas() - getNPessoas() * 0.1);
+    setNPessoas(getNPessoas() - static_cast<int>(getNPessoas() * 0.1));
     cout << "A caravana " << getID() << " perdeu 10% dos seus tripulantes devido a tempestade de areia" << endl;
 
     if (getMercadoria() > getMaxMercadoria() / 2) {
-        randomDead = rand() % 3 + 1;
+        int randomDead = rand() % 3 + 1;
 
         if (randomDead == 1) {
             setDestruida();
@@ -52,7 +50,6 @@ void Militar::moveAuto() {
     while(getMovimentos() != getMaxJogadasPTurno()) {
         if (m->getNCaravanasBarbaras() > 0) {
             if(moveCloserToCaravanaBarbara(m)) {
-                setMovimentos();
                 continue;
             }
         }
@@ -118,14 +115,7 @@ bool Militar::moveCloserToCaravanaBarbara(Mapa *m) {
     return false;
 }
 
-void Militar::semTripulantes() {
-
-}
-
-bool Militar::verificaContinuidade() {
-
-    return true;
-}
+//MOVIMENTO GETTERS E SETTERS
 
 string Militar::getLastMove() { return lastMove; }
 

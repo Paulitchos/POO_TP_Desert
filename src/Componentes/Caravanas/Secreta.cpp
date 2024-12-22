@@ -3,7 +3,6 @@
 using namespace std;
 
 void Secreta::perdeAgua() {
-
 }
 
 
@@ -20,7 +19,6 @@ void Secreta::tempestade() {
 }
 
 void Secreta::moveAuto() {
-
 }
 
 void Secreta::moveRandom() {
@@ -64,38 +62,24 @@ void Secreta::moveRandom() {
         }
     }
 
-    while (getMovimentos() != getMaxJogadasPTurno()) {
 
-        if (getEstado() || !getRandomMode()) {
-            return;
-        }
+    if (getEstado() || !getRandomMode()) {
+        return;
+    }
 
-        vector<string> possibleMoves = {"D", "E", "C", "B", "CE", "CD", "BE", "BD"};
-        vector<bool> triedMoves(possibleMoves.size(), false);
-        int attempts = 0;
+    vector<string> possibleMoves = {"D", "E", "C", "B", "CE", "CD", "BE", "BD"};
+    vector<bool> triedMoves(possibleMoves.size(), false);
+    int attempts = 0;
 
-        while (attempts < possibleMoves.size()) {
-            int randomIndex = rand() % possibleMoves.size();
+    while (attempts < possibleMoves.size()) {
+        int randomIndex = rand() % possibleMoves.size();
 
-            if (!triedMoves[randomIndex]) {
-                triedMoves[randomIndex] = true;
-                if (move(possibleMoves[randomIndex])) {
-                    break;
-                }
-                attempts++;
+        if (!triedMoves[randomIndex]) {
+            triedMoves[randomIndex] = true;
+            if (move(possibleMoves[randomIndex])) {
+                break;
             }
-        }
-
-        if (attempts >= possibleMoves.size()) {
-            break;
+            attempts++;
         }
     }
-}
-
-void Secreta::semTripulantes() {
-
-}
-
-bool Secreta::verificaContinuidade() {
-
 }

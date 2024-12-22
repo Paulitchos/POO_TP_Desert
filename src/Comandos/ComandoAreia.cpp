@@ -6,7 +6,7 @@ ComandoAreia::ComandoAreia() : Comando("areia", "Cria uma tempestade de areia na
                                        "<l> <c> <r>") {
 }
 
-void ComandoAreia::execute(const std::string &args, Simulador &sim) {
+void ComandoAreia::execute(const string &args, Simulador &sim) {
     vector<string> inputs = split(args, ' ');
     int maximoRaio = min(sim.getMapRows(), sim.getMapCols());
 

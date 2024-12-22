@@ -5,7 +5,7 @@ using namespace std;
 ComandoSave::ComandoSave() : Comando("save", " Faz uma copia do estado do buffer", "<nome>") {
 }
 
-void ComandoSave::execute(const std::string &args, Simulador &sim) {
+void ComandoSave::execute(const string &args, Simulador &sim) {
     vector<string> inputs = split(args, ' ');
 
     if (inputs.size() != 2) {

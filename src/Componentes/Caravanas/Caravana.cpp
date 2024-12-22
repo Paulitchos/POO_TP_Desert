@@ -6,24 +6,17 @@ using namespace std;
 #include <sstream>
 
 Caravana::Caravana(int row, int col, char id, int nPessoas, int maxPessoas, int maxAgua,
-                   int maxJogadasPTurno, double maxMercadoria, bool controlavel, Mapa *onde, int turnosParaDesaparecer)
+                   int maxJogadasPTurno, int maxMercadoria, Mapa *onde, int turnosParaDesaparecer)
     : row(row), col(col), caravanaID(id), nPessoas(nPessoas), nMercadoria(0), maxPessoas(maxPessoas), maxAgua(maxAgua),
-      movimentos(0), maxJogadasPTurno(maxJogadasPTurno), maxMercadoria(maxMercadoria), controlavel(controlavel), turnosParaDesparecer(turnosParaDesaparecer),
-      cidadeName(' '), onde(onde), destruida(false), autoPilot(false), randomMode(false), autoFase(false), turnosEmRandom(0) {
+      movimentos(0), maxJogadasPTurno(maxJogadasPTurno), maxMercadoria(maxMercadoria), turnosParaDesparecer(turnosParaDesaparecer),
+      cidadeName(' '), onde(onde), destruida(false), autoPilot(false), randomMode(false), autoFase(false), turnosEmRandom(0), nivelAgua(0) {
 }
 
-Caravana::~Caravana() {
-    //cout << "Caravana destruida" << endl;
-}
+//PESSOAS GETTERS E SETTERS
 
-// ------- PESSOAS
-int Caravana::getNPessoas() const {
-    return nPessoas;
-}
+int Caravana::getNPessoas() const { return nPessoas; }
 
-int Caravana::getmaxPessoas() const {
-    return maxPessoas;
-}
+int Caravana::getmaxPessoas() const { return maxPessoas; }
 
 void Caravana::adicionaPessoas(int pessoasAAdicionar) {
     if (onde->getCoins() - pessoasAAdicionar < 0) {
@@ -95,16 +88,12 @@ void Caravana::setNPessoas(int numeroPessoas) {
     nPessoas = numeroPessoas;
 }
 
-// ------- AGUA
-int Caravana::getnivelAgua() const {
-    return nivelAgua;
-}
+//AGUA GETTERS E SETTERS
 
-int Caravana::getMaxAgua() const {
-    return maxAgua;
-}
+int Caravana::getnivelAgua() const { return nivelAgua; }
 
-//TF - pode não ser preciso
+int Caravana::getMaxAgua() const { return maxAgua; }
+
 void Caravana::removerAgua(int aguaARemover) {
     if (getnivelAgua() - aguaARemover < 0) {
         setNivelAgua(0);
@@ -116,16 +105,15 @@ void Caravana::removerAgua(int aguaARemover) {
     setNivelAgua(getnivelAgua() - aguaARemover);
 }
 
-void Caravana::setNivelAgua(int nivelAgua) {
-    this->nivelAgua = nivelAgua;
-}
+void Caravana::setNivelAgua(int nivelAgua) { this->nivelAgua = nivelAgua; }
 
 void Caravana::abastecerAgua() {
     cout << "Agua abastecida no poco da cidade" << endl << endl;
     setNivelAgua(getMaxAgua());
 }
 
-//ID
+//ID GETTERS E SETTERS
+
 char Caravana::getID() const {
     return caravanaID;
 }
@@ -134,18 +122,13 @@ void Caravana::setID(char newID) {
     caravanaID = newID;
 }
 
-//MERCADORIA
-int Caravana::getMercadoria() const {
-    return nMercadoria;
-}
+//MERCADORIA GETTERS E SETTERS
 
-int Caravana::getMaxMercadoria() const {
-    return maxMercadoria;
-}
+int Caravana::getMercadoria() const { return nMercadoria; }
 
-void Caravana::setMercadoria(int novaMercadoria) {
-    nMercadoria = novaMercadoria;
-}
+int Caravana::getMaxMercadoria() const { return maxMercadoria; }
+
+void Caravana::setMercadoria(int novaMercadoria) { nMercadoria = novaMercadoria; }
 
 void Caravana::adicionaMercadoria(int mercadoriaAAdicionar) {
     if (onde->getCoins() - mercadoriaAAdicionar < 0) {
@@ -203,7 +186,8 @@ void Caravana::removeMercadoria(int mercadoriaARemover) {
     setMercadoria(getMercadoria() - mercadoriaARemover);
 }
 
-//MOVIMENTOS
+//MOVIMENTOS GETTERS E SETTERS
+
 bool Caravana::move(const string &direction) {
     if (getEstado()) {
         cout << "Caravana nao pode mover devido a ter sido declarada como destruida" << endl << endl;
@@ -323,19 +307,13 @@ void Caravana::setCol(int newCol) {
         col = newCol;
 }
 
-int Caravana::getMovimentos() const {
-    return movimentos;
-}
+int Caravana::getMovimentos() const { return movimentos; }
 
-void Caravana::setMovimentos() {
-    movimentos = movimentos++;
-}
+void Caravana::setMovimentos() { movimentos++; }
 
-void Caravana::resetMovimento() {
-    movimentos = 0;
-}
+void Caravana::resetMovimento() { movimentos = 0; }
 
-std::string Caravana::getBestMove(Mapa *m, int targetRow, int targetCol) {
+std::string Caravana::getBestMove(Mapa *m, int targetRow, int targetCol) const {
     std::vector<std::tuple<std::string, int, int>> moves = {
         {"C", -1, 0},    // Up
         {"B", 1, 0},     // Down
@@ -371,40 +349,26 @@ std::string Caravana::getBestMove(Mapa *m, int targetRow, int targetCol) {
 }
 
 
-int Caravana::getMaxJogadasPTurno() const {
-    return maxJogadasPTurno;
-}
+int Caravana::getMaxJogadasPTurno() const { return maxJogadasPTurno; }
 
-//SEM TRIPULANTES / AUTO MODE
-void Caravana::setTurnosParaDesaparecer(int turnos) {
-    turnosParaDesparecer = turnos;
-}
+//SEM TRIPULANTES / AUTO MODE GETTERS E SETTERS
 
-int Caravana::getTurnosParaDesaparecer() {
-    return turnosParaDesparecer;
-}
+void Caravana::setTurnosParaDesaparecer(int turnos) { turnosParaDesparecer = turnos; }
 
+int Caravana::getTurnosParaDesaparecer() const { return turnosParaDesparecer; }
 
-void Caravana::setAutoPilot() {
-    autoPilot = !autoPilot;
-}
+void Caravana::setAutoPilot() { autoPilot = !autoPilot; }
 
-bool Caravana::getAutoPilot() {
-    return autoPilot;
-}
+bool Caravana::getAutoPilot() const { return autoPilot; }
 
 void Caravana::setRandomMode() {
     randomMode = !randomMode;
     autoPilot = false;
 }
 
-bool Caravana::getRandomMode() {
-    return randomMode;
-}
+bool Caravana::getRandomMode() const { return randomMode; }
 
-int Caravana::getTurnosEmRandom() const {
-    return turnosEmRandom;
-}
+int Caravana::getTurnosEmRandom() const { return turnosEmRandom; }
 
 void Caravana::addTurnosEmRandom() {
     turnosEmRandom++;
@@ -413,7 +377,10 @@ void Caravana::addTurnosEmRandom() {
     }
 }
 
-//EXTRA
+void Caravana::setTurnosEmRandom(int turnos) { turnosEmRandom = turnos; }
+
+//EXTRA GETTERS E SETTERS
+
 string Caravana::showInfo() const {
     ostringstream os;
     os << "ID: " << caravanaID << " Pessoas: " << nPessoas << "/" << maxPessoas
@@ -423,13 +390,9 @@ string Caravana::showInfo() const {
     return os.str();
 }
 
-bool Caravana::getEstado() const {
-    return destruida;
-}
+bool Caravana::getEstado() const { return destruida; }
 
-void Caravana::setDestruida() {
-    destruida = true;
-}
+void Caravana::setDestruida() { destruida = true; }
 
 char Caravana::getCidadeName() const { return cidadeName; }
 

@@ -7,7 +7,7 @@ class Militar : public Caravana {
     std::string lastMove;
 public:
     Militar(int row, int col, char id, Mapa *m)
-    : Caravana(row, col, id, 20, 40, 400, 3, 5, true, m, 7), lastMove("") {
+    : Caravana(row, col, id, 20, 40, 400, 3, 5, m, 7) {
     }
 
     void perdeAgua() override;
@@ -24,12 +24,7 @@ public:
 
     bool moveCloserToCaravanaBarbara(Mapa *m);
 
-    //verificar
-    void semTripulantes() override;
-
-    bool verificaContinuidade() override;
-
-    //movimento
+    //Movimento
 
     std::string getLastMove();
 

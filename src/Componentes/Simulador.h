@@ -8,6 +8,7 @@
 class Simulador {
     std::unique_ptr<Mapa> mapa;
     int turnAAvancar;
+
 public:
     Simulador();
 
@@ -17,37 +18,37 @@ public:
 
     int getMapRows() const;
 
-    void setMapRows(int row);
+    void setMapRows(int row) const;
 
     int getMapCols() const;
 
-    void setMapCols(int col);
+    void setMapCols(int col) const;
 
     int getMapCoins() const;
 
-    void setMapCoins(int coins);
+    void setMapCoins(int coins) const;
 
-    void addMapCoins(int coins);
+    void addMapCoins(int coins) const;
 
-    void setMapInsNewItem(int insNewItem);
+    void setMapInsNewItem(int insNewItem) const;
 
-    void setMapDurItem(int durItem);
+    void setMapDurItem(int durItem) const;
 
-    void setMapMaxItem(int maxItem);
+    void setMapMaxItem(int maxItem) const;
 
     int getMapSellMerch() const;
 
-    void setMapSellMerch(int pSellMerch);
+    void setMapSellMerch(int pSellMerch) const;
 
     int getMapBuyMerch() const;
 
-    void setMapBuyMerch(int pBuyMerch);
+    void setMapBuyMerch(int pBuyMerch) const;
 
-    void setMapPCaravan(int pCaravan);
+    void setMapPCaravan(int pCaravan) const;
 
-    void setMapInsNewBarb(int insNewBarb);
+    void setMapInsNewBarb(int insNewBarb) const;
 
-    void setMapDurBarb(int durBarb);
+    void setMapDurBarb(int durBarb) const;
 
     int getTurnAAvancar() const;
 
@@ -55,13 +56,13 @@ public:
 
     void showMapDetails() const;
 
-    void startBuffer();
+    void startBuffer() const;
 
     void imprimeBuffer() const;
 
-    void addMontanha(int row, int col);
+    void addMontanha(int row, int col) const;
 
-    void addCidade(int row, int col, char name);
+    void addCidade(int row, int col, char name) const;
 
     int cidadeNameAvailable(char name) const;
 
@@ -69,31 +70,31 @@ public:
 
     bool isMontanha(int row, int col) const;
 
-    void addCaravanaInicial(int row, int col, char id);
+    void addCaravanaInicial(int row, int col, char id) const;
 
-    void setTurnosADesaparecerBarb();
+    void setTurnosADesaparecerBarb() const;
 
-    void addCaravanaBarbaro(int row, int col);
+    void addCaravanaBarbaro(int row, int col) const;
 
     int caravanaNameAvailable(char caravanaID) const;
 
     std::shared_ptr<Caravana> getMapCaravana(int index) const;
 
-    void startMapTempestade(int row, int col, int raio);
+    void startMapTempestade(int row, int col, int raio) const;
 
-    void saveBuffer(std::string ficheiro);
+    void saveBuffer(const std::string& ficheiro) const;
 
-    void loadBuffer(std::string ficheiro);
+    void loadBuffer(const std::string& ficheiro) const;
 
     void listMapSavedBuffers() const;
 
-    void deleteSavedBuffer(const std::string& nome);
+    void deleteSavedBuffer(const std::string &nome) const;
 
-    int autoCaravanaUtilizadorBehaviour();
+    int autoCaravanaUtilizadorBehaviour() const;
 
-    int autoCaravanaBarbarasBehaviour();
+    int autoCaravanaBarbarasBehaviour() const;
 
-    void autoItemBehaviour();
+    void autoItemBehaviour() const;
 
     void terminaMapa();
 };

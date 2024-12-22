@@ -17,11 +17,13 @@ class Item {
 public:
     Item(int row, int col, std::string nome, Mapa *onde);
 
+    virtual ~Item() = default;
+
     virtual void execute(std::shared_ptr<Caravana> car) = 0;
 
-    std::string getNome() const;
+    //GETTERS E SETTERS
 
-    void setNome(std::string nome);
+    std::string getNome() const;
 
     int getRow() const;
 
@@ -29,7 +31,7 @@ public:
 
     int getVidaUtil() const;
 
-    void setVidaUtil(int vidaUtil);
+    //FUNCOES
 
     Mapa *getMapa();
 };
