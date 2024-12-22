@@ -14,7 +14,7 @@ public:
 
     ~Simulador();
 
-    void iniciateMap();
+    //GETTERS AND SETTERS
 
     int getMapRows() const;
 
@@ -54,13 +54,23 @@ public:
 
     void setTurnAAvancar(int turnAAvancar);
 
+    //FUNCOES
+
+    void iniciateMap();
+
     void showMapDetails() const;
 
     void startBuffer() const;
 
     void imprimeBuffer() const;
 
+    //MONTANHAS
+
     void addMontanha(int row, int col) const;
+
+    bool isMontanha(int row, int col) const;
+
+    //CIDADES
 
     void addCidade(int row, int col, char name) const;
 
@@ -68,17 +78,29 @@ public:
 
     Cidade *getMapCidade(int index) const;
 
-    bool isMontanha(int row, int col) const;
+    //CARAVANA UTILIZADOR
 
     void addCaravanaInicial(int row, int col, char id) const;
+
+    int caravanaNameAvailable(char caravanaID) const;
+
+    std::shared_ptr<Caravana> getMapCaravana(int index) const;
+
+    int autoCaravanaUtilizadorBehaviour() const;
+
+    //CARAVANA BARBARO
 
     void setTurnosADesaparecerBarb() const;
 
     void addCaravanaBarbaro(int row, int col) const;
 
-    int caravanaNameAvailable(char caravanaID) const;
+    int autoCaravanaBarbarasBehaviour() const;
 
-    std::shared_ptr<Caravana> getMapCaravana(int index) const;
+    //ITEMS
+
+    void autoItemBehaviour() const;
+
+    //FUNCOES AUXILIARES
 
     void startMapTempestade(int row, int col, int raio) const;
 
@@ -89,12 +111,6 @@ public:
     void listMapSavedBuffers() const;
 
     void deleteSavedBuffer(const std::string &nome) const;
-
-    int autoCaravanaUtilizadorBehaviour() const;
-
-    int autoCaravanaBarbarasBehaviour() const;
-
-    void autoItemBehaviour() const;
 
     void terminaMapa();
 };

@@ -7,7 +7,7 @@ Simulador::Simulador() : turnAAvancar(1), mapa(nullptr) {
 
 Simulador::~Simulador()  = default;
 
-void Simulador::iniciateMap() { mapa = make_unique<Mapa>(); }
+//GETTERS AND SETTERS
 
 int Simulador::getMapRows() const { return mapa->getRows(); }
 
@@ -47,13 +47,23 @@ int Simulador::getTurnAAvancar() const { return turnAAvancar; }
 
 void Simulador::setTurnAAvancar(int turnAAvancar) { this->turnAAvancar = turnAAvancar; }
 
+//FUNCOES
+
+void Simulador::iniciateMap() { mapa = make_unique<Mapa>(); }
+
 void Simulador::showMapDetails() const { mapa->showDetails(); }
 
 void Simulador::startBuffer() const { mapa->startBuffer(); }
 
 void Simulador::imprimeBuffer() const { mapa->imprimeBuffer(); }
 
+//MONTANHAS
+
 void Simulador::addMontanha(int row, int col) const { mapa->addMontanha(row, col); }
+
+bool Simulador::isMontanha(int row, int col) const { return mapa->isMontanha(row, col); }
+
+//CIDADES
 
 void Simulador::addCidade(int row, int col, char name) const { mapa->addCidade(row, col, name); }
 
@@ -61,32 +71,24 @@ int Simulador::cidadeNameAvailable(char name) const { return mapa->cidadeNameAva
 
 Cidade *Simulador::getMapCidade(int index) const { return mapa->getCidade(index); }
 
-bool Simulador::isMontanha(int row, int col) const { return mapa->isMontanha(row, col); }
+//CARAVANAS UTILIZADOR
 
 void Simulador::addCaravanaInicial(int row, int col, char id) const { mapa->addCaravanaInicial(row, col, id); }
-
-void Simulador::setTurnosADesaparecerBarb() const { mapa->setTurnosADesaparecerBarb(); }
-
-void Simulador::addCaravanaBarbaro(int row, int col) const { mapa->addCaravanaBarbaro(row, col); }
 
 int Simulador::caravanaNameAvailable(char caravanaID) const { return mapa->getCaravanaIndex(caravanaID); }
 
 shared_ptr<Caravana> Simulador::getMapCaravana(int index) const { return mapa->getCaravana(index); }
 
-void Simulador::startMapTempestade(int row, int col, int raio) const { mapa->startTempestade(row, col, raio); }
-
-void Simulador::saveBuffer(const string& ficheiro) const { mapa->saveBuffer(ficheiro); }
-
-void Simulador::loadBuffer(const string& ficheiro) const { mapa->loadBuffer(ficheiro); }
-
-void Simulador::listMapSavedBuffers() const { mapa->listSavedBuffers(); }
-
-void Simulador::deleteSavedBuffer(const string &nome) const { mapa->deleteSavedBuffer(nome); }
-
 int Simulador::autoCaravanaUtilizadorBehaviour() const {
     mapa->autoCaravanaUtilizadorMove();
     return 2;
 }
+
+//CARAVANAS BARBARAS
+
+void Simulador::setTurnosADesaparecerBarb() const { mapa->setTurnosADesaparecerBarb(); }
+
+void Simulador::addCaravanaBarbaro(int row, int col) const { mapa->addCaravanaBarbaro(row, col); }
 
 int Simulador::autoCaravanaBarbarasBehaviour() const {
     mapa->refreshBarbaros();
@@ -101,11 +103,25 @@ int Simulador::autoCaravanaBarbarasBehaviour() const {
     return 3;
 }
 
+//ITEMS
+
 void Simulador::autoItemBehaviour() const {
     mapa->refreshItems();
     if (mapa->getNItems() < mapa->getMaxItems() && mapa->getTurn() % mapa->getInstantNewItem() == 0)
         mapa->addRandomItem();
 }
+
+//FUNCOES AUXILIARES
+
+void Simulador::startMapTempestade(int row, int col, int raio) const { mapa->startTempestade(row, col, raio); }
+
+void Simulador::saveBuffer(const string& ficheiro) const { mapa->saveBuffer(ficheiro); }
+
+void Simulador::loadBuffer(const string& ficheiro) const { mapa->loadBuffer(ficheiro); }
+
+void Simulador::listMapSavedBuffers() const { mapa->listSavedBuffers(); }
+
+void Simulador::deleteSavedBuffer(const string &nome) const { mapa->deleteSavedBuffer(nome); }
 
 void Simulador::terminaMapa() {
     if (mapa) {
