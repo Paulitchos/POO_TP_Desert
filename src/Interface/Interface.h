@@ -8,7 +8,6 @@
 #include <vector>
 
 #include "../Componentes/Simulador.h"
-
 #include "../Comandos/ComandoPrecos.h"
 #include "../Comandos/ComandoProx.h"
 #include "../Comandos/ComandoCidade.h"
@@ -37,13 +36,21 @@ class Interface {
 public:
     Interface(Simulador &s);
 
-    void startSimulation();
+    //SIMULATION
 
     void iniciateSimulation();
+
+    void startSimulation();
+
+    //MAP
 
     bool fileCommandSet(std::map<std::string, int> &map, const std::string &key, const int &valor);
 
     bool readMapFromFile(std::string filename);
+
+    void showMapDetails();
+
+    //COMMANDS
 
     int askCommands();
 
@@ -51,9 +58,9 @@ public:
 
     void helpCommands() const;
 
-    std::vector<std::string> split(const std::string &s, char c);
+    //EXTRA
 
-    void showMapDetails();
+    std::vector<std::string> split(const std::string &s, char c);
 };
 
 

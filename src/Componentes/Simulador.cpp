@@ -128,7 +128,7 @@ void Simulador::terminaMapa() {
         cout << "Encerrando a simulacao e limpando os recursos do mapa..." << endl;
         cout << "A simulacao decorreu durante " << mapa->getTurn() << " turnos" << endl <<
                 "O utilizador venceu " << mapa->getNFightsWon() << " combates e acabou com " << mapa->getCoins() <<
-                " moedas." << endl;
+                " moedas." << endl << endl;
         mapa.reset();
     }
 

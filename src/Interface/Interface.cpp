@@ -7,38 +7,6 @@ using namespace std;
 Interface::Interface(Simulador &s) : sim(&s) {
 }
 
-void Interface::startSimulation() {
-    sim->setTurnosADesaparecerBarb();
-    sim->showMapDetails();
-    this->proxFase = 0;
-    bool running = true;
-
-    while (running) {
-        switch (this->proxFase) {
-            case 0:
-                this->proxFase = askCommands();
-                break;
-            case 1:
-                sim->autoItemBehaviour();
-                this->proxFase = sim->autoCaravanaUtilizadorBehaviour();
-                break;
-            case 2:
-                this->proxFase = sim->autoCaravanaBarbarasBehaviour();
-                sim->showMapDetails();
-                break;
-            case 3:
-                cout << "Combates" << endl;
-                this->proxFase = 0;
-                break;
-            case 4:
-                running = false;
-                break;
-            default:
-                cout << "Algo de inesperado aconteceu!" << endl << endl;
-        }
-    }
-}
-
 void Interface::iniciateSimulation() {
     string input;
     cout << "Para iniciar o mapa use o comando: config <nomeFicheiro>" << endl;
@@ -74,6 +42,40 @@ void Interface::iniciateSimulation() {
     startSimulation();
     iniciateSimulation();
 }
+
+void Interface::startSimulation() {
+    sim->setTurnosADesaparecerBarb();
+    sim->showMapDetails();
+    this->proxFase = 0;
+    bool running = true;
+
+    while (running) {
+        switch (this->proxFase) {
+            case 0:
+                this->proxFase = askCommands();
+            break;
+            case 1:
+                sim->autoItemBehaviour();
+            this->proxFase = sim->autoCaravanaUtilizadorBehaviour();
+            break;
+            case 2:
+                this->proxFase = sim->autoCaravanaBarbarasBehaviour();
+            sim->showMapDetails();
+            break;
+            case 3:
+                cout << "Combates" << endl;
+            this->proxFase = 0;
+            break;
+            case 4:
+                running = false;
+            break;
+            default:
+                cout << "Algo de inesperado aconteceu!" << endl << endl;
+        }
+    }
+}
+
+//MAPA
 
 bool Interface::fileCommandSet(map<string, int> &map, const string &key, const int &valor) {
     if (map.find(key) != map.end()) {
@@ -275,6 +277,10 @@ bool Interface::readMapFromFile(string fileName) {
     return true;
 }
 
+void Interface::showMapDetails() { sim->showMapDetails(); }
+
+//COMMANDS
+
 int Interface::askCommands() {
     string input;
     vector<string> inputs;
@@ -341,6 +347,8 @@ void Interface::helpCommands() const {
     }
 }
 
+//EXTRA
+
 vector<string> Interface::split(const string &s, char c) {
     vector<string> result;
     stringstream ss(s);
@@ -359,5 +367,3 @@ vector<string> Interface::split(const string &s, char c) {
 
     return result;
 }
-
-void Interface::showMapDetails() { sim->showMapDetails(); }
