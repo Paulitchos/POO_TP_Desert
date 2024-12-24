@@ -5,7 +5,7 @@ using namespace std;
 Simulador::Simulador() : turnAAvancar(1), mapa(nullptr) {
 }
 
-Simulador::~Simulador()  = default;
+Simulador::~Simulador() = default;
 
 //GETTERS AND SETTERS
 
@@ -108,22 +108,25 @@ int Simulador::autoCaravanaBarbarasBehaviour() const {
 int Simulador::autoCombate() {
     mapa->autoCombate();
 
-    if(getTurnAAvancar() > 1) {
+    if (getTurnAAvancar() > 1) {
         decrementTurnAAvancar();
         mapa->setTurn();
         cout << "Simulacao avancou para o proximo turno" << endl << endl;
         mapa->increaseLifeTimeItems();
         mapa->increaseLifeTimeBarbaros();
+        if (mapa->getNCaravanasUtilizador() == 0 && mapa->getCoins() < mapa->getPCaravan())
+            return 4;
         return 1;
     }
 
-    if(mapa->getNCaravanasUtilizador() == 0 && mapa->getCoins() < mapa->getPCaravan()) {
+    if (mapa->getNCaravanasUtilizador() == 0 && mapa->getCoins() < mapa->getPCaravan())
         return 4;
 
     mapa->setTurn();
     cout << "Simulacao avancou para o proximo turno" << endl << endl;
     return 0;
 }
+
 
 //ITEMS
 
@@ -137,9 +140,9 @@ void Simulador::autoItemBehaviour() const {
 
 void Simulador::startMapTempestade(int row, int col, int raio) const { mapa->startTempestade(row, col, raio); }
 
-void Simulador::saveBuffer(const string& ficheiro) const { mapa->saveBuffer(ficheiro); }
+void Simulador::saveBuffer(const string &ficheiro) const { mapa->saveBuffer(ficheiro); }
 
-void Simulador::loadBuffer(const string& ficheiro) const { mapa->loadBuffer(ficheiro); }
+void Simulador::loadBuffer(const string &ficheiro) const { mapa->loadBuffer(ficheiro); }
 
 void Simulador::listMapSavedBuffers() const { mapa->listSavedBuffers(); }
 
