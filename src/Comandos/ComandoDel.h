@@ -7,7 +7,7 @@ class ComandoDel : public Comando {
 public:
     ComandoDel();
 
-    void execute(const std::string &args, Simulador &sim) override;
+    void execute(const std::string &args, Interface *interface) override;
 };
 
 

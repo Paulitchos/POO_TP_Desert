@@ -8,6 +8,7 @@
 #include <vector>
 
 #include "../Componentes/Simulador.h"
+
 #include "../Comandos/ComandoPrecos.h"
 #include "../Comandos/ComandoProx.h"
 #include "../Comandos/ComandoCidade.h"
@@ -61,6 +62,8 @@ public:
     //EXTRA
 
     std::vector<std::string> split(const std::string &s, char c);
+
+    Simulador *getSimulador() const;
 };
 
 

@@ -1,11 +1,14 @@
 #include "ComandoSave.h"
+#include "../Interface/Interface.h"
 
 using namespace std;
 
 ComandoSave::ComandoSave() : Comando("save", " Faz uma copia do estado do buffer", "<nome>") {
 }
 
-void ComandoSave::execute(const string &args, Simulador &sim) {
+void ComandoSave::execute(const string &args, Interface *interface) {
+    const Simulador *sim = interface->getSimulador();
+
     vector<string> inputs = split(args, ' ');
 
     if (inputs.size() != 2) {
@@ -13,7 +16,7 @@ void ComandoSave::execute(const string &args, Simulador &sim) {
         return;
     }
 
-    sim.saveBuffer(inputs[1]);
+    sim->saveBuffer(inputs[1]);
 }
 
 

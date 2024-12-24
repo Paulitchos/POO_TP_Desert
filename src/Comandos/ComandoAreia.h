@@ -7,7 +7,7 @@ class ComandoAreia : public Comando {
 public:
     ComandoAreia();
 
-    void execute(const std::string &args, Simulador &sim) override;
+    void execute(const std::string &args, Interface *interface) override;
 };
 
 

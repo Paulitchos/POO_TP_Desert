@@ -7,7 +7,7 @@ class ComandoCidade : public Comando {
 public:
     ComandoCidade();
 
-    void execute(const std::string &args, Simulador &sim) override;
+    void execute(const std::string &args, Interface *interface) override;
 };
 
 

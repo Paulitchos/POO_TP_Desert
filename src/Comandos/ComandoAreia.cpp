@@ -1,4 +1,5 @@
 #include "ComandoAreia.h"
+#include "../Interface/Interface.h"
 
 using namespace std;
 
@@ -6,9 +7,11 @@ ComandoAreia::ComandoAreia() : Comando("areia", "Cria uma tempestade de areia na
                                        "<l> <c> <r>") {
 }
 
-void ComandoAreia::execute(const string &args, Simulador &sim) {
+void ComandoAreia::execute(const string &args, Interface *interface) {
+    const Simulador *sim = interface->getSimulador();
+
     vector<string> inputs = split(args, ' ');
-    int maximoRaio = min(sim.getMapRows(), sim.getMapCols());
+    int maximoRaio = min(sim->getMapRows(), sim->getMapCols());
 
     if (inputs.size() != 4) {
         cout << "O comando " << getNome() << " apenas aceita tres argumentos <l> que e um numero e corresponde "
@@ -17,12 +20,12 @@ void ComandoAreia::execute(const string &args, Simulador &sim) {
         return;
     }
 
-    if (!isNumeric(inputs[1]) || stoi(inputs[1]) < 0 || stoi(inputs[1]) > sim.getMapRows()) {
+    if (!isNumeric(inputs[1]) || stoi(inputs[1]) < 0 || stoi(inputs[1]) > sim->getMapRows()) {
         cout << "argumento <l> precisa de ser um numero e corresponder a uma linha valida do mapa!!" << endl << endl;
         return;
     }
 
-    if (!isNumeric(inputs[2]) || stoi(inputs[2]) < 0 || stoi(inputs[2]) > sim.getMapCols()) {
+    if (!isNumeric(inputs[2]) || stoi(inputs[2]) < 0 || stoi(inputs[2]) > sim->getMapCols()) {
         cout << "argumento <c> precisa de ser um numero e corresponder a uma coluna valida do mapa!!" << endl << endl;
         return;
     }
@@ -40,5 +43,5 @@ void ComandoAreia::execute(const string &args, Simulador &sim) {
                 endl << endl;
     }
 
-    sim.startMapTempestade(stoi(inputs[1]), stoi(inputs[2]), raio);
+    sim->startMapTempestade(stoi(inputs[1]), stoi(inputs[2]), raio);
 }

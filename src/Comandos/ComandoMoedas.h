@@ -7,7 +7,7 @@ class ComandoMoedas : public Comando {
 public:
     ComandoMoedas();
 
-    void execute(const std::string &args, Simulador &sim) override;
+    void execute(const std::string &args, Interface *interface) override;
 };
 
 

@@ -1,4 +1,5 @@
 #include "ComandoCompra.h"
+#include "../Interface/Interface.h"
 
 using namespace std;
 
@@ -7,7 +8,9 @@ ComandoCompra::ComandoCompra() : Comando(
     "<N> <M>") {
 }
 
-void ComandoCompra::execute(const string &args, Simulador &sim) {
+void ComandoCompra::execute(const string &args, Interface *interface) {
+    const Simulador *sim = interface->getSimulador();
+
     vector<string> inputs = split(args, ' ');
 
     if (inputs.size() != 3) {
@@ -17,7 +20,7 @@ void ComandoCompra::execute(const string &args, Simulador &sim) {
         return;
     }
 
-    int index = sim.caravanaNameAvailable(inputs[1][0]);
+    int index = sim->caravanaNameAvailable(inputs[1][0]);
 
     if (inputs[1].size() != 1 || !isNumeric(inputs[1]) || index == -1) {
         cout << "argumento <N> precisa de ser um numero e corresponder a uma caravana!!" << endl << endl;
@@ -29,7 +32,7 @@ void ComandoCompra::execute(const string &args, Simulador &sim) {
         return;
     }
 
-    shared_ptr<Caravana> aux = sim.getMapCaravana(index);
+    shared_ptr<Caravana> aux = sim->getMapCaravana(index);
 
     int mercadoria = std::stoi(inputs[2]);
 

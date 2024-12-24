@@ -1,4 +1,5 @@
 #include "ComandoTermina.h"
+#include "../Interface/Interface.h"
 
 using namespace std;
 
@@ -6,7 +7,9 @@ ComandoTermina::ComandoTermina() : Comando("terminar", "Termina a simulacaoo, se
 
 }
 
-void ComandoTermina::execute(const string &args, Simulador &sim) {
+void ComandoTermina::execute(const string &args, Interface *interface) {
+    Simulador *sim = interface->getSimulador();
+
     vector<string> inputs = split(args, ' ');
 
     if (inputs.size() != 1) {
@@ -14,6 +17,6 @@ void ComandoTermina::execute(const string &args, Simulador &sim) {
         return;
     }
 
-    sim.terminaMapa();
+    sim->terminaMapa();
 }
 

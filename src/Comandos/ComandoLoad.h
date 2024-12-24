@@ -7,7 +7,7 @@ class ComandoLoad : public Comando {
 public:
     ComandoLoad();
 
-    void execute(const std::string &args, Simulador &sim) override;
+    void execute(const std::string &args, Interface *interface) override;
 };
 
 #endif //COMANDOLOAD_H

@@ -301,7 +301,7 @@ int Interface::askCommands() {
 
     auto it = commands.find(inputs[0]);
     if (it != commands.end()) {
-        it->second->execute(input, *sim);
+        it->second->execute(input, this);
     } else {
         cout << "Comando invalido: " << input << endl << endl;
         return 0;
@@ -365,3 +365,5 @@ vector<string> Interface::split(const string &s, char c) {
 
     return result;
 }
+
+Simulador *Interface::getSimulador() const { return sim; }

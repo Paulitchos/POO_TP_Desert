@@ -1,11 +1,14 @@
 #include "ComandoDel.h"
+#include "../Interface/Interface.h"
 
 using namespace std;
 
 ComandoDel::ComandoDel() : Comando("dels", "Apaga a copia do buffer em memoria associada ao nome indicado", "<nome>") {
 }
 
-void ComandoDel::execute(const string &args, Simulador &sim) {
+void ComandoDel::execute(const string &args, Interface *interface) {
+    const Simulador *sim = interface->getSimulador();
+
     vector<string> inputs = split(args, ' ');
 
     if (inputs.size() != 2) {
@@ -14,5 +17,5 @@ void ComandoDel::execute(const string &args, Simulador &sim) {
         return;
     }
 
-    sim.deleteSavedBuffer(inputs[1]);
+    sim->deleteSavedBuffer(inputs[1]);
 }

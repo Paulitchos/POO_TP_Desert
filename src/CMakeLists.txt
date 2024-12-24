@@ -78,4 +78,6 @@ add_executable(src main.cpp
         Componentes/Item/Mina.h
         Componentes/Item/Surpresa.cpp
         Componentes/Item/Surpresa.h
+        Comandos/ComandoExec.cpp
+        Comandos/ComandoExec.h
 )

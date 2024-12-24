@@ -1,4 +1,5 @@
 #include "ComandoCompraC.h"
+#include "../Interface/Interface.h"
 
 using namespace std;
 
@@ -8,7 +9,9 @@ ComandoCompraC::ComandoCompraC()
               "<C> <T>") {
 }
 
-void ComandoCompraC::execute(const string &args, Simulador &sim) {
+void ComandoCompraC::execute(const string &args, Interface *interface) {
+    const Simulador *sim = interface->getSimulador();
+
     vector<string> inputs = split(args, ' ');
 
     if (inputs.size() != 3) {
@@ -18,7 +21,7 @@ void ComandoCompraC::execute(const string &args, Simulador &sim) {
         return;
     }
 
-    int index = sim.cidadeNameAvailable(inputs[1][0]);
+    int index = sim->cidadeNameAvailable(inputs[1][0]);
 
     if (inputs[1].size() != 1 || !islower(inputs[1][0]) || index == -1) {
         cout << "argumento <C> precisa de ser um letra minuscula e corresponder a uma cidade!!" << endl << endl;
@@ -32,7 +35,7 @@ void ComandoCompraC::execute(const string &args, Simulador &sim) {
         return;
     }
 
-    Cidade *aux = sim.getMapCidade(index);
+    Cidade *aux = sim->getMapCidade(index);
 
     if (aux) {
         aux->buyCaravana(inputs[2][0]);

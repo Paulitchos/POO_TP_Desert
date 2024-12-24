@@ -1,4 +1,5 @@
 #include "ComandoPrecos.h"
+#include "../Interface/Interface.h"
 
 #include <iostream>
 
@@ -9,7 +10,7 @@ ComandoPrecos::ComandoPrecos(int pSellMerch, int pBuyMerch) : Comando("precos",
                                                               pSellMerch(pSellMerch), pBuyMerch(pBuyMerch) {
 }
 
-void ComandoPrecos::execute(const string &args, Simulador &sim) {
+void ComandoPrecos::execute(const string &args, Interface *interface) {
     vector<string> inputs = split(args, ' ');
 
     if (inputs.size() != 1) {

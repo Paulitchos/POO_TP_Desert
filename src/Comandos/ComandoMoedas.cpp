@@ -1,11 +1,14 @@
 #include "ComandoMoedas.h"
+#include "../Interface/Interface.h"
 
 using namespace std;
 
 ComandoMoedas::ComandoMoedas() : Comando("moedas", "Acrescenta N moedas ao jogador", "<N>") {
 }
 
-void ComandoMoedas::execute(const string &args, Simulador &sim) {
+void ComandoMoedas::execute(const string &args, Interface *interface) {
+    const Simulador *sim = interface->getSimulador();
+
     vector<string> inputs = split(args, ' ');
 
     if (inputs.size() != 2) {
@@ -20,5 +23,5 @@ void ComandoMoedas::execute(const string &args, Simulador &sim) {
         return;
     }
 
-    sim.addMapCoins(stoi(inputs[1]));
+    sim->addMapCoins(stoi(inputs[1]));
 }

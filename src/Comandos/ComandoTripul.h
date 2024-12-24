@@ -7,7 +7,7 @@ class ComandoTripul : public Comando {
 public:
     ComandoTripul();
 
-    void execute(const std::string &args, Simulador &sim) override;
+    void execute(const std::string &args, Interface *interface) override;
 };
 
 

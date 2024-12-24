@@ -7,7 +7,7 @@ class ComandoCaravana : public Comando {
 public:
     ComandoCaravana();
 
-    void execute(const std::string &args, Simulador &sim) override;
+    void execute(const std::string &args, Interface *interface) override;
 };
 
 

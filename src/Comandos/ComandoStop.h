@@ -7,7 +7,7 @@ class ComandoStop : public Comando {
 public:
     ComandoStop();
 
-    void execute(const std::string &args, Simulador &sim) override;
+    void execute(const std::string &args, Interface *interface) override;
 };
 
 

@@ -1,11 +1,14 @@
 #include "ComandoCaravana.h"
+#include "../Interface/Interface.h"
 
 using namespace std;
 
 ComandoCaravana::ComandoCaravana() : Comando("caravana", "Lista conteudo da caravana C", "<C>") {
 }
 
-void ComandoCaravana::execute(const string &args, Simulador &sim) {
+void ComandoCaravana::execute(const string &args, Interface *interface) {
+    const Simulador *sim = interface->getSimulador();
+
     vector<string> inputs = split(args, ' ');
 
     if (inputs.size() != 2) {
@@ -14,14 +17,14 @@ void ComandoCaravana::execute(const string &args, Simulador &sim) {
         return;
     }
 
-    int index = sim.caravanaNameAvailable(inputs[1][0]);
+    int index = sim->caravanaNameAvailable(inputs[1][0]);
 
     if (inputs[1].size() != 1 || !isNumeric(inputs[1]) || index == -1) {
         cout << "argumento <C> precisa de ser um numero e corresponder a uma caravana!!" << endl << endl;
         return;
     }
 
-    shared_ptr<Caravana> aux = sim.getMapCaravana(index);
+    shared_ptr<Caravana> aux = sim->getMapCaravana(index);
 
     if (aux) {
         cout << aux->showInfo() << endl;

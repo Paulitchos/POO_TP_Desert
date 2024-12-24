@@ -7,13 +7,15 @@
 #include <iostream>
 #include <cctype>
 
-#include "../Componentes/Simulador.h"
+class Interface;
 
 class Comando {
     std::string nome, descr, args;
 
 public:
     Comando(std::string n, std::string d, std::string args = "");
+
+    virtual ~Comando() = default;
 
     // Getters
     std::string getNome() const;
@@ -24,7 +26,7 @@ public:
 
     // Funções
 
-    virtual void execute(const std::string &args, Simulador &sim) = 0;
+    virtual void execute(const std::string &args, Interface *interface) = 0;
 
     std::vector<std::string> split(const std::string &s, char c) const;
 

@@ -7,7 +7,7 @@ class ComandoSave : public Comando {
 public:
     ComandoSave();
 
-    void execute(const std::string &args, Simulador &sim) override;
+    void execute(const std::string &args, Interface *interface) override;
 };
 
 

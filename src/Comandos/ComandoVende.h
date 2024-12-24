@@ -8,7 +8,7 @@ class ComandoVende : public Comando {
 public:
     ComandoVende();
 
-    void execute(const std::string &args, Simulador &sim) override;
+    void execute(const std::string &args, Interface *interface) override;
 };
 
 

@@ -1,4 +1,5 @@
 #include "ComandoProx.h"
+#include "../Interface/Interface.h"
 
 using namespace std;
 
@@ -15,10 +16,10 @@ bool ComandoProx::setInstantes(int n) {
     return true;
 }
 
-void ComandoProx::execute(const string &args, Simulador &sim) {
-    vector<string> inputs;
+void ComandoProx::execute(const string &args, Interface *interface) {
+    Simulador *sim = interface->getSimulador();
 
-    inputs = split(args, ' ');
+    vector<string> inputs = split(args, ' ');
 
     if (inputs.size() > 2) {
         cout << "O comando " << getNome() << " apenas aceita um argumento opcional <n> que e um numero inteiro!!" << endl << endl;
@@ -32,7 +33,7 @@ void ComandoProx::execute(const string &args, Simulador &sim) {
         }
 
         if(setInstantes(stoi(inputs[1]))) {
-            sim.setTurnAAvancar(instants);
+            sim->setTurnAAvancar(instants);
             cout << "Simulacao ira avancar " << instants << " turnos" << endl << endl;
         }
     }
