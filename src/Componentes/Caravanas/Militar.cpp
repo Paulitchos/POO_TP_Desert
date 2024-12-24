@@ -14,9 +14,11 @@ string Militar::showInfo() const {
     ostringstream os;
     os << "Caravana Militar " << endl;
     if (getCidadeName() == ' ') {
-        os << "A caravana nao esta numa cidade." << endl;
+        os << "A caravana nao esta numa cidade, esta em modo "
+                << (getAutoPilot() ? "auto" : (getRandomMode() ? "aleatorio" : "manual")) << endl << endl;
     } else {
-        os << "A caravana esta na cidade " << getCidadeName() << endl;
+        os << "A caravana esta na cidade " << getCidadeName() << ", esta em modo "
+                << (getAutoPilot() ? "auto" : (getRandomMode() ? "aleatorio" : "manual")) << endl << endl;;
     }
     os << Caravana::showInfo();
     return os.str();
@@ -37,7 +39,7 @@ void Militar::tempestade() {
 }
 
 bool Militar::move(const std::string &direction) {
-    if(Caravana::move(direction)) {
+    if (Caravana::move(direction)) {
         setLastMove(direction);
         return true;
     }
@@ -47,9 +49,9 @@ bool Militar::move(const std::string &direction) {
 
 void Militar::moveAuto() {
     Mapa *m = getMapa();
-    while(getMovimentos() != getMaxJogadasPTurno()) {
+    while (getMovimentos() != getMaxJogadasPTurno()) {
         if (m->getNCaravanasBarbaras() > 0) {
-            if(moveCloserToCaravanaBarbara(m)) {
+            if (moveCloserToCaravanaBarbara(m)) {
                 continue;
             }
         }
@@ -97,16 +99,16 @@ bool Militar::moveCloserToCaravanaBarbara(Mapa *m) {
     int targetCol = nearestCaravana->getCol();
 
     int rowDiff = abs(getRow() - targetRow);
-    int colDiff = abs(getCol() - targetCol );
+    int colDiff = abs(getCol() - targetCol);
 
     int currentDistance = max(rowDiff, colDiff);
 
     if (currentDistance <= 1) {
         return false;
     }
-    
+
     string bestMove = getBestMove(m, targetRow, targetCol);
-    
+
     if (!bestMove.empty()) {
         setLastMove(bestMove);
         return move(bestMove);
@@ -120,5 +122,3 @@ bool Militar::moveCloserToCaravanaBarbara(Mapa *m) {
 string Militar::getLastMove() { return lastMove; }
 
 void Militar::setLastMove(std::string lastMove) { this->lastMove = lastMove; }
-
-

@@ -156,8 +156,6 @@ public:
 
     //CARAVANA BARBARO
 
-    void setTurnosADesaparecerBarb();
-
     void addCaravanaBarbaro(int row, int col);
 
     int getNCaravanasBarbaras() const;
@@ -168,7 +166,15 @@ public:
 
     std::shared_ptr<Caravana> getNearCaravanaUtilizador(int row, int col, const Caravana *self, int distance);
 
+    std::vector<std::shared_ptr<Caravana>> getAllNearCaravanasUtilizador(int row, int col);
+
     void refreshBarbaros();
+
+    void increaseLifeTimeBarbaros();
+
+    //COMBATES
+
+    void autoCombate();
 
     //ITEMS
 
@@ -185,6 +191,8 @@ public:
     Item *getNearItem(int row, int col, int distance) const;
 
     void applyItem(Item *item, const Caravana *self);
+
+    void increaseLifeTimeItems();
 
     //FUNCOES AUXILIARES
 

@@ -47,6 +47,8 @@ int Simulador::getTurnAAvancar() const { return turnAAvancar; }
 
 void Simulador::setTurnAAvancar(int turnAAvancar) { this->turnAAvancar = turnAAvancar; }
 
+void Simulador::decrementTurnAAvancar() { turnAAvancar--; }
+
 //FUNCOES
 
 void Simulador::iniciateMap() { mapa = make_unique<Mapa>(); }
@@ -86,8 +88,6 @@ int Simulador::autoCaravanaUtilizadorBehaviour() const {
 
 //CARAVANAS BARBARAS
 
-void Simulador::setTurnosADesaparecerBarb() const { mapa->setTurnosADesaparecerBarb(); }
-
 void Simulador::addCaravanaBarbaro(int row, int col) const { mapa->addCaravanaBarbaro(row, col); }
 
 int Simulador::autoCaravanaBarbarasBehaviour() const {
@@ -101,6 +101,25 @@ int Simulador::autoCaravanaBarbarasBehaviour() const {
     }
     mapa->autoCaravanaBarbaraMove();
     return 3;
+}
+
+//COMBATES
+
+int Simulador::autoCombate() {
+    mapa->autoCombate();
+
+    if(getTurnAAvancar() > 1) {
+        decrementTurnAAvancar();
+        mapa->setTurn();
+        cout << "Simulacao avancou para o proximo turno" << endl << endl;
+        mapa->increaseLifeTimeItems();
+        mapa->increaseLifeTimeBarbaros();
+        return 1;
+    }
+
+    mapa->setTurn();
+    cout << "Simulacao avancou para o proximo turno" << endl << endl;
+    return 0;
 }
 
 //ITEMS

@@ -12,7 +12,7 @@ void Jaula::execute(std::shared_ptr<Caravana> car) {
     int espacoDisponivel = car->getmaxPessoas() - car->getNPessoas();
 
     if (espacoDisponivel <= 0) {
-        cout << "A caravana ja atingiu o limite maximo de tripulantes." << endl;
+        cout << "Apanhou o item " << getNome() << " mas caravana ja atingiu o limite maximo de tripulantes." << endl;
         return;
     }
 

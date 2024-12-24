@@ -5,7 +5,7 @@
 
 class Barbaro : public Caravana {
 public:
-    Barbaro(int row, int col, char id, Mapa *m, int turnosParaDesaparecer);
+    Barbaro(int row, int col, char id, Mapa *m);
 
     std::string showInfo() const override;
 
@@ -17,7 +17,18 @@ public:
 
     bool moveCloserToCaravana(Mapa *m);
 
+    void combate();
+
     void perdeAgua() override;
+
+    //GETTERS E SETTERS
+
+    int getLifetime() const;
+
+    void setLifetime();
+
+private:
+    int lifetime;
 };
 
 

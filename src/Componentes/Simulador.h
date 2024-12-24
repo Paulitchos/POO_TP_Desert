@@ -54,6 +54,8 @@ public:
 
     void setTurnAAvancar(int turnAAvancar);
 
+    void decrementTurnAAvancar();
+
     //FUNCOES
 
     void iniciateMap();
@@ -90,11 +92,13 @@ public:
 
     //CARAVANA BARBARO
 
-    void setTurnosADesaparecerBarb() const;
-
     void addCaravanaBarbaro(int row, int col) const;
 
     int autoCaravanaBarbarasBehaviour() const;
+
+    //COMBATES
+
+    int autoCombate();
 
     //ITEMS
 

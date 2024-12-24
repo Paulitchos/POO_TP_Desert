@@ -39,7 +39,7 @@ void Secreta::moveRandom() {
             switch (random) {
                 case 1:
                     if (getnivelAgua() >= water && water > 0) {
-                        nearestCaravana->abastecerAgua();
+                        nearestCaravana->addAgua(water);
                         removerAgua(water);
                     }
                     break;

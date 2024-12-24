@@ -71,11 +71,11 @@ int Caravana::setSecuredPessoas(int pessoas) {
 }
 
 void Caravana::removePessoas(int pessoasARemover) {
-    if (getNPessoas() - pessoasARemover < 0) {
+    if (getNPessoas() - pessoasARemover <= 0) {
         setNPessoas(0);
         if(!getRandomMode())
             setRandomMode();
-        cout << "Caravana sem pessoas!" << endl << endl;
+        cout << "Caravana " << getID() << " ficou sem pessoas!" << endl << endl;
         return;
     }
 
@@ -97,7 +97,7 @@ int Caravana::getMaxAgua() const { return maxAgua; }
 void Caravana::removerAgua(int aguaARemover) {
     if (getnivelAgua() - aguaARemover < 0) {
         setNivelAgua(0);
-        removePessoas(-1);
+        removePessoas(1);
         cout << "Caravana " << getID() << " sem agua!" << endl << endl;
         return;
     }
@@ -110,6 +110,17 @@ void Caravana::setNivelAgua(int nivelAgua) { this->nivelAgua = nivelAgua; }
 void Caravana::abastecerAgua() {
     cout << "Agua abastecida no poco da cidade" << endl << endl;
     setNivelAgua(getMaxAgua());
+}
+
+void Caravana::addAgua(int agua) {
+    if (getnivelAgua() + agua > getMaxAgua()) {
+        setNivelAgua(getMaxAgua());
+        cout << "Caravana " << getID() << " ficou com tanque cheio de agua!" << endl << endl;
+        return;
+    }
+
+    setNivelAgua(getnivelAgua() + agua);
+    cout << "Caravana " << getID() << " recebeu " << agua << " litros de agua!" << endl << endl;
 }
 
 //ID GETTERS E SETTERS
@@ -285,12 +296,23 @@ bool Caravana::move(const string &direction) {
     return true;
 }
 
+void Caravana::moveManual() {
+    Item *nearestItem = nullptr;
+
+    if(onde->getNItems() > 0)
+        nearestItem = onde->getNearItem(getRow(), getCol(), 1);
+
+    if (nearestItem) {
+        onde->applyItem(nearestItem, this);
+    }
+}
+
 int Caravana::getRow() const { return row; }
 
 void Caravana::setRow(int newRow) {
-    if (row == 0)
+    if (row == 0 && newRow < 0)
         row = onde->getRows() - 1;
-    else if (row == onde->getRows() - 1)
+    else if (row == onde->getRows() - 1 && newRow > 0)
         row = 0;
     else
         row = newRow;
@@ -299,9 +321,9 @@ void Caravana::setRow(int newRow) {
 int Caravana::getCol() const { return col; }
 
 void Caravana::setCol(int newCol) {
-    if (col == 0)
+    if (col == 0 && newCol < 0)
         col = onde->getCols() - 1;
-    else if (col == onde->getCols() - 1)
+    else if (col == onde->getCols() - 1 && newCol > 0)
         col = 0;
     else
         col = newCol;

@@ -2,8 +2,9 @@
 #include "../Mapa.h"
 using namespace std;
 
-Barbaro::Barbaro(int row, int col, char id, Mapa *m, int turnosParaDesaparecer)
-    : Caravana(row, col, id, 40, 80, -1, 1, -1, m, turnosParaDesaparecer) {
+Barbaro::Barbaro(int row, int col, char id, Mapa *m)
+    : Caravana(row, col, id, 40, 80, 50, 1, -1, m, -1)
+      , lifetime(1) {
 }
 
 string Barbaro::showInfo() const {
@@ -41,9 +42,10 @@ void Barbaro::moveRandom() {
 bool Barbaro::moveCloserToCaravana(Mapa *m) {
     Item *nearestItem = nullptr;
 
-    auto nearestCaravana = m->getNearCaravanaUtilizador(getRow(), getCol(), this, 8);
+    auto nearestCaravana = m->getNearCaravanaUtilizador(getRow(), getCol(), nullptr, 8);
 
-    nearestItem = m->getNearItem(getRow(), getCol(), 1);
+    if(m->getNItems() > 0)
+        nearestItem = m->getNearItem(getRow(), getCol(), 1);
 
     if (nearestItem) {
         m->applyItem(nearestItem, this);
@@ -74,5 +76,63 @@ bool Barbaro::moveCloserToCaravana(Mapa *m) {
     return false;
 }
 
+void Barbaro::combate() {
+    Mapa *m = getMapa();
+
+    auto adjacentCaravanas = m->getAllNearCaravanasUtilizador(getRow(), getCol());
+
+    if (adjacentCaravanas.size() < 2) {
+        return;
+    }
+
+    for (const auto &caravana: adjacentCaravanas) {
+        if (caravana) {
+            cout << "Combate iniciado entre caravana barbara e caravana " << caravana->getID() << endl << endl;
+
+            int barbaroScore = rand() % getNPessoas();
+            int caravanaScore = rand() % caravana->getNPessoas();
+
+            if (barbaroScore > caravanaScore) {
+                cout << "A caravana barbara ganhou o combate" << endl << endl;
+                int loss = static_cast<int>(getNPessoas() * 0.2);
+                removePessoas(loss);
+                caravana->removePessoas(2 * loss);
+                if (caravana->getNPessoas() <= 0) {
+                    cout << "A caravana do utilizador " << caravana->getID() << " foi destruida no combate." << endl << endl;
+                    m->removeCaravanaUtilizador(caravana);
+                }
+                if (getNPessoas() <= 0) {
+                    cout << "A caravana barbara foi destruida no combate." << endl << endl;
+                    m->removeCaravanaBarbara(this);
+                    return;
+                }
+            } else {
+                cout << "A caravana do utilizador " << caravana->getID() << " ganhou o combate" << endl << endl;
+                m->setNFightsWon();
+                int loss = static_cast<int>(caravana->getNPessoas() * 0.2);
+                caravana->setNPessoas(caravana->getNPessoas() - loss);
+                removePessoas(2 * loss);
+                if (caravana->getNPessoas() <= 0) {
+                    cout << "A caravana do utilizador " << caravana->getID() << " foi destruida no combate." << endl << endl;
+                    m->removeCaravanaUtilizador(caravana);
+                }
+                if (getNPessoas() <= 0) {
+                    caravana->addAgua(getnivelAgua());
+                    cout << "A caravana barbara foi destruida no combate." << endl << endl;
+                    m->removeCaravanaBarbara(this);
+                    return;
+                }
+            }
+        }
+    }
+}
+
+
 void Barbaro::perdeAgua() {
 }
+
+//GETTERS E SETTERS
+
+int Barbaro::getLifetime() const { return lifetime; }
+
+void Barbaro::setLifetime() { lifetime++; }

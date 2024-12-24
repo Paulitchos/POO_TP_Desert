@@ -15,9 +15,11 @@ string Comercio::showInfo() const {
     ostringstream os;
     os << "Caravana Comercio " << endl;
     if (getCidadeName() == ' ') {
-        os << "A caravana nao esta numa cidade." << endl;
+        os << "A caravana nao esta numa cidade, esta em modo "
+                << (getAutoPilot() ? "auto" : (getRandomMode() ? "aleatorio" : "manual")) << endl << endl;
     } else {
-        os << "A caravana esta na cidade " << getCidadeName() << endl;
+        os << "A caravana esta na cidade " << getCidadeName() << ", esta em modo "
+                << (getAutoPilot() ? "auto" : (getRandomMode() ? "aleatorio" : "manual")) << endl << endl;;
     }
     os << Caravana::showInfo();
     return os.str();
@@ -108,7 +110,7 @@ void Comercio::moveRandom() {
 
 bool Comercio::tryToPickItem(Mapa *m) {
     Item *nearestItem = nullptr;
-    int shortestDistance = 2;
+    int shortestDistance = 3;
 
     nearestItem = m->getNearItem(getRow(), getCol(), shortestDistance);
 

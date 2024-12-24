@@ -44,6 +44,8 @@ public:
 
     void abastecerAgua();
 
+    void addAgua(int agua);
+
     virtual void perdeAgua() = 0;
 
     //ID GETTERS E SETTERS
@@ -69,6 +71,8 @@ public:
     //MOVIMENTOS GETTERS E SETTERS
 
     virtual bool move(const std::string &direction);
+
+    void moveManual();
 
     virtual void moveAuto() = 0;
 

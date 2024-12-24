@@ -44,7 +44,6 @@ void Interface::iniciateSimulation() {
 }
 
 void Interface::startSimulation() {
-    sim->setTurnosADesaparecerBarb();
     sim->showMapDetails();
     this->proxFase = 0;
     bool running = true;
@@ -53,22 +52,21 @@ void Interface::startSimulation() {
         switch (this->proxFase) {
             case 0:
                 this->proxFase = askCommands();
-            break;
+                break;
             case 1:
                 sim->autoItemBehaviour();
-            this->proxFase = sim->autoCaravanaUtilizadorBehaviour();
-            break;
+                this->proxFase = sim->autoCaravanaUtilizadorBehaviour();
+                break;
             case 2:
                 this->proxFase = sim->autoCaravanaBarbarasBehaviour();
-            sim->showMapDetails();
-            break;
+                break;
             case 3:
-                cout << "Combates" << endl;
-            this->proxFase = 0;
-            break;
+                this->proxFase = sim->autoCombate();
+                sim->showMapDetails();
+                break;
             case 4:
                 running = false;
-            break;
+                break;
             default:
                 cout << "Algo de inesperado aconteceu!" << endl << endl;
         }

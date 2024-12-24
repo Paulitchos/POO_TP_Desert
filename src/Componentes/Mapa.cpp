@@ -77,11 +77,11 @@ void Mapa::setDurationBarb(int durationBarb) { this->durBarb = durationBarb; }
 
 int Mapa::getTurn() const { return turn; }
 
-void Mapa::setTurn() { turn = turn++; }
+void Mapa::setTurn() { turn++; }
 
 int Mapa::getNFightsWon() const { return nFightsWon; }
 
-void Mapa::setNFightsWon() { nFightsWon = nFightsWon++; }
+void Mapa::setNFightsWon() { nFightsWon++; }
 
 //FUNCOES
 
@@ -171,8 +171,9 @@ bool Mapa::isCidade(int row, int col) const {
 
 void Mapa::addCaravanaInicial(int row, int col, char id) {
     if (id == '!') {
-        barbaras.emplace_back(make_unique<Barbaro>(row, col, id, this, 0));
+        barbaras.emplace_back(make_unique<Barbaro>(row, col, id, this));
         barbaras.back()->setAutoPilot();
+        barbaras.back()->setNivelAgua(50);
     } else {
         auto newCaravana = make_shared<Comercio>(row, col, id, this);
         newCaravana->setNivelAgua(10);
@@ -258,19 +259,20 @@ void Mapa::unparkCaravana(char caravanaID, char cidadeName) {
 }
 
 void Mapa::removeCaravanaUtilizador(const shared_ptr<Caravana> &caravana) {
-    auto it = find(caravanas.begin(), caravanas.end(), caravana);
-    if (it != caravanas.end()) {
-        if (caravana->getCidadeName() == ' ')
-            writeCharToBuffer(caravana->getRow(), caravana->getCol(), '.');
-        cout << "Caravana " << caravana->getID() << " foi destruida e removida do mapa." << endl << endl;
-        caravanas.erase(it);
-    } else {
-        cout << "Erro: Caravana nao encontrada no mapa!" << endl << endl;
-    }
-
     if (caravana->getCidadeName() != ' ') {
         for (auto &cidade: cidades) {
             cidade.unparkCaravana(caravana);
+        }
+    }
+
+    for (auto it = caravanas.begin(); it != caravanas.end(); ++it) {
+        if (*it == caravana) {
+            if (caravana->getCidadeName() == ' ') {
+                writeCharToBuffer(caravana->getRow(), caravana->getCol(), '.');
+            }
+            cout << "Caravana " << caravana->getID() << " foi destruida e removida do mapa." << endl << endl;
+            caravanas.erase(it);
+            break;
         }
     }
 }
@@ -289,6 +291,7 @@ void Mapa::autoCaravanaUtilizadorMove() {
                 caravana->addTurnosEmRandom();
             } else {
                 caravana->setTurnosEmRandom(0);
+                caravana->moveManual();
             }
 
             if (caravana->getEstado()) {
@@ -324,12 +327,6 @@ Caravana *Mapa::getNearCaravanaBarbara(int row, int col, int distance) {
 
 //CARAVANA BARBARO
 
-void Mapa::setTurnosADesaparecerBarb() {
-    for (auto &caravana: barbaras) {
-        caravana->setTurnosParaDesaparecer(getDurationBarb());
-    }
-}
-
 void Mapa::addCaravanaBarbaro(int row, int col) {
     if (isMontanha(row, col)) {
         cout << "Nao pode criar uma caravana barbara em cima de uma montanha!!" << endl << endl;
@@ -346,7 +343,9 @@ void Mapa::addCaravanaBarbaro(int row, int col) {
         return;
     }
 
-    barbaras.emplace_back(make_unique<Barbaro>(row, col, '!', this, getDurationBarb()));
+    barbaras.emplace_back(make_unique<Barbaro>(row, col, '!', this));
+    barbaras.back()->setAutoPilot();
+    barbaras.back()->setNivelAgua(50);
     writeCharToBuffer(row, col, '!');
     cout << "Criada uma caravana barbaro na linha " << row << " e coluna " << col << endl << endl;
 }
@@ -369,6 +368,7 @@ void Mapa::autoCaravanaBarbaraMove() {
     for (auto &caravana: barbaras) {
         if (caravana) {
             caravana->setAutoFase();
+            caravana->moveManual();
             caravana->moveAuto();
             if (caravana->getEstado()) {
                 removeCaravanaBarbara(caravana.get());
@@ -388,7 +388,7 @@ shared_ptr<Caravana> Mapa::getNearCaravanaUtilizador(int row, int col, const Car
         if (caravana && caravana.get() != self) {
             int distanceRows = abs(caravana->getRow() - row);
             int distanceCols = abs(caravana->getCol() - col);
-            int currentDistance = distanceRows + distanceCols;
+            int currentDistance = max(distanceRows, distanceCols);
 
             if (currentDistance <= distance && currentDistance < minDistance) {
                 minDistance = currentDistance;
@@ -400,14 +400,47 @@ shared_ptr<Caravana> Mapa::getNearCaravanaUtilizador(int row, int col, const Car
     return nearestCaravana;
 }
 
+vector<shared_ptr<Caravana>> Mapa::getAllNearCaravanasUtilizador(int row, int col) {
+    vector<shared_ptr<Caravana>> nearbyCaravanas;
+
+    for (auto &caravana : caravanas) {
+        if (caravana) {
+            int distanceRows = abs(caravana->getRow() - row);
+            int distanceCols = abs(caravana->getCol() - col);
+
+            if (std::max(distanceRows, distanceCols) <= 1) {
+                nearbyCaravanas.push_back(caravana);
+            }
+        }
+    }
+
+    return nearbyCaravanas;
+}
+
 void Mapa::refreshBarbaros() {
     for (auto &caravana: barbaras) {
-        if (caravana && getTurn() % caravana->getTurnosParaDesaparecer() == 0) {
+        if (caravana && caravana->getLifetime() % getDurationBarb() == 0 || caravana->getRandomMode()) {
             int tX = caravana->getRow();
             int tY = caravana->getCol();
 
             removeCaravanaBarbara(caravana.get());
             cout << "Caravana Barbara da linha " << tX << " e coluna " << tY << " foi removida" << endl << endl;
+        }
+    }
+}
+
+void Mapa::increaseLifeTimeBarbaros() {
+    for (auto &caravana: barbaras) {
+        caravana->setLifetime();
+    }
+}
+
+//COMBATES
+
+void Mapa::autoCombate() {
+    for (auto &caravana: barbaras) {
+        if (caravana) {
+            caravana->combate();
         }
     }
 }
@@ -439,22 +472,13 @@ void Mapa::removeItem(const Item *self) {
 
 void Mapa::refreshItems() {
     for (auto &item: items) {
-        if (item && getTurn() % item->getVidaUtil() == 0) {
+        if (item && item->getLifeTime() % getDurationItem() == 0) {
             int tX = item->getRow();
             int tY = item->getCol();
 
             writeCharToBuffer(tX, tY, '.');
 
             cout << "Item da linha " << tX << " e coluna " << tY << " foi removido." << endl << endl;
-        }
-    }
-    for (auto it = items.begin(); it != items.end();) {
-        if (getTurn() % (*it)->getVidaUtil() == 0) {
-            int tX = (*it)->getRow();
-            int tY = (*it)->getCol();
-
-            it = items.erase(it);
-            cout << "Item da linha " << tX << " e coluna " << tY << "removido." << endl << endl;
         }
     }
 }
@@ -476,16 +500,16 @@ void Mapa::addRandomItem() {
     switch (randomDead) {
         case 1:
             items.emplace_back(make_unique<Pandora>(availablePositions[0].first, availablePositions[0].second, this));
-
+            break;
         case 2:
             items.emplace_back(make_unique<Tesouro>(availablePositions[0].first, availablePositions[0].second, this));
-
+            break;
         case 3:
             items.emplace_back(make_unique<Jaula>(availablePositions[0].first, availablePositions[0].second, this));
-
+            break;
         case 4:
             items.emplace_back(make_unique<Mina>(availablePositions[0].first, availablePositions[0].second, this));
-
+            break;
         //case 5:
         //items.emplace_back(make_unique<Surpresa>(availablePositions[0].first, availablePositions[0].second, this));
         default:
@@ -501,7 +525,7 @@ Item *Mapa::getNearItem(int row, int col, int distance) const {
     for (const auto &item: items) {
         int distanceRows = abs(item->getRow() - row);
         int distanceCols = abs(item->getCol() - col);
-        int currentDistance = distanceRows + distanceCols;
+        int currentDistance = max(distanceRows, distanceCols);
 
         if (currentDistance <= distance && currentDistance < minDistance) {
             minDistance = currentDistance;
@@ -516,7 +540,14 @@ void Mapa::applyItem(Item *item, const Caravana *self) {
     for (auto &caravana: caravanas) {
         if (caravana && caravana.get() == self) {
             item->execute(caravana);
+            removeItem(item);
         }
+    }
+}
+
+void Mapa::increaseLifeTimeItems() {
+    for (auto &item: items) {
+        item->setLifeTime();
     }
 }
 

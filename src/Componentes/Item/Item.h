@@ -10,7 +10,7 @@ class Mapa;
 class Item {
     int row, col;
     std::string nome;
-    int vidaUtil;
+    int lifeTime;
 
     Mapa *onde;
 
@@ -29,7 +29,9 @@ public:
 
     int getCol() const;
 
-    int getVidaUtil() const;
+    int getLifeTime() const;
+
+    void setLifeTime();
 
     //FUNCOES
 
