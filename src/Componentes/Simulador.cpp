@@ -117,6 +117,9 @@ int Simulador::autoCombate() {
         return 1;
     }
 
+    if(mapa->getNCaravanasUtilizador() == 0 && mapa->getCoins() < mapa->getPCaravan()) {
+        return 4;
+
     mapa->setTurn();
     cout << "Simulacao avancou para o proximo turno" << endl << endl;
     return 0;
