@@ -279,20 +279,22 @@ void Interface::showMapDetails() { sim->showMapDetails(); }
 
 //COMMANDS
 
-int Interface::askCommands() {
-    string input;
-    vector<string> inputs;
-
-    cout << "> ";
-
-    getline(cin, input);
+int Interface::askCommands(const std::string &input) {
+    string linha;
 
     if (input.empty()) {
+        cout << "> ";
+        getline(cin, linha);
+    } else {
+        linha = input;
+    }
+
+    if (linha.empty()) {
         cout << "Comando invalido!" << endl << endl;
         return 0;
     }
 
-    inputs = split(input, ' ');
+     vector<string> inputs = split(linha, ' ');
 
     if (inputs[0] == "help") {
         helpCommands();
@@ -301,16 +303,16 @@ int Interface::askCommands() {
 
     auto it = commands.find(inputs[0]);
     if (it != commands.end()) {
-        it->second->execute(input, this);
+        it->second->execute(linha, this);
     } else {
-        cout << "Comando invalido: " << input << endl << endl;
+        cout << "Comando invalido: " << linha << endl << endl;
         return 0;
     }
 
-    if (inputs[0] == "prox")
+    if (inputs[0] == "prox" || getProxFase() == 1)
         return 1;
 
-    if (inputs[0] == "termina")
+    if (inputs[0] == "termina" || getProxFase() == 4)
         return 4;
 
     return 0;
@@ -336,6 +338,7 @@ void Interface::loadCommands() {
     commands["lists"] = make_unique<ComandoList>();
     commands["dels"] = make_unique<ComandoDel>();
     commands["termina"] = make_unique<ComandoTermina>();
+    commands["exec"] = make_unique<ComandoExec>();
 }
 
 void Interface::helpCommands() const {
@@ -366,4 +369,11 @@ vector<string> Interface::split(const string &s, char c) {
     return result;
 }
 
+//GETTERS AND SETTERS
+
 Simulador *Interface::getSimulador() const { return sim; }
+
+int Interface::getProxFase() const { return proxFase; }
+
+void Interface::setProxFase(int proxFase) { this->proxFase = proxFase; }
+

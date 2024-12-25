@@ -28,6 +28,7 @@
 #include "../Comandos/ComandoList.h"
 #include "../Comandos/ComandoDel.h"
 #include "../Comandos/ComandoTermina.h"
+#include "../Comandos/ComandoExec.h"
 
 class Interface {
     Simulador *sim;
@@ -53,7 +54,7 @@ public:
 
     //COMMANDS
 
-    int askCommands();
+    int askCommands(const std::string &input = "");
 
     void loadCommands();
 
@@ -63,7 +64,13 @@ public:
 
     std::vector<std::string> split(const std::string &s, char c);
 
+    //GETTERS AND SETTERS
+
     Simulador *getSimulador() const;
+
+    int getProxFase() const;
+
+    void setProxFase(int proxFase);
 };
 
 
