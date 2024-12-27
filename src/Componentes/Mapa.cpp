@@ -370,7 +370,7 @@ void Mapa::autoCaravanaBarbaraMove() {
             caravana->setAutoFase();
             caravana->moveManual();
             caravana->moveAuto();
-            if (caravana->getEstado()) {
+            if (caravana->getEstado() || caravana->getRandomMode()) {
                 removeCaravanaBarbara(caravana.get());
             } else {
                 caravana->setAutoFase();
@@ -419,7 +419,7 @@ vector<shared_ptr<Caravana>> Mapa::getAllNearCaravanasUtilizador(int row, int co
 
 void Mapa::refreshBarbaros() {
     for (auto &caravana: barbaras) {
-        if (caravana && caravana->getLifetime() % getDurationBarb() == 0 || caravana->getRandomMode()) {
+        if (caravana && caravana->getLifetime() % getDurationBarb() == 0 || caravana->getRandomMode() || caravana->getEstado()) {
             int tX = caravana->getRow();
             int tY = caravana->getCol();
 
@@ -539,7 +539,14 @@ Item *Mapa::getNearItem(int row, int col, int distance) const {
 void Mapa::applyItem(Item *item, const Caravana *self) {
     for (auto &caravana: caravanas) {
         if (caravana && caravana.get() == self) {
-            item->execute(caravana);
+            item->execute(caravana, nullptr);
+            removeItem(item);
+        }
+    }
+
+    for (auto &caravana: barbaras) {
+        if (caravana && caravana.get() == self) {
+            item->execute(nullptr, caravana.get());
             removeItem(item);
         }
     }

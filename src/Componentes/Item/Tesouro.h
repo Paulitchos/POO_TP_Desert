@@ -7,7 +7,7 @@ class Tesouro : public Item {
 public:
     Tesouro(int row, int col, Mapa *m);
 
-    void execute(std::shared_ptr<Caravana> car) override;
+    void execute(std::shared_ptr<Caravana> car, Barbaro* bar) override;
 };
 
 

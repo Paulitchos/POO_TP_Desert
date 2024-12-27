@@ -4,6 +4,7 @@
 #include <iostream>
 #include <memory>
 #include "../Caravanas/Caravana.h"
+#include "../Caravanas/Barbaro.h"
 
 class Mapa;
 
@@ -19,7 +20,7 @@ public:
 
     virtual ~Item() = default;
 
-    virtual void execute(std::shared_ptr<Caravana> car) = 0;
+    virtual void execute(std::shared_ptr<Caravana> car, Barbaro* bar) = 0;
 
     //GETTERS E SETTERS
 
