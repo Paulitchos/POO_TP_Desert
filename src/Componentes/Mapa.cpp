@@ -400,10 +400,10 @@ shared_ptr<Caravana> Mapa::getNearCaravanaUtilizador(int row, int col, const Car
     return nearestCaravana;
 }
 
-vector<shared_ptr<Caravana>> Mapa::getAllNearCaravanasUtilizador(int row, int col) {
-    vector<shared_ptr<Caravana>> nearbyCaravanas;
+vector<shared_ptr<Caravana> > Mapa::getAllNearCaravanasUtilizador(int row, int col) {
+    vector<shared_ptr<Caravana> > nearbyCaravanas;
 
-    for (auto &caravana : caravanas) {
+    for (auto &caravana: caravanas) {
         if (caravana) {
             int distanceRows = abs(caravana->getRow() - row);
             int distanceCols = abs(caravana->getCol() - col);
@@ -418,13 +418,19 @@ vector<shared_ptr<Caravana>> Mapa::getAllNearCaravanasUtilizador(int row, int co
 }
 
 void Mapa::refreshBarbaros() {
-    for (auto &caravana: barbaras) {
-        if (caravana && caravana->getLifetime() % getDurationBarb() == 0 || caravana->getRandomMode() || caravana->getEstado()) {
+    for (auto it = barbaras.begin(); it != barbaras.end();) {
+        auto &caravana = *it;
+        if (caravana && (caravana->getLifetime() % getDurationBarb() == 0 ||
+                         caravana->getRandomMode() ||
+                         caravana->getEstado())) {
             int tX = caravana->getRow();
             int tY = caravana->getCol();
 
-            removeCaravanaBarbara(caravana.get());
             cout << "Caravana Barbara da linha " << tX << " e coluna " << tY << " foi removida" << endl << endl;
+
+            it = barbaras.erase(it);
+        } else {
+            ++it;
         }
     }
 }
@@ -510,8 +516,9 @@ void Mapa::addRandomItem() {
         case 4:
             items.emplace_back(make_unique<Mina>(availablePositions[0].first, availablePositions[0].second, this));
             break;
-        //case 5:
-        //items.emplace_back(make_unique<Surpresa>(availablePositions[0].first, availablePositions[0].second, this));
+        case 5:
+            items.emplace_back(make_unique<Surpresa>(availablePositions[0].first, availablePositions[0].second, this));
+            break;
         default:
             cout << "Algo de inesperado aconteceu!!" << endl << endl;
             break;

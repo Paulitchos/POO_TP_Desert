@@ -272,7 +272,7 @@ bool Caravana::move(const string &direction) {
         return false;
     }
 
-    if (onde->isCidade(getRow(), getCol())) {
+    if (onde->isCidade(getRow(), getCol()) && getID() != '!') {
         char cidadeNome = onde->getNomeCidade(getRow(), getCol());
         onde->parkCaravana(getID(), cidadeNome);
         abastecerAgua();
