@@ -22,7 +22,7 @@ public:
 
     std::string getDescr() const;
 
-    virtual std::string getAsString() const;
+    std::string getAsString() const;
 
     // Funções
 

@@ -14,7 +14,7 @@ string Comando::getDescr() const { return descr; }
 
 string Comando::getAsString() const {
     ostringstream os;
-    os << "Comando: " << nome << "args: " << args << endl;
+    os << "Comando: " << nome << " " << args << endl;
     os << "Descricao: " << descr;
     return os.str();
 }
