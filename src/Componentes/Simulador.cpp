@@ -124,6 +124,10 @@ int Simulador::autoCombate() {
 
     mapa->setTurn();
     cout << "Simulacao avancou para o proximo turno" << endl << endl;
+    mapa->increaseLifeTimeItems();
+    mapa->increaseLifeTimeBarbaros();
+    if (mapa->getNCaravanasUtilizador() == 0 && mapa->getCoins() < mapa->getPCaravan())
+        return 4;
     return 0;
 }
 
