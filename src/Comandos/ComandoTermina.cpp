@@ -4,7 +4,6 @@
 using namespace std;
 
 ComandoTermina::ComandoTermina() : Comando("terminar", "Termina a simulacaoo, sendo apresentada a pontuacao.", "") {
-
 }
 
 void ComandoTermina::execute(const string &args, Interface *interface) {
@@ -19,4 +18,3 @@ void ComandoTermina::execute(const string &args, Interface *interface) {
 
     sim->terminaMapa();
 }
-

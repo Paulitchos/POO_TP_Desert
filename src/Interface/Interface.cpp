@@ -294,7 +294,7 @@ int Interface::askCommands(const std::string &input) {
         return 0;
     }
 
-     vector<string> inputs = split(linha, ' ');
+    vector<string> inputs = split(linha, ' ');
 
     if (inputs[0] == "help") {
         helpCommands();
@@ -376,4 +376,3 @@ Simulador *Interface::getSimulador() const { return sim; }
 int Interface::getProxFase() const { return proxFase; }
 
 void Interface::setProxFase(int proxFase) { this->proxFase = proxFase; }
-

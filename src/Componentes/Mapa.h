@@ -37,8 +37,8 @@ class Mapa {
 
     std::vector<Montanha> montanhas;
     std::vector<Cidade> cidades;
-    std::vector<std::shared_ptr<Caravana>> caravanas;
-    std::vector<std::unique_ptr<Barbaro>> barbaras;
+    std::vector<std::shared_ptr<Caravana> > caravanas;
+    std::vector<std::unique_ptr<Barbaro> > barbaras;
     std::vector<std::unique_ptr<Item> > items;
 
 public:
@@ -166,7 +166,7 @@ public:
 
     std::shared_ptr<Caravana> getNearCaravanaUtilizador(int row, int col, const Caravana *self, int distance);
 
-    std::vector<std::shared_ptr<Caravana>> getAllNearCaravanasUtilizador(int row, int col);
+    std::vector<std::shared_ptr<Caravana> > getAllNearCaravanasUtilizador(int row, int col);
 
     void refreshBarbaros();
 
@@ -196,9 +196,9 @@ public:
 
     //FUNCOES AUXILIARES
 
-    std::vector<std::pair<int,int>> getRandomAvailablePosition() const;
+    std::vector<std::pair<int, int> > getRandomAvailablePosition() const;
 
-    std::vector<std::pair<int, int>> getAvailablePositions() const;
+    std::vector<std::pair<int, int> > getAvailablePositions() const;
 
     void writeCharToBuffer(int row, int col, char c) const;
 

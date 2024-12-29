@@ -3,7 +3,8 @@
 
 using namespace std;
 
-ComandoLoad::ComandoLoad() : Comando("loads", "Recupera a copia do buffer previamente armazenado em memoria com o nome indicado", "<nome>") {
+ComandoLoad::ComandoLoad() : Comando(
+    "loads", "Recupera a copia do buffer previamente armazenado em memoria com o nome indicado", "<nome>") {
 }
 
 void ComandoLoad::execute(const string &args, Interface *interface) {

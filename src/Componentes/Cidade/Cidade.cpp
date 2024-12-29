@@ -52,7 +52,7 @@ void Cidade::buyCaravana(char tipoCar) {
         onde->addCaravana(newCaravana);
         onde->addCoins(-onde->getPCaravan());
         cout << "Comprou uma caravana comercial na cidade " << newCaravana->getCidadeName() << " que ficou com ID: "
-        << newCaravana->getID() << endl << endl;
+                << newCaravana->getID() << endl << endl;
         setComprouC();
         return;
     }
@@ -66,7 +66,7 @@ void Cidade::buyCaravana(char tipoCar) {
         onde->addCaravana(newCaravana);
         onde->addCoins(-onde->getPCaravan());
         cout << "Comprou uma caravana militar na cidade " << newCaravana->getCidadeName() << " que ficou com ID: "
-        << newCaravana->getID() << endl << endl;
+                << newCaravana->getID() << endl << endl;
         setComprouM();
         return;
     }
@@ -81,7 +81,7 @@ void Cidade::buyCaravana(char tipoCar) {
         onde->addCaravana(newCaravana);
         onde->addCoins(-onde->getPCaravan());
         cout << "Comprou uma caravana secreta na cidade " << newCaravana->getCidadeName() << " que ficou com ID: "
-        << newCaravana->getID() << endl << endl;
+                << newCaravana->getID() << endl << endl;
         setComprouS();
         return;
     }

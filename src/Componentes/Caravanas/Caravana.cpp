@@ -8,8 +8,10 @@ using namespace std;
 Caravana::Caravana(int row, int col, char id, int nPessoas, int maxPessoas, int maxAgua,
                    int maxJogadasPTurno, int maxMercadoria, Mapa *onde, int turnosParaDesaparecer)
     : row(row), col(col), caravanaID(id), nPessoas(nPessoas), nMercadoria(0), maxPessoas(maxPessoas), maxAgua(maxAgua),
-      movimentos(0), maxJogadasPTurno(maxJogadasPTurno), maxMercadoria(maxMercadoria), turnosParaDesparecer(turnosParaDesaparecer),
-      cidadeName(' '), onde(onde), destruida(false), autoPilot(false), randomMode(false), autoFase(false), turnosEmRandom(0), nivelAgua(0) {
+      movimentos(0), maxJogadasPTurno(maxJogadasPTurno), maxMercadoria(maxMercadoria),
+      turnosParaDesparecer(turnosParaDesaparecer),
+      cidadeName(' '), onde(onde), destruida(false), autoPilot(false), randomMode(false), autoFase(false),
+      turnosEmRandom(0), nivelAgua(0) {
 }
 
 //PESSOAS GETTERS E SETTERS
@@ -44,7 +46,7 @@ void Caravana::adicionaPessoas(int pessoasAAdicionar) {
 
     if (nPessoasAAdicionar < pessoasAAdicionar) {
         cout << "Nao foi possivel adicionar todos os tripulantes solicitados devido ao limite maximo de "
-             << getmaxPessoas() << " tripulantes." << endl << endl;
+                << getmaxPessoas() << " tripulantes." << endl << endl;
     }
 }
 
@@ -64,7 +66,7 @@ int Caravana::setSecuredPessoas(int pessoas) {
 
     if (nPessoasAAdicionar < pessoas) {
         cout << "Nao foi possivel adicionar todos os tripulantes solicitados devido ao limite maximo de "
-             << getmaxPessoas() << " tripulantes." << endl << endl;
+                << getmaxPessoas() << " tripulantes." << endl << endl;
     }
 
     return nPessoasAAdicionar;
@@ -73,7 +75,7 @@ int Caravana::setSecuredPessoas(int pessoas) {
 void Caravana::removePessoas(int pessoasARemover) {
     if (getNPessoas() - pessoasARemover <= 0) {
         setNPessoas(0);
-        if(!getRandomMode())
+        if (!getRandomMode())
             setRandomMode();
         cout << "Caravana " << getID() << " ficou sem pessoas!" << endl << endl;
         return;
@@ -163,7 +165,7 @@ void Caravana::adicionaMercadoria(int mercadoriaAAdicionar) {
 
     if (numeroAAdicionar < mercadoriaAAdicionar) {
         cout << "Nao foi possivel adicionar todas as toneladas solicitados devido ao limite maximo de "
-             << getMaxMercadoria() << " toneladas desta caravana." << endl << endl;
+                << getMaxMercadoria() << " toneladas desta caravana." << endl << endl;
     }
 }
 
@@ -178,11 +180,12 @@ int Caravana::setSecuredMercadoria(int mercadoria) {
 
     setMercadoria(getMercadoria() + numeroAAdicionar);
 
-    cout << "Foram adicionados " << numeroAAdicionar << " toneladas de mercadoria a caravana " << getID() << endl << endl;
+    cout << "Foram adicionados " << numeroAAdicionar << " toneladas de mercadoria a caravana " << getID() << endl <<
+            endl;
 
     if (numeroAAdicionar < mercadoria) {
         cout << "Nao foi possivel adicionar todas as toneladas solicitados devido ao limite maximo de "
-             << getMaxMercadoria() << " toneladas desta caravana." << endl << endl;
+                << getMaxMercadoria() << " toneladas desta caravana." << endl << endl;
     }
 
     return mercadoria;
@@ -249,7 +252,7 @@ bool Caravana::move(const string &direction) {
     }
 
     if (onde->isMontanha(getRow(), getCol())) {
-        if(!autoFase)
+        if (!autoFase)
             cout << "Movimento invalido devido a tentar conduzir contra uma montanha!!" << endl << endl;
         setRow(auxRow);
         setCol(auxCol);
@@ -257,7 +260,7 @@ bool Caravana::move(const string &direction) {
     }
 
     if (onde->isCaravana(getRow(), getCol(), this)) {
-        if(!autoFase)
+        if (!autoFase)
             cout << "Movimento invalido devido a tentar conduzir contra outra caravana!!" << endl << endl;
         setRow(auxRow);
         setCol(auxCol);
@@ -265,7 +268,7 @@ bool Caravana::move(const string &direction) {
     }
 
     if (onde->isItem(getRow(), getCol())) {
-        if(!autoFase)
+        if (!autoFase)
             cout << "Movimento invalido devido a tentar conduzir contra um item!!" << endl << endl;
         setRow(auxRow);
         setCol(auxCol);
@@ -280,7 +283,8 @@ bool Caravana::move(const string &direction) {
         cout << "A caravana " << getID() << " entrou na cidade " << cidadeNome << endl << endl;
         movimentos++;
     } else {
-        cout << "Caravana " << getID() << " moveu-se para a linha " << getRow() << " e coluna " << getCol() << endl << endl;
+        cout << "Caravana " << getID() << " moveu-se para a linha " << getRow() << " e coluna " << getCol() << endl <<
+                endl;
         if (getCidadeName() != ' ') {
             onde->unparkCaravana(getID(), getCidadeName());
             onde->writeCharToBuffer(getRow(), getCol(), getID());
@@ -299,7 +303,7 @@ bool Caravana::move(const string &direction) {
 void Caravana::moveManual() {
     Item *nearestItem = nullptr;
 
-    if(onde->getNItems() > 0)
+    if (onde->getNItems() > 0)
         nearestItem = onde->getNearItem(getRow(), getCol(), 1);
 
     if (nearestItem) {
@@ -334,25 +338,25 @@ int Caravana::getMovimentos() const { return movimentos; }
 void Caravana::resetMovimento() { movimentos = 0; }
 
 std::string Caravana::getBestMove(Mapa *m, int targetRow, int targetCol) const {
-    std::vector<std::tuple<std::string, int, int>> moves = {
-        {"C", -1, 0},    // Up
-        {"B", 1, 0},     // Down
-        {"E", 0, -1},    // Left
-        {"D", 0, 1},     // Right
-        {"CE", -1, -1},  // Up-Left
-        {"CD", -1, 1},   // Up-Right
-        {"BE", 1, -1},   // Down-Left
-        {"BD", 1, 1}     // Down-Right
+    std::vector<std::tuple<std::string, int, int> > moves = {
+        {"C", -1, 0}, // Up
+        {"B", 1, 0}, // Down
+        {"E", 0, -1}, // Left
+        {"D", 0, 1}, // Right
+        {"CE", -1, -1}, // Up-Left
+        {"CD", -1, 1}, // Up-Right
+        {"BE", 1, -1}, // Down-Left
+        {"BD", 1, 1} // Down-Right
     };
 
     std::string bestMove;
     int minDistance = std::numeric_limits<int>::max();
 
-    for (const auto& [direction, rowOffset, colOffset] : moves) {
+    for (const auto &[direction, rowOffset, colOffset]: moves) {
         int newRow = (getRow() + rowOffset + m->getRows()) % m->getRows();
         int newCol = (getCol() + colOffset + m->getCols()) % m->getCols();
 
-        if (m->isMontanha(newRow, newCol) || m->isCaravana(newRow, newCol,nullptr) || m->isItem(newRow, newCol)) {
+        if (m->isMontanha(newRow, newCol) || m->isCaravana(newRow, newCol, nullptr) || m->isItem(newRow, newCol)) {
             continue;
         }
 
@@ -419,4 +423,3 @@ Mapa *Caravana::getMapa() const { return onde; }
 bool Caravana::getAutoFase() const { return autoFase; }
 
 void Caravana::setAutoFase() { autoFase = !autoFase; }
-

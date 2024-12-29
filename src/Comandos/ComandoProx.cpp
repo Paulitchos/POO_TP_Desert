@@ -22,17 +22,18 @@ void ComandoProx::execute(const string &args, Interface *interface) {
     vector<string> inputs = split(args, ' ');
 
     if (inputs.size() > 2) {
-        cout << "O comando " << getNome() << " apenas aceita um argumento opcional <n> que e um numero inteiro!!" << endl << endl;
+        cout << "O comando " << getNome() << " apenas aceita um argumento opcional <n> que e um numero inteiro!!" <<
+                endl << endl;
         return;
     }
 
-    if(inputs.size() == 2) {
+    if (inputs.size() == 2) {
         if (!isNumeric(inputs[1])) {
             cout << "argumento <n> precisa de ser um numero inteiro!!" << endl << endl;
             return;
         }
 
-        if(setInstantes(stoi(inputs[1]))) {
+        if (setInstantes(stoi(inputs[1]))) {
             sim->setTurnAAvancar(instants);
             cout << "Simulacao ira avancar " << instants << " turnos" << endl << endl;
         }

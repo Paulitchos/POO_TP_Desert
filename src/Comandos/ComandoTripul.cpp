@@ -33,7 +33,8 @@ void ComandoTripul::execute(const std::string &args, Interface *interface) {
 
     if (aux) {
         if (aux->getEstado()) {
-            cout << "Caravana nao pode adquirir mais tripulantes devido a ter sido declarada como destruida" << endl << endl;
+            cout << "Caravana nao pode adquirir mais tripulantes devido a ter sido declarada como destruida" << endl <<
+                    endl;
             return;
         }
         aux->adicionaPessoas(stoi(inputs[2]));

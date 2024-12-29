@@ -7,7 +7,7 @@ class Mina : public Item {
 public:
     Mina(int row, int col, Mapa *m);
 
-    void execute(std::shared_ptr<Caravana> car, Barbaro* bar) override;
+    void execute(std::shared_ptr<Caravana> car, Barbaro *bar) override;
 };
 
 

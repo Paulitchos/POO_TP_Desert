@@ -6,7 +6,8 @@
 class Secreta : public Caravana {
 public:
     Secreta(int row, int col, char id, Mapa *m)
-    : Caravana(row, col, id, 100, 100, 1000, 1, 1000, m, 3) {};
+        : Caravana(row, col, id, 100, 100, 1000, 1, 1000, m, 3) {
+    };
 
     void perdeAgua() override;
 

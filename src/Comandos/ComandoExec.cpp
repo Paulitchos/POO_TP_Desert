@@ -4,11 +4,11 @@
 using namespace std;
 
 ComandoExec::ComandoExec() : Comando("exec", "Le comandos do ficheiro de texto designado por nomeFicheiro, "
-                                                 "um por linha, e executa-os", "<nomeFicheiro>") {
+                                     "um por linha, e executa-os", "<nomeFicheiro>") {
 }
 
 void ComandoExec::execute(const std::string &args, Interface *interface) {
-    Simulador* sim = interface->getSimulador();
+    Simulador *sim = interface->getSimulador();
 
     vector<string> inputs = split(args, ' ');
 
@@ -18,7 +18,7 @@ void ComandoExec::execute(const std::string &args, Interface *interface) {
         return;
     }
 
-    const string& nomeFicheiro = inputs[1];
+    const string &nomeFicheiro = inputs[1];
     ifstream ficheiro(nomeFicheiro);
 
     if (!ficheiro.is_open()) {
@@ -28,7 +28,6 @@ void ComandoExec::execute(const std::string &args, Interface *interface) {
 
     string linha;
     while (getline(ficheiro, linha)) {
-
         vector<string> linhaInputs = split(linha, ' ');
         if (!linhaInputs.empty() && linhaInputs[0] == "exec" || linhaInputs.empty()) {
             continue;

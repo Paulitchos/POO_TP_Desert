@@ -20,7 +20,7 @@ public:
 
     virtual ~Item() = default;
 
-    virtual void execute(std::shared_ptr<Caravana> car, Barbaro* bar) = 0;
+    virtual void execute(std::shared_ptr<Caravana> car, Barbaro *bar) = 0;
 
     //GETTERS E SETTERS
 

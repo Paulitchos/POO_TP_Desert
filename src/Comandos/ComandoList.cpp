@@ -3,7 +3,7 @@
 
 using namespace std;
 
-ComandoList::ComandoList() : Comando("lists", "Lista os nomes das copias do buffer existentes" , "") {
+ComandoList::ComandoList() : Comando("lists", "Lista os nomes das copias do buffer existentes", "") {
 }
 
 void ComandoList::execute(const string &args, Interface *interface) {
@@ -18,4 +18,3 @@ void ComandoList::execute(const string &args, Interface *interface) {
 
     sim->listMapSavedBuffers();
 }
-

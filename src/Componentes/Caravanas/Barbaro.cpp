@@ -44,7 +44,7 @@ bool Barbaro::moveCloserToCaravana(Mapa *m) {
 
     auto nearestCaravana = m->getNearCaravanaUtilizador(getRow(), getCol(), nullptr, 8);
 
-    if(m->getNItems() > 0)
+    if (m->getNItems() > 0)
         nearestItem = m->getNearItem(getRow(), getCol(), 1);
 
     if (nearestItem) {
@@ -98,7 +98,8 @@ void Barbaro::combate() {
                 removePessoas(loss);
                 caravana->removePessoas(2 * loss);
                 if (caravana->getNPessoas() <= 0) {
-                    cout << "A caravana do utilizador " << caravana->getID() << " foi destruida no combate." << endl << endl;
+                    cout << "A caravana do utilizador " << caravana->getID() << " foi destruida no combate." << endl <<
+                            endl;
                     m->removeCaravanaUtilizador(caravana);
                 }
                 if (getNPessoas() <= 0) {
@@ -113,7 +114,8 @@ void Barbaro::combate() {
                 caravana->setNPessoas(caravana->getNPessoas() - loss);
                 removePessoas(2 * loss);
                 if (caravana->getNPessoas() <= 0) {
-                    cout << "A caravana do utilizador " << caravana->getID() << " foi destruida no combate." << endl << endl;
+                    cout << "A caravana do utilizador " << caravana->getID() << " foi destruida no combate." << endl <<
+                            endl;
                     m->removeCaravanaUtilizador(caravana);
                 }
                 if (getNPessoas() <= 0) {

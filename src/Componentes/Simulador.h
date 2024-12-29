@@ -108,9 +108,9 @@ public:
 
     void startMapTempestade(int row, int col, int raio) const;
 
-    void saveBuffer(const std::string& ficheiro) const;
+    void saveBuffer(const std::string &ficheiro) const;
 
-    void loadBuffer(const std::string& ficheiro) const;
+    void loadBuffer(const std::string &ficheiro) const;
 
     void listMapSavedBuffers() const;
 

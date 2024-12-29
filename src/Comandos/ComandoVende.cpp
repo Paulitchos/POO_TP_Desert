@@ -29,7 +29,8 @@ void ComandoVende::execute(const std::string &args, Interface *interface) {
 
     if (aux) {
         if (aux->getEstado()) {
-            cout << "Caravana nao pode vender a sua mercadoria devido a ter sido declarada como destruida" << endl << endl;
+            cout << "Caravana nao pode vender a sua mercadoria devido a ter sido declarada como destruida" << endl <<
+                    endl;
             return;
         }
         if (aux->getCidadeName() == ' ') {
