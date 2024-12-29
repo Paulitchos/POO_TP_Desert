@@ -331,8 +331,6 @@ void Caravana::setCol(int newCol) {
 
 int Caravana::getMovimentos() const { return movimentos; }
 
-void Caravana::setMovimentos() { movimentos++; }
-
 void Caravana::resetMovimento() { movimentos = 0; }
 
 std::string Caravana::getBestMove(Mapa *m, int targetRow, int targetCol) const {
@@ -375,8 +373,6 @@ int Caravana::getMaxJogadasPTurno() const { return maxJogadasPTurno; }
 
 //SEM TRIPULANTES / AUTO MODE GETTERS E SETTERS
 
-void Caravana::setTurnosParaDesaparecer(int turnos) { turnosParaDesparecer = turnos; }
-
 int Caravana::getTurnosParaDesaparecer() const { return turnosParaDesparecer; }
 
 void Caravana::setAutoPilot() { autoPilot = !autoPilot; }
@@ -389,8 +385,6 @@ void Caravana::setRandomMode() {
 }
 
 bool Caravana::getRandomMode() const { return randomMode; }
-
-int Caravana::getTurnosEmRandom() const { return turnosEmRandom; }
 
 void Caravana::addTurnosEmRandom() {
     turnosEmRandom++;

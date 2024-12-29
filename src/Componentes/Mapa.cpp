@@ -640,7 +640,6 @@ vector<string> Mapa::captureBufferState() const {
     return state;
 }
 
-
 void Mapa::saveBuffer(const string &nome) {
     if (savedBuffers.find(nome) != savedBuffers.end()) {
         cout << "Erro: Já existe um buffer salvo com o nome \"" << nome << "\"!" << endl << endl;

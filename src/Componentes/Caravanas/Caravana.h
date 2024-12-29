@@ -88,8 +88,6 @@ public:
 
     int getMovimentos() const;
 
-    void setMovimentos();
-
     void resetMovimento();
 
     std::string getBestMove(Mapa *m, int targetRow, int targetCol) const;
@@ -97,8 +95,6 @@ public:
     int getMaxJogadasPTurno() const;
 
     //RANDOM MODE / AUTO MODE GETTERS E SETTERS
-
-    void setTurnosParaDesaparecer(int turnos);
 
     int getTurnosParaDesaparecer() const;
 
@@ -109,8 +105,6 @@ public:
     void setRandomMode();
 
     bool getRandomMode() const;
-
-    int getTurnosEmRandom() const ;
 
     void addTurnosEmRandom();
 
